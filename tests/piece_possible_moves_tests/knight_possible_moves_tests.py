@@ -11,69 +11,86 @@ class KnightPossibleMovesTests(unittest.TestCase):
     def setUp(self):
         self.board = Board()
         self.testUtility = TestUtility(self.board)
-        self.board.setupEmptyBoard()
 
     # ///////////
     # // WHITE //
     # ///////////
     
-    def testPossibleMovesWhiteKnightFromA1():
+    def testPossibleMovesWhiteKnightFromA1(self):
         possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.knight,A1))
-        comparisonMoves = [B2, C3, D4, E5, F6, G7, H8]
-        self.assertEqual(possibleMoves,comparisonMoves)
+        comparisonMoves = [B3, C2]
+        self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
-    def testPossibleMovesWhiteKnightFromD5():
+    def testPossibleMovesWhiteKnightFromD5(self):
         possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.knight,D5))
-        comparisonMoves = [E6, F7, G8, E4, F3, G2, H1, C6, B7, A8, C4, B3, A2]
-        self.assertEqual(possibleMoves,comparisonMoves)
+        comparisonMoves = [E7, F6, C7, B6, E3, F4, C3, B4]
+        self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
-    def testPossibleMovesWhiteKnightFromD4FriendlyFire():
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.knight,E5))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.knight,E3))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.knight,C5))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.knight,C3))
+    def testPossibleMovesWhiteKnightFromD4FriendlyFire(self):
+        self.testUtility.movePieceValueToSquare(Values.knight,E6)
+        self.testUtility.movePieceValueToSquare(Values.knight,E2)
+        self.testUtility.movePieceValueToSquare(Values.knight,F5)
+        self.testUtility.movePieceValueToSquare(Values.knight,F3)
+        self.testUtility.movePieceValueToSquare(Values.knight,C6)
+        self.testUtility.movePieceValueToSquare(Values.knight,C2)
+        self.testUtility.movePieceValueToSquare(Values.knight,B5)
+        self.testUtility.movePieceValueToSquare(Values.knight,B3)
+        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.knight,D4))
         comparisonMoves = []
-        self.assertEqual(possibleMoves,comparisonMoves)
+        self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
-    def testPossibleMovesWhiteKnightFromD4EnemyFire():
-        
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.knight,E5))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.knight,E3))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.knight,C5))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.knight,C3))
-        comparisonMoves = [E5, E3, C5, C3]
-        self.assertEqual(possibleMoves,comparisonMoves)
+    def testPossibleMovesWhiteKnightFromD4EnemyFire(self):
+        self.testUtility.movePieceValueToSquare(-Values.knight,E6)
+        self.testUtility.movePieceValueToSquare(-Values.knight,E2)
+        self.testUtility.movePieceValueToSquare(-Values.knight,F5)
+        self.testUtility.movePieceValueToSquare(-Values.knight,F3)
+        self.testUtility.movePieceValueToSquare(-Values.knight,C6)
+        self.testUtility.movePieceValueToSquare(-Values.knight,C2)
+        self.testUtility.movePieceValueToSquare(-Values.knight,B5)
+        self.testUtility.movePieceValueToSquare(-Values.knight,B3)
+        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.knight,D4))
+        comparisonMoves = [E6, E2, F5, F3, C6, C2, B5, B3]
+        self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
     # ///////////
     # // BLACK //
     # ///////////
     
-    def testPossibleMovesBlackKnightFromH1():
+    def testPossibleMovesBlackKnightFromH1(self):
         possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.knight,H1))
-        comparisonMoves = [G2, F3, E4, D5, C6, B7, A8]
-        self.assertEqual(possibleMoves,comparisonMoves)
+        comparisonMoves = [G3, F2]
+        self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
-    def testPossibleMovesBlackKnightFromE4():
+    def testPossibleMovesBlackKnightFromE4(self):
         possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.knight,E4))
-        comparisonMoves = [F5, G6, H7, F3, G2, H1, D5, C6, B7, A8, D3, C2, B1]
-        self.assertEqual(possibleMoves,comparisonMoves)
+        comparisonMoves = [F6, G5, D6, C5, F2, G3, D2, C3]
+        self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
-    def testPossibleMovesBlackKnightFromDE6FriendlyFire():
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.knight,F7))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.knight,F5))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.knight,D7))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.knight,D5))
+    def testPossibleMovesBlackKnightFromDE6FriendlyFire(self):
+        self.testUtility.movePieceValueToSquare(-Values.knight,F8)
+        self.testUtility.movePieceValueToSquare(-Values.knight,F4)
+        self.testUtility.movePieceValueToSquare(-Values.knight,G7)
+        self.testUtility.movePieceValueToSquare(-Values.knight,G5)
+        self.testUtility.movePieceValueToSquare(-Values.knight,D8)
+        self.testUtility.movePieceValueToSquare(-Values.knight,D4)
+        self.testUtility.movePieceValueToSquare(-Values.knight,C7)
+        self.testUtility.movePieceValueToSquare(-Values.knight,C5)
+        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.knight,E6))
         comparisonMoves = []
-        self.assertEqual(possibleMoves,comparisonMoves)
+        self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
-    def testPossibleMovesBlackKnightFromDE6EnemyFire():
-        
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.knight,F7))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.knight,F5))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.knight,D7))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.knight,D5))
-        comparisonMoves = [F7, F5, D7, D5]
-        self.assertEqual(possibleMoves,comparisonMoves)
+    def testPossibleMovesBlackKnightFromDE6EnemyFire(self):
+        self.testUtility.movePieceValueToSquare(Values.knight,F8)
+        self.testUtility.movePieceValueToSquare(Values.knight,F4)
+        self.testUtility.movePieceValueToSquare(Values.knight,G7)
+        self.testUtility.movePieceValueToSquare(Values.knight,G5)
+        self.testUtility.movePieceValueToSquare(Values.knight,D8)
+        self.testUtility.movePieceValueToSquare(Values.knight,D4)
+        self.testUtility.movePieceValueToSquare(Values.knight,C7)
+        self.testUtility.movePieceValueToSquare(Values.knight,C5)
+        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.knight,E6))
+        comparisonMoves = [F8, F4, G7, G5, D8, D4, C7, C5]
+        self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
 
 if __name__ == '__main__':
     unittest.main()

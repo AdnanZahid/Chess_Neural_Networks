@@ -28,6 +28,12 @@ class Piece:
         
         if changeHasMoved:
             hasMoved = True
+    
+    def moveToSquare(self,toSquare):
+        return self.move(EvaluationMove(self.position,toSquare))\
+            and self.board.checkIfSquareIsNotNil(toSquare)\
+            and self.board.checkIfEmptyOrEnemyPieceExists(self.color,toSquare)\
+            and self.board.checkForClearPath(EvaluationMove(self.position,toSquare))
 
 class EmptyPiece(Piece):
     def __init__(self,color,position,hasMoved,delegate):

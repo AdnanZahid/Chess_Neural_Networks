@@ -25,17 +25,13 @@ class King(Piece):
         self.directionsList.append((-1,  0))
         self.directionsList.append(( 0, -1))
         
-        self.moveStrategy = LimitedMoveStrategy(color,self.directionsList)
+        self.moveStrategy = LimitedMoveStrategy(self,color,self.directionsList,board)
     
-    def moveToSquare(self,toSquare):
-        return self.move(self.position,toSquare,self.directionsList)
-    
-    def move(self,position,toSquare,directionsList):
-        
+    def move(self,move):
         result = False
         
         for direction in self.directionsList:
-            result = direction == getFileAndRankAdvance(EvaluationMove(position,toSquare))
+            result = direction == getFileAndRankAdvance(EvaluationMove(self.position,move.toSquare))
             if result:
                 break
         

@@ -27,17 +27,18 @@ class Knight(Piece):
         self.directionsList.append((-1, -2))
         self.directionsList.append((-2, -1))
         
-        self.moveStrategy = LimitedMoveStrategy(color,self.directionsList)
+        self.moveStrategy = LimitedMoveStrategy(self,color,self.directionsList,board)
     
     def moveToSquare(self,toSquare):
-        return self.move(self.position,toSquare,self.directionsList)
+        return self.move(EvaluationMove(self.position,toSquare))\
+            and self.board.checkIfSquareIsNotNil(toSquare)\
+            and self.board.checkIfEmptyOrEnemyPieceExists(self.color,toSquare)
 
-    def move(self,position,toSquare,directionsList):
-        
+    def move(self,move):
         result = False
         
         for direction in self.directionsList:
-            result = direction == getFileAndRankAdvance(EvaluationMove(position,toSquare))
+            result = direction == getFileAndRankAdvance(EvaluationMove(self.position,move.toSquare))
             if result:
                 break
         

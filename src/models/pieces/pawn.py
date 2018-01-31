@@ -22,21 +22,23 @@ class Pawn(Piece):
         self.directionsList.append((-1, self.pawnMoveDirection(1)))
         self.directionsList.append(( 1, self.pawnMoveDirection(1)))
         
-        self.moveStrategy = LimitedMoveStrategy(color,self.directionsList)
-    
-    def moveToSquare(self,toSquare):
+        self.moveStrategy = LimitedMoveStrategy(self,color,self.directionsList,board)
+
+    def move(self,move):
         result = False
         
-        if self.board.checkIfSquareIsEmpty(toSquare):
-            if   getFileAndRankAdvance(EvaluationMove(self.position,toSquare)) == self.directionsList[0]:               
-                result = True
-            elif getFileAndRankAdvance(EvaluationMove(self.position,toSquare)) == self.directionsList[1]\
-            and self.hasMoved == False:
-                result = self.board.checkForClearPath(EvaluationMove(self.position,toSquare))
-        
-        elif not(self.board.getPieceOnPosition(toSquare).color == color):
+        targetPiece = self.board.getPieceOnPosition(move.toSquare)
 
-            fileAndRankAdvance = getFileAndRankAdvance(EvaluationMove(position,toSquare))
+        if self.board.checkIfSquareIsEmpty(move.toSquare):
+            if   getFileAndRankAdvance(EvaluationMove(self.position,move.toSquare)) == self.directionsList[0]:               
+                result = True
+            elif getFileAndRankAdvance(EvaluationMove(self.position,move.toSquare)) == self.directionsList[1]\
+            and self.hasMoved == False:
+                result = self.board.checkForClearPath(EvaluationMove(self.position,move.toSquare))
+        
+        elif not(targetPiece == NilPiece) and not(targetPiece.color == self.color):
+
+            fileAndRankAdvance = getFileAndRankAdvance(EvaluationMove(self.position,move.toSquare))
             result = fileAndRankAdvance == self.directionsList[2] or fileAndRankAdvance == self.directionsList[3]
         
         return result

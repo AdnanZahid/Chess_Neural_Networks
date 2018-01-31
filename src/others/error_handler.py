@@ -1,8 +1,10 @@
 # This class handles all sorts of errors centrally
 class ErrorHandler:
     @staticmethod
-    def logError(error):
-        print(error)
+    def logError(board,piece,toSquare,error):
+        print("{} to move".format(board.currentTurnColor))
+        print("{} {} -> {}{}-{}{}: {}".format(piece.color,piece.symbol,piece.position.file,piece.position.rank,toSquare.file,toSquare.rank,error))
+        board.printBoard()
 
 class Error:
     friendlyFire       = "Can not captured own piece"

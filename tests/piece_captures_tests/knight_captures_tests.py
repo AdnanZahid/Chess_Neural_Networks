@@ -11,45 +11,44 @@ class KnightCapturesTests(unittest.TestCase):
     def setUp(self):
         self.board = Board()
         self.testUtility = TestUtility(self.board)
-        self.board.setupEmptyBoard()
 
     # ///////////
     # // WHITE //
     # ///////////
     
-    def testCaptureWhiteKnightFromA1ToH8(self):
-        self.testUtility.movePieceValueToSquare(-Values.knight,H8)
-        self.testUtility.failToMovePiece(Values.knight,self.testUtility.getMove(A1,H8))
+    def testCaptureWhiteKnightFromA1ToC2(self):
+        self.testUtility.movePieceValueToSquare(-Values.knight,C2)
+        self.testUtility.movePiece(Values.knight,self.testUtility.getMove(A1,C2))
     
-    def testCaptureWhiteKnightFromH1ToA8(self):
-        self.testUtility.movePieceValueToSquare(-Values.knight,D5)
-        self.testUtility.failToMovePiece(Values.knight,self.testUtility.getMove(H1,A8))
+    def testCaptureWhiteKnightFromH1ToG3(self):
+        self.testUtility.movePieceValueToSquare(-Values.knight,G3)
+        self.testUtility.movePiece(Values.knight,self.testUtility.getMove(H1,G3))
     
-    def testCaptureWhiteKnightFromD4ToE5ToF4(self):
-        self.testUtility.movePieceValueToSquare(-Values.knight,E5)
-        self.testUtility.movePieceValueToSquare(-Values.knight,F4)
-        self.testUtility.invalidMove(\
-            self.testUtility.failToMovePiece(Values.knight,\
-                self.testUtility.getMove(H1,A8)),F4)
+    def testCaptureWhiteKnightFromD6ToE6ToF2(self):
+        self.testUtility.movePieceValueToSquare(-Values.knight,E4)
+        self.testUtility.movePieceValueToSquare(-Values.knight,F2)
+        self.testUtility.validMove(\
+            self.testUtility.movePiece(Values.knight,\
+                self.testUtility.getMove(D6,E4)),F2)
     
     # ///////////
     # // BLACK //
     # ///////////
     
-    def testCaptureBlackKnightFromA1ToH8(self):
-        self.testUtility.movePieceValueToSquare(Values.knight,D4)
-        self.testUtility.failToMovePiece(-Values.knight,self.testUtility.getMove(A1,H8))
+    def testCaptureBlackKnightFromA1ToC2(self):
+        self.testUtility.movePieceValueToSquare(Values.knight,C2)
+        self.testUtility.movePiece(-Values.knight,self.testUtility.getMove(A1,C2))
     
-    def testCaptureBlackKnightFromH1ToA8(self):
-        self.testUtility.movePieceValueToSquare(Values.knight,D5)
-        self.testUtility.failToMovePiece(-Values.knight,self.testUtility.getMove(H1,A8))
+    def testCaptureBlackKnightFromH1ToG3(self):
+        self.testUtility.movePieceValueToSquare(Values.knight,G3)
+        self.testUtility.movePiece(-Values.knight,self.testUtility.getMove(H1,G3))
     
-    def testCaptureBlackKnightFromD4ToE5ToF4(self):
-        self.testUtility.movePieceValueToSquare(Values.knight,E5)
-        self.testUtility.movePieceValueToSquare(Values.knight,F4)
-        self.testUtility.invalidMove(\
-            self.testUtility.failToMovePiece(Values.knight,\
-                self.testUtility.getMove(D4,E5)),F4)
+    def testCaptureBlackKnightFromD4ToE6ToF8(self):
+        self.testUtility.movePieceValueToSquare(Values.knight,E6)
+        self.testUtility.movePieceValueToSquare(Values.knight,F8)
+        self.testUtility.validMove(\
+            self.testUtility.movePiece(-Values.knight,\
+                self.testUtility.getMove(D4,E6)),F8)
 
 if __name__ == '__main__':
     unittest.main()

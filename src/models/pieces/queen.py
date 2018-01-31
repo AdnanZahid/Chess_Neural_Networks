@@ -28,14 +28,9 @@ class Queen(Piece):
         self.directionsList.append((-1,  0))
         self.directionsList.append(( 0, -1))
         
-        self.moveStrategy = UnlimitedMoveStrategy(color,self.directionsList)
+        self.moveStrategy = UnlimitedMoveStrategy(self,color,self.directionsList,board)
     
-    def moveToSquare(self,toSquare):
-        return self.move(EvaluationMove(self.position,toSquare))\
-        and self.board.checkForClearPath(EvaluationMove(self.position,toSquare))
-    
-    def move(self,move):
-        
+    def move(self,move):        
         result = False
         
         if fileOrRankAdvanceBothCheck(EvaluationMove(move.fromSquare,move.toSquare)):

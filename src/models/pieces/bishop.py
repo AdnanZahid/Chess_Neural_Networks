@@ -20,14 +20,9 @@ class Bishop(Piece):
         self.directionsList.append((-1,  1))
         self.directionsList.append((-1, -1))
         
-        self.moveStrategy = UnlimitedMoveStrategy(color,self.directionsList)
-    
-    def moveToSquare(self,toSquare):
-        return self.move(EvaluationMove(self.position,toSquare))\
-        and self.board.checkForClearPath(EvaluationMove(self.position,toSquare))
+        self.moveStrategy = UnlimitedMoveStrategy(self,color,self.directionsList,board)
     
     def move(self,move):
-        
         result = False
         
         if fileOrRankAdvanceBothCheck(EvaluationMove(move.fromSquare,move.toSquare)):

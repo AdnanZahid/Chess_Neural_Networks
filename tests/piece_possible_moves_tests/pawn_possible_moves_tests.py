@@ -11,69 +11,84 @@ class PawnPossibleMovesTests(unittest.TestCase):
     def setUp(self):
         self.board = Board()
         self.testUtility = TestUtility(self.board)
-        self.board.setupEmptyBoard()
 
     # ///////////
     # // WHITE //
     # ///////////
     
-    def testPossibleMovesWhitePawnFromA1():
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.pawn,A1))
-        comparisonMoves = [B2, C3, D4, E5, F6, G7, H8]
-        self.assertEqual(possibleMoves,comparisonMoves)
+    def testPossibleMovesWhitePawnFromA1(self):
+        piece = self.testUtility.movePieceValueToSquare(Values.pawn,A2)
+
+        possibleMoves = self.testUtility.generateAllMoves(piece)
+        comparisonMoves = [A3, A4]
+        self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
-    def testPossibleMovesWhitePawnFromD5():
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.pawn,D5))
-        comparisonMoves = [E6, F7, G8, E4, F3, G2, H1, C6, B7, A8, C4, B3, A2]
-        self.assertEqual(possibleMoves,comparisonMoves)
+    def testPossibleMovesWhitePawnFromD5(self):
+        piece = self.testUtility.movePieceValueToSquare(Values.pawn,D5)
+        piece.hasMoved = True
+
+        possibleMoves = self.testUtility.generateAllMoves(piece)
+        comparisonMoves = [D6]
+        self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
-    def testPossibleMovesWhitePawnFromD4FriendlyFire():
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.pawn,E5))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.pawn,E3))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.pawn,C5))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.pawn,C3))
+    def testPossibleMovesWhitePawnFromD4FriendlyFire(self):
+        piece = self.testUtility.movePieceValueToSquare(Values.pawn,D4)
+
+        self.testUtility.movePieceValueToSquare(Values.pawn,E5)
+        self.testUtility.movePieceValueToSquare(Values.pawn,D5)
+        self.testUtility.movePieceValueToSquare(Values.pawn,C5)
+        possibleMoves = self.testUtility.generateAllMoves(piece)
         comparisonMoves = []
-        self.assertEqual(possibleMoves,comparisonMoves)
+        self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
-    def testPossibleMovesWhitePawnFromD4EnemyFire():
-        
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.pawn,E5))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.pawn,E3))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.pawn,C5))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.pawn,C3))
-        comparisonMoves = [E5, E3, C5, C3]
-        self.assertEqual(possibleMoves,comparisonMoves)
+    def testPossibleMovesWhitePawnFromD4EnemyFire(self):
+        piece = self.testUtility.movePieceValueToSquare(Values.pawn,D4)
+
+        self.testUtility.movePieceValueToSquare(-Values.pawn,E5)
+        self.testUtility.movePieceValueToSquare(-Values.pawn,D5)
+        self.testUtility.movePieceValueToSquare(-Values.pawn,C5)
+        possibleMoves = self.testUtility.generateAllMoves(piece)
+        comparisonMoves = [E5, C5]
+        self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
     # ///////////
     # // BLACK //
     # ///////////
     
-    def testPossibleMovesBlackPawnFromH1():
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.pawn,H1))
-        comparisonMoves = [G2, F3, E4, D5, C6, B7, A8]
-        self.assertEqual(possibleMoves,comparisonMoves)
+    def testPossibleMovesBlackPawnFromH7(self):
+        piece = self.testUtility.movePieceValueToSquare(-Values.pawn,H7)
+
+        possibleMoves = self.testUtility.generateAllMoves(piece)
+        comparisonMoves = [H6, H5]
+        self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
-    def testPossibleMovesBlackPawnFromE4():
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.pawn,E4))
-        comparisonMoves = [F5, G6, H7, F3, G2, H1, D5, C6, B7, A8, D3, C2, B1]
-        self.assertEqual(possibleMoves,comparisonMoves)
+    def testPossibleMovesBlackPawnFromE4(self):
+        piece = self.testUtility.movePieceValueToSquare(-Values.pawn,E4)
+        piece.hasMoved = True
+
+        possibleMoves = self.testUtility.generateAllMoves(piece)
+        comparisonMoves = [E3]
+        self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
-    def testPossibleMovesBlackPawnFromDE6FriendlyFire():
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.pawn,F7))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.pawn,F5))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.pawn,D7))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.pawn,D5))
+    def testPossibleMovesBlackPawnFromDE6FriendlyFire(self):
+        piece = self.testUtility.movePieceValueToSquare(-Values.pawn,E6)
+
+        self.testUtility.movePieceValueToSquare(-Values.pawn,F5)
+        self.testUtility.movePieceValueToSquare(-Values.pawn,E5)
+        self.testUtility.movePieceValueToSquare(-Values.pawn,D5)
+        possibleMoves = self.testUtility.generateAllMoves(piece)
         comparisonMoves = []
-        self.assertEqual(possibleMoves,comparisonMoves)
+        self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
-    def testPossibleMovesBlackPawnFromDE6EnemyFire():
-        
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.pawn,F7))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.pawn,F5))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.pawn,D7))
-        possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.pawn,D5))
-        comparisonMoves = [F7, F5, D7, D5]
-        self.assertEqual(possibleMoves,comparisonMoves)
+    def testPossibleMovesBlackPawnFromDE6EnemyFire(self):
+        piece = self.testUtility.movePieceValueToSquare(-Values.pawn,E6)
+
+        self.testUtility.movePieceValueToSquare(Values.pawn,F5)
+        self.testUtility.movePieceValueToSquare(Values.pawn,E5)
+        self.testUtility.movePieceValueToSquare(Values.pawn,D5)
+        possibleMoves = self.testUtility.generateAllMoves(piece)
+        comparisonMoves = [F5, D5]
+        self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
 
 if __name__ == '__main__':
     unittest.main()

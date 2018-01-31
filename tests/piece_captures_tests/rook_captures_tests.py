@@ -11,45 +11,44 @@ class RookCapturesTests(unittest.TestCase):
     def setUp(self):
         self.board = Board()
         self.testUtility = TestUtility(self.board)
-        self.board.setupEmptyBoard()
 
     # ///////////
     # // WHITE //
     # ///////////
     
-    def testCaptureWhiteRookFromA1ToH8(self):
-        self.testUtility.movePieceValueToSquare(-Values.rook,H8)
-        self.testUtility.failToMovePiece(Values.rook,self.testUtility.getMove(A1,H8))
+    def testCaptureWhiteRookFromA1ToA8(self):
+        self.testUtility.movePieceValueToSquare(-Values.rook,A8)
+        self.testUtility.movePiece(Values.rook,self.testUtility.getMove(A1,A8))
     
-    def testCaptureWhiteRookFromH1ToA8(self):
-        self.testUtility.movePieceValueToSquare(-Values.rook,D5)
-        self.testUtility.failToMovePiece(Values.rook,self.testUtility.getMove(H1,A8))
+    def testCaptureWhiteRookFromH1ToA1(self):
+        self.testUtility.movePieceValueToSquare(-Values.rook,A1)
+        self.testUtility.movePiece(Values.rook,self.testUtility.getMove(H1,A1))
     
-    def testCaptureWhiteRookFromD4ToE5ToF4(self):
-        self.testUtility.movePieceValueToSquare(-Values.rook,E5)
+    def testCaptureWhiteRookFromD4ToE4ToF4(self):
+        self.testUtility.movePieceValueToSquare(-Values.rook,E4)
         self.testUtility.movePieceValueToSquare(-Values.rook,F4)
-        self.testUtility.invalidMove(\
-            self.testUtility.failToMovePiece(Values.rook,\
-                self.testUtility.getMove(H1,A8)),F4)
+        self.testUtility.validMove(\
+            self.testUtility.movePiece(Values.rook,\
+                self.testUtility.getMove(D4,E4)),F4)
     
     # ///////////
     # // BLACK //
     # ///////////
     
-    def testCaptureBlackRookFromA1ToH8(self):
-        self.testUtility.movePieceValueToSquare(Values.rook,D4)
-        self.testUtility.failToMovePiece(-Values.rook,self.testUtility.getMove(A1,H8))
+    def testCaptureBlackRookFromA1ToA8(self):
+        self.testUtility.movePieceValueToSquare(Values.rook,A8)
+        self.testUtility.movePiece(-Values.rook,self.testUtility.getMove(A1,A8))
     
-    def testCaptureBlackRookFromH1ToA8(self):
-        self.testUtility.movePieceValueToSquare(Values.rook,D5)
-        self.testUtility.failToMovePiece(-Values.rook,self.testUtility.getMove(H1,A8))
+    def testCaptureBlackRookFromH1ToA1(self):
+        self.testUtility.movePieceValueToSquare(Values.rook,A1)
+        self.testUtility.movePiece(-Values.rook,self.testUtility.getMove(H1,A1))
     
-    def testCaptureBlackRookFromD4ToE5ToF4(self):
-        self.testUtility.movePieceValueToSquare(Values.rook,E5)
+    def testCaptureBlackRookFromD4ToE4ToF4(self):
+        self.testUtility.movePieceValueToSquare(Values.rook,E4)
         self.testUtility.movePieceValueToSquare(Values.rook,F4)
-        self.testUtility.invalidMove(\
-            self.testUtility.failToMovePiece(Values.rook,\
-                self.testUtility.getMove(D4,E5)),F4)
+        self.testUtility.validMove(\
+            self.testUtility.movePiece(-Values.rook,\
+                self.testUtility.getMove(D4,E4)),F4)
 
 if __name__ == '__main__':
     unittest.main()

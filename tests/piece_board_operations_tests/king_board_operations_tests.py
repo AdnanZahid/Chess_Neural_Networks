@@ -11,27 +11,26 @@ class KingBoardOperationsTests(unittest.TestCase):
     def setUp(self):
         self.board = Board()
         self.testUtility = TestUtility(self.board)
-        self.board.setupEmptyBoard()
 
     # ///////////
     # // WHITE //
     # ///////////
     
     def testGetWhiteKingOnD4(self):
-        isPieceExists(Values.king,D4)
+        self.testUtility.isPieceExists(Values.king,D4)
     
     def testPutWhiteKingOnD4(self):
-        movePieceValueToSquare(Values.king,D4)
+        self.testUtility.movePieceValueToSquare(Values.king,D4)
     
     # ///////////
     # // BLACK //
     # ///////////
     
     def testGetBlackKingOnD4(self):
-        isPieceExists(-Values.king,D4)
+        self.testUtility.isPieceExists(-Values.king,D4)
     
     def testPutBlackKingOnD4(self):
-        movePieceValueToSquare(-Values.king,D4)
+        self.testUtility.movePieceValueToSquare(-Values.king,D4)
 
 if __name__ == '__main__':
     unittest.main()

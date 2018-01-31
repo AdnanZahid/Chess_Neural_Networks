@@ -3,16 +3,13 @@ from src.models.pieces.strategies.move_strategy import *
 
 class UnlimitedMoveStrategy(MoveStrategy):
     
-    def generateMove(position,fileRankPair):
+    def generateMove(self,position,fileRankPair):
     
         possibleMovesToSquaresList = []
         newPosition = position + fileRankPair
         
-        while Board.checkIfSquareIsNotNil(newPosition)\
-            and Board.sharedInstance.checkIfEmptyOrEnemyPieceExists(color,newPosition)\
-            and Board.sharedInstance.checkForClearPath(EvaluationMove(position,newPosition)):
-                
-                possibleMovesToSquaresList.append(newPosition)                
+        while self.piece.moveToSquare(newPosition):
+                possibleMovesToSquaresList.append(newPosition)
                 newPosition = newPosition + fileRankPair
         
         return possibleMovesToSquaresList

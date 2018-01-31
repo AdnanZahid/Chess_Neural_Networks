@@ -3,14 +3,12 @@ from src.models.pieces.strategies.move_strategy import *
 
 class LimitedMoveStrategy(MoveStrategy):
     
-    def generateMove(position,fileRankPair):
+    def generateMove(self,position,fileRankPair):
         
         possibleMovesToSquaresList = []
         newPosition = position + fileRankPair
         
-        if Board.checkIfSquareIsNotNil(newPosition)\
-            and Board.checkIfEmptyOrEnemyPieceExists(color,newPosition):
-            
+        if self.piece.moveToSquare(newPosition):
             possibleMovesToSquaresList.append(newPosition)
         
         return possibleMovesToSquaresList

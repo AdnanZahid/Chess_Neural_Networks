@@ -36,19 +36,33 @@ class TestUtility(unittest.TestCase):
     def failToMovePiece(self,pieceValue,move):
         
         # GETTING a PIECE from the PIECE FACTORY - Given the PIECE VALUE and STARTING SQUARE
-        piece = PieceFactory.getPiece(pieceValue,move.fromSquare,None)
+        piece = PieceFactory.getPiece(pieceValue,move.fromSquare,None,self.board)
 
         # PUTTING the PIECE on the given SQUARE
         self.assertTrue(self.board.putPieceOnPosition(piece,piece.position,False))
-        
+
         # MOVING the PIECE to the given SQUARE - EXPECTING it to FAIL
-        invalidMove(piece,move.toSquare)
+        self.invalidMove(piece,move.toSquare)
         
         return piece
+
+    # GET PIECE and move on it to the SQUARE on a completely NEW BOARD, asserts TRUE
+    def validMove(self,piece,toSquare):
+        self.board.putPieceOnPosition(piece,piece.position,False)
+        self.assertTrue(self.board.movePiece(EvaluationMove(piece.position,toSquare),False))
+
+    # GET PIECE and move on it to the SQUARE on a completely NEW BOARD, asserts TRUE
+    def validMoveOnNewBoard(self,board,piece,toSquare):
+        piece.board = board
+        board.putPieceOnPosition(piece,piece.position,False)
+        self.assertTrue(board.movePiece(EvaluationMove(piece.position,toSquare),False))
 
     # GET PIECE and move on it to the SQUARE, asserts FALSE
     def invalidMove(self,piece,toSquare):
         self.assertFalse(self.board.movePiece(EvaluationMove(piece.position,toSquare),False))
+
+        # MOVING the PIECE to the given SQUARE on a completely NEW BOARD - EXPECTING it to PASS
+        self.validMoveOnNewBoard(Board(),piece,toSquare)
 
     # GET two SQUARE's and make a MOVE out of them
     def getMove(self,fromSquare,toSquare):    
@@ -58,7 +72,7 @@ class TestUtility(unittest.TestCase):
     def isPieceExists(self,pieceValue,square):
         
         # GETTING a PIECE from the PIECE FACTORY - Given the PIECE VALUE and STARTING SQUARE
-        piece = PieceFactory.getPiece(pieceValue,square,None)
+        piece = PieceFactory.getPiece(pieceValue,square,None,self.board)
         
         # PUTTING the PIECE on the given SQUARE - self.assertS TRUE
         self.assertTrue(self.board.putPieceOnPosition(piece,square,False))
@@ -73,7 +87,7 @@ class TestUtility(unittest.TestCase):
     def movePieceValueToSquare(self,pieceValue,square):
         
         # GETTING a PIECE from the PIECE FACTORY - Given the PIECE VALUE and STARTING SQUARE
-        piece = PieceFactory.getPiece(pieceValue,square,None)
+        piece = PieceFactory.getPiece(pieceValue,square,None,self.board)
         
         # PUTTING the PIECE on the given SQUARE - self.assertS TRUE
         self.assertTrue(self.board.putPieceOnPosition(piece,square,False))
@@ -83,6 +97,10 @@ class TestUtility(unittest.TestCase):
     # GET POSSIBLE MOVES LIST from PIECE
     def generateAllMoves(self,piece):
         return (piece.moveStrategy.generateAllMoves(piece.position))
+
+    def checkEqualMoves(self,movesList1,movesList2):
+        self.assertTrue(len(movesList1) == len(movesList2))
+        self.assertTrue(sorted(movesList1) == sorted(movesList2))
 
 if __name__ == "__main__":
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(Test)

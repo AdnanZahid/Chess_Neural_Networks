@@ -51,10 +51,10 @@ class Board:
                             
                             # Check if an EMPTY piece can be PUT on STARTING POSITION
                             result = self.putEmptyPieceOnPosition(move.fromSquare)
-                    else: ErrorHandler.logError(Error.invalidMove)
-                else: ErrorHandler.logError(Error.wrongTurn)
-            else: ErrorHandler.logError(Error.invalidPiece)
-        else: ErrorHandler.logError(Error.samePosition)
+                    else: ErrorHandler.logError(self,piece,move.toSquare,Error.invalidMove)
+                else: ErrorHandler.logError(self,piece,move.toSquare,Error.wrongTurn)
+            else: ErrorHandler.logError(self,piece,move.toSquare,Error.invalidPiece)
+        else: ErrorHandler.logError(self,piece,move.toSquare,Error.samePosition)
         
         return result
     
@@ -88,7 +88,7 @@ class Board:
         # CHECK if given SQUARE is EMPTY or occupied by the ENEMY
         piece = self.grid[square.rank][square.file]
         if not(piece == NilPiece):
-            result = not(piece.color == color) or piece == EmptyPiece
+            result = piece == EmptyPiece or not(piece.color == color)
         
         return result
     
@@ -166,9 +166,9 @@ class Board:
                     
                     result = True
                     piece.updatePosition(square,pushToStack)
-                else: ErrorHandler.sharedInstance.logError(Error.FriendlyFire)
-            else: ErrorHandler.sharedInstance.logError(Error.KingCapture)
-        else: ErrorHandler.sharedInstance.logError(Error.InvalidDestination)
+                else: ErrorHandler.logError(self,piece,square,Error.friendlyFire)
+            else: ErrorHandler.logError(self,piece,square,Error.kingCapture)
+        else: ErrorHandler.logError(self,piece,square,Error.invalidDestination)
         
         return result
     

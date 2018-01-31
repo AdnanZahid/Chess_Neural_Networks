@@ -11,7 +11,6 @@ class BishopBlockMovesTests(unittest.TestCase):
     def setUp(self):
         self.board = Board()
         self.testUtility = TestUtility(self.board)
-        self.board.setupEmptyBoard()
 
     # ///////////
     # // WHITE //
@@ -25,12 +24,12 @@ class BishopBlockMovesTests(unittest.TestCase):
     	self.testUtility.movePieceValueToSquare(Values.bishop,D5)
     	self.testUtility.failToMovePiece(Values.bishop,self.testUtility.getMove(H1,A8))
     
-    def testBlockWhiteBishopFromD4ToE5ToF4(self):
+    def testBlockWhiteBishopFromD4ToE5ToC3(self):
     	self.testUtility.movePieceValueToSquare(Values.bishop,E5)
-    	self.testUtility.movePieceValueToSquare(Values.bishop,F4)
+    	self.testUtility.movePieceValueToSquare(Values.bishop,C3)
     	self.testUtility.invalidMove(\
     		self.testUtility.failToMovePiece(Values.bishop,\
-    			self.testUtility.getMove(H1,A8)),F4)
+    			self.testUtility.getMove(D4,E5)),C3)
     
     # ///////////
     # // BLACK //
@@ -44,12 +43,12 @@ class BishopBlockMovesTests(unittest.TestCase):
     	self.testUtility.movePieceValueToSquare(-Values.bishop,D5)
     	self.testUtility.failToMovePiece(-Values.bishop,self.testUtility.getMove(H1,A8))
     
-    def testBlockBlackBishopFromD4ToE5ToF4(self):
+    def testBlockBlackBishopFromD4ToE5ToC3(self):
     	self.testUtility.movePieceValueToSquare(-Values.bishop,E5)
-    	self.testUtility.movePieceValueToSquare(-Values.bishop,F4)
+    	self.testUtility.movePieceValueToSquare(-Values.bishop,C3)
     	self.testUtility.invalidMove(\
-    		self.testUtility.failToMovePiece(Values.bishop,\
-    			self.testUtility.getMove(D4,E5)),F4)
+    		self.testUtility.failToMovePiece(-Values.bishop,\
+    			self.testUtility.getMove(D4,E5)),C3)
 
 if __name__ == '__main__':
     unittest.main()
