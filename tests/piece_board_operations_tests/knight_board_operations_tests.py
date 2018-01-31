@@ -1,9 +1,9 @@
 import unittest
-from TestUtility import *
-from TestConstants import *
-from Board import *
-from Constants import *
-from Structures import *
+from tests.test_utils.test_utility import *
+from tests.test_utils.test_constants import *
+from src.models.board import *
+from src.others.constants import *
+from src.others.structures import *
 
 # This class tests if knight legal moves are blocked as intended
 class KnightBoardOperationsTests(unittest.TestCase):

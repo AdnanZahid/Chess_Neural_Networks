@@ -1,5 +1,4 @@
-from Constants import *
-from Structures import *
+from src.others.structures import *
 
 # Here are all the constants
 kMaxPlies = 2

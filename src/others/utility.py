@@ -1,4 +1,4 @@
-from Structures import *
+from src.others.structures import *
 
 # This file contains basic utility functions
 def fileAdvanceCheck(move):

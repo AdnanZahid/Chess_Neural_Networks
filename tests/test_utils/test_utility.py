@@ -1,7 +1,7 @@
 import unittest
-from PieceFactory import *
-from Constants import *
-from Structures import *
+from src.models.pieces.piece_factory import *
+from src.others.constants import *
+from src.others.structures import *
 
 # /////////////////////////////////////////
 # // Operator overloading for Unit Tests //

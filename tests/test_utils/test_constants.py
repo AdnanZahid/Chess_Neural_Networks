@@ -1,5 +1,5 @@
-from Constants import *
-from Structures import *
+from src.others.constants import *
+from src.others.structures import *
 
 # This file defines all board squares
 

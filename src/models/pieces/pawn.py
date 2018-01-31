@@ -1,9 +1,9 @@
-import Constants
-import Structures
-import Board
-from Piece import *
-from LimitedMoveStrategy import *
-from Utility import *
+from src.others.constants import *
+from src.others.structures import *
+from src.others.utility import *
+from src.models.board import *
+from src.models.pieces.piece import *
+from src.models.pieces.strategies.limited_move_strategy import *
 
 # This class handles all the pawn logic
 class Pawn(Piece):

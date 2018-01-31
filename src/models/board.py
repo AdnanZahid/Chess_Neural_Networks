@@ -1,10 +1,9 @@
-import PieceFactory
-import Constants
-from ErrorHandler import *
-from Constants import *
-from Structures import *
-from Piece import *
-from Utility import *
+from src.others.constants import *
+from src.others.error_handler import *
+from src.others.structures import *
+from src.others.utility import *
+from src.models.pieces.piece import *
+from src.models.pieces.piece_factory import *
 
 # This class handles all the Board related tasks
 class Board:
@@ -15,7 +14,7 @@ class Board:
         self.kNumberOfSquaresAlongY = piecesConfigurationList.count
     
         # Initialize piece list with Nil pieces
-        self.grid = [[NilPiece for x in range(Constants.kNumberOfSquaresAlongY)] for y in range(Constants.kNumberOfSquaresAlongX)]
+        self.grid = [[NilPiece for x in range(kNumberOfSquaresAlongY)] for y in range(kNumberOfSquaresAlongX)]
         
         # Assign the CURRENT TURN COLOR to WHITE by default - Later it changes according to turns
         self.currentTurnColor = Color.white

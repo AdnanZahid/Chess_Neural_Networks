@@ -1,5 +1,5 @@
-from Constants import *
-from Structures import *
+from src.others.constants import *
+from src.others.structures import *
 
 # This class handles all the piece-centric logic
 class Piece:

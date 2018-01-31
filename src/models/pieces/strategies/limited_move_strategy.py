@@ -1,5 +1,5 @@
-import Board
-from MoveStrategy import *
+from src.models.board import *
+from src.models.pieces.strategies.move_strategy import *
 
 class LimitedMoveStrategy(MoveStrategy):
     

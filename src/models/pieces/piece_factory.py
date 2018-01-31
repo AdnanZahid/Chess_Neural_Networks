@@ -1,12 +1,12 @@
-from Constants import *
-from Structures import *
-from Piece import *
-from King import *
-from Queen import *
-from Rook import *
-from Knight import *
-from Bishop import *
-from Pawn import *
+from src.others.constants import *
+from src.others.structures import *
+from src.models.pieces.piece import *
+from src.models.pieces.king import *
+from src.models.pieces.queen import *
+from src.models.pieces.rook import *
+from src.models.pieces.knight import *
+from src.models.pieces.bishop import *
+from src.models.pieces.pawn import *
 
 class PieceFactory:
     
