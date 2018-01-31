@@ -1,5 +1,6 @@
 import unittest
-from game_logic_and_player_tests import *
+from game_logic_and_player_tests.game_logic_tests import *
+from game_logic_and_player_tests.player_tests import *
 
 from piece_allow_moves_tests.bishop_allow_moves_tests import *
 from piece_allow_moves_tests.king_allow_moves_tests import *

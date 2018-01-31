@@ -4,6 +4,7 @@ from src.others.structures import *
 from src.others.utility import *
 from src.models.pieces.piece import *
 from src.models.pieces.piece_factory import *
+from src.models.squares import *
 
 # This class handles all the Board related tasks
 class Board:
@@ -227,9 +228,7 @@ class Board:
             for file in allPiecesFileEnumeration:
                 
                 # Get values from a PRE-CONFIGURED ARRAY - DEFAULT CHESS STARTING CONFIGURATION
-                piece = PieceFactory.getPiece(
-                    piecesConfigurationList[rank][file],
-                    Square(file,rank,pieceDelegate))
+                piece = PieceFactory.getPiece(piecesConfigurationList[rank][file],Square(file,rank,pieceDelegate),None,self)
                 
                 self.grid[rank][file] = piece
                 

@@ -1,5 +1,6 @@
 from src.others.constants import *
 from src.others.structures import *
+from src.models.squares import *
 
 # This file defines all board squares
 
