@@ -37,7 +37,7 @@ allPiecesRankEnumeration = range(RankIndex.k1,RankIndex.k8+1)
 allPiecesFileEnumeration = range(FileIndex.kA,FileIndex.kH+1)
 
 # RANK ENUMERATION for squares occupied by WHITE PIECES
-whitePiecesRankEnumeration = range(RankIndex.k1,RankIndex.k2)
+whitePiecesRankEnumeration = range(RankIndex.k1,RankIndex.k2+1)
 
 # RANK ENUMERATION for squares occupied by BLACK PIECES
-blackPiecesRankEnumeration = range(RankIndex.k7,RankIndex.k8)
+blackPiecesRankEnumeration = range(RankIndex.k7,RankIndex.k8+1)
