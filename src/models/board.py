@@ -228,7 +228,7 @@ class Board:
             for file in allPiecesFileEnumeration:
                 
                 # Get values from a PRE-CONFIGURED ARRAY - DEFAULT CHESS STARTING CONFIGURATION
-                piece = PieceFactory.getPiece(piecesConfigurationList[rank][file],Square(file,rank,pieceDelegate),None,self)
+                piece = PieceFactory.getPiece(piecesConfigurationList[rank][file],Square(file,rank),None,self)
                 
                 self.grid[rank][file] = piece
                 

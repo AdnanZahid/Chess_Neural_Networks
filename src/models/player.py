@@ -6,7 +6,7 @@ class Player:
     def __init__(self,color,board):
         self.color = color
         self.board = board
-        # self.piecesList = self.board.setupPieceBoard(color,self)
+        self.piecesList = self.board.setupPieceBoard(color,self)
     
     def movePiece(move,checkCurrentTurn):
         result = False

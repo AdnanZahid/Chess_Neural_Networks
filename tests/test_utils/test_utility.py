@@ -1,4 +1,5 @@
 import unittest
+from src.models.board import *
 from src.models.pieces.piece_factory import *
 from src.others.constants import *
 from src.others.structures import *

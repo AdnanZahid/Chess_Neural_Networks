@@ -1,5 +1,4 @@
 import unittest
-from tests.test_utils.test_utility import *
 from tests.test_utils.test_constants import *
 from src.models.board import *
 from src.models.game_logic import *
