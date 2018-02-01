@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from src.others.structures import *
 
 # Here are all the constants
@@ -8,14 +9,14 @@ kNumberOfSquaresAlongY = 12
 
 class Symbols:
     newLine = "\n"
-    nil     = "X"
-    empty   = "-"
-    pawn    = "P"
-    knight  = "N"
-    bishop  = "B"
-    rook    = "R"
-    queen   = "Q"
-    king    = "K"
+    nil     = " "
+    empty   = "·"
+    pawn    = "♙"
+    knight  = "♘"
+    bishop  = "♗"
+    rook    = "♖"
+    queen   = "♕"
+    king    = "♔"
 
 class Values:
     nil    = -1
