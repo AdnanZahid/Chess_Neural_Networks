@@ -8,7 +8,7 @@ class Player:
         self.board = board
         self.piecesList = self.board.setupPieceBoard(color,self)
     
-    def movePiece(move,checkCurrentTurn):
+    def movePiece(self,move,checkCurrentTurn):
         result = False
         
         if self.board.movePiece(move,checkCurrentTurn):

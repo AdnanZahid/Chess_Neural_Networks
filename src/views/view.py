@@ -1,6 +1,7 @@
 import os
 from pygame import *
 from src.models.pieces.piece import *
+from src.models.squares import *
 
 # Constants
 square_size = 100
@@ -13,8 +14,9 @@ green_color = (0, 255, 0)
 # This class handles all the view related activity
 class View:
 
-	def __init__(self,board):
-		possibleMoves = []
+	def runGame(self,board):
+		self.possibleMoves = []
+		selectedPiece = EmptyPiece
 		while not(self.isGameOver()):
 			# Initialization
 			init()
@@ -27,20 +29,35 @@ class View:
 				elif e.type == MOUSEBUTTONUP:
 					position = mouse.get_pos()
 					x,y = self.convertCoordinatesForModel(position[0],position[1])
-					possibleMoves = self.getPossibleMoves(x,y,board)
+
+					if not self.possibleMoves:
+						self.selectedPiece = board.grid[x][y]
+						self.possibleMoves = self.getPossibleMoves(x,y,board)
+					elif not(self.selectedPiece == NilPiece or self.selectedPiece == EmptyPiece):
+						self.move(EvaluationMove(self.selectedPiece.position,Square(y,x)))
 
 			# Drawing
 			screen.fill(white_color)
-			self.draw(screen,board,possibleMoves)
+			self.draw(screen,board)
 			display.flip()
 
 			# Clock ticking
 			time.Clock().tick(60)
 
-	def draw(self,screen,board,possibleMoves):
+	def output(self,move):        
+		doNothing = True
+
+	def move(self,move):
+		self.inputHandlerDelegate.didTakeInput(move)
+
+	def cancelMove(self):
+		self.selectedPiece = EmptyPiece
+		self.possibleMoves = []
+
+	def draw(self,screen,board):
 		self.drawSquares(screen)
 		self.drawPieces(screen,board)
-		self.drawPossibleMoves(screen,possibleMoves)
+		self.drawPossibleMoves(screen)
 
 	def drawSquares(self,screen):
 		for x in range(columns):
@@ -63,10 +80,14 @@ class View:
 
 	def getPossibleMoves(self,x,y,board):
 		piece = board.grid[x][y]
-		return piece.moveStrategy.generateAllMoves(piece.position)
+		
+		if not(piece == NilPiece or piece == EmptyPiece):
+			return piece.moveStrategy.generateAllMoves(piece.position)
+		else:
+			return []
 
-	def drawPossibleMoves(self,screen,squares):
-		for square in squares:
+	def drawPossibleMoves(self,screen):
+		for square in self.possibleMoves:
 			x,y = self.convertCoordinatesForGUI(square.rank,square.file)
 			surface = Surface((square_size,square_size))
 			surface.set_alpha(100)

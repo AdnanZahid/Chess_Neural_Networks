@@ -1,10 +1,15 @@
+from src.models.pieces.piece import *
+
 # This class handles all sorts of errors centrally
 class ErrorHandler:
     @staticmethod
     def logError(board,piece,toSquare,error):
-        print("{} to move".format(board.currentTurnColor))
-        print("{} {} -> {}{}-{}{}: {}".format(piece.color,piece.symbol,piece.position.file,piece.position.rank,toSquare.file,toSquare.rank,error))
-        board.printBoard()
+        if not(piece == NilPiece or piece == EmptyPiece):
+            print("{} to move".format(board.currentTurnColor))
+            print("{} {} -> {}{}-{}{}: {}".format(piece.color,piece.symbol,piece.position.file,piece.position.rank,toSquare.file,toSquare.rank,error))
+            board.printBoard()
+        else:
+            print(error)
 
 class Error:
     friendlyFire       = "Can not captured own piece"

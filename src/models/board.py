@@ -33,6 +33,7 @@ class Board:
     def movePiece(self,move,checkCurrentTurn):
         
         result = False
+        piece = NilPiece
         
         # STARTING and ENDING squares are not the same
         if not(move.fromSquare == move.toSquare):

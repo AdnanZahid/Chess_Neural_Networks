@@ -9,12 +9,9 @@ from src.others.structures import *
 
 # This class tests if game logic is working properly
 class GameLogicTests(unittest.TestCase):
-    
-    def setUp(self):
-        self.board = Board()
 
     def testChangeTurn(self):
-        gameLogic = GameLogic(self.board)
+        gameLogic = GameLogic()
         self.assertTrue(gameLogic.currentPlayer.color == Color.white)        
         gameLogic.changeTurn()        
         self.assertTrue(gameLogic.currentPlayer.color == Color.black)        
@@ -22,12 +19,12 @@ class GameLogicTests(unittest.TestCase):
         self.assertTrue(gameLogic.currentPlayer.color == Color.white)
     
     def testChangeBoardColor(self):
-        gameLogic = GameLogic(self.board)
-        self.assertTrue(self.board.currentTurnColor == Color.white)
+        gameLogic = GameLogic()
+        self.assertTrue(gameLogic.board.currentTurnColor == Color.white)
         gameLogic.changeTurn()
-        self.assertTrue(self.board.currentTurnColor == Color.black)
+        self.assertTrue(gameLogic.board.currentTurnColor == Color.black)
         gameLogic.changeTurn()
-        self.assertTrue(self.board.currentTurnColor == Color.white)
+        self.assertTrue(gameLogic.board.currentTurnColor == Color.white)
 
 if __name__ == '__main__':
     unittest.main()

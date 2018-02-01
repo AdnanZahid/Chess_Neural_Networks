@@ -1,9 +1,3 @@
-from src.models.board import *
-from src.views.view import *
+from src.controllers.controller import *
 
-board = Board()
-board.setupPieceBoard(Color.white,None)
-board.setupPieceBoard(Color.black,None)
-board.printBoard()
-
-View(board)
+Controller()

@@ -6,8 +6,8 @@ from src.others.structures import *
 # This class represents all the game logic in general
 class GameLogic:
     
-    def __init__(self,board):
-        self.board = board
+    def __init__(self):
+        self.board = Board()
         self.whitePlayer = Player(Color.white,self.board)
         self.blackPlayer = Player(Color.black,self.board)
         
@@ -19,7 +19,7 @@ class GameLogic:
     def move(self,move):
         result = False
         
-        if currentPlayer.movePiece(move,True):            
+        if self.currentPlayer.movePiece(move,True):            
             self.changeTurn()
             result = True
         
@@ -28,3 +28,9 @@ class GameLogic:
     def changeTurn(self):        
         self.currentPlayer = self.currentPlayer.opponent
         self.board.currentTurnColor = self.currentPlayer.color
+    
+    def isAITurn(self):            
+        return False
+        
+    def input(self):
+        inputHandlerDelegate.didTakeInput(currentPlayer.generateMove())
