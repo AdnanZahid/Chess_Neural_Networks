@@ -8,7 +8,7 @@ square_size = 100
 columns, rows = 8, 8
 screen_size = (columns * square_size,rows * square_size)
 white_color = (255, 255, 255)
-black_color = (0, 0, 0)
+black_color = (160, 82, 45)
 green_color = (0, 255, 0)
 
 # This class handles all the view related activity
@@ -33,6 +33,7 @@ class View:
 					if not self.possibleMoves:
 						self.selectedPiece = board.grid[x][y]
 						self.possibleMoves = self.getPossibleMoves(x,y,board)
+
 					elif not(self.selectedPiece == NilPiece or self.selectedPiece == EmptyPiece):
 						self.move(EvaluationMove(self.selectedPiece.position,Square(y,x)))
 
@@ -49,6 +50,8 @@ class View:
 
 	def move(self,move):
 		self.inputHandlerDelegate.didTakeInput(move)
+		self.selectedPiece = EmptyPiece
+		self.possibleMoves = []
 
 	def cancelMove(self):
 		self.selectedPiece = EmptyPiece

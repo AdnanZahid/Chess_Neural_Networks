@@ -19,7 +19,7 @@ class GameLogic:
     def move(self,move):
         result = False
         
-        if self.currentPlayer.movePiece(move,True):            
+        if self.currentPlayer.movePiece(move,True):
             self.changeTurn()
             result = True
         
