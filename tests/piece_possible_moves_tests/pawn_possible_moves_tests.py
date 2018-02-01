@@ -17,6 +17,7 @@ class PawnPossibleMovesTests(unittest.TestCase):
     # ///////////
     
     def testPossibleMovesWhitePawnFromA1(self):
+        self.board.currentTurnColor = Color.white
         piece = self.testUtility.movePieceValueToSquare(Values.pawn,A2)
 
         possibleMoves = self.testUtility.generateAllMoves(piece)
@@ -24,6 +25,7 @@ class PawnPossibleMovesTests(unittest.TestCase):
         self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
     def testPossibleMovesWhitePawnFromD5(self):
+        self.board.currentTurnColor = Color.white
         piece = self.testUtility.movePieceValueToSquare(Values.pawn,D5)
         piece.hasMoved = True
 
@@ -32,6 +34,7 @@ class PawnPossibleMovesTests(unittest.TestCase):
         self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
     def testPossibleMovesWhitePawnFromD4FriendlyFire(self):
+        self.board.currentTurnColor = Color.white
         piece = self.testUtility.movePieceValueToSquare(Values.pawn,D4)
 
         self.testUtility.movePieceValueToSquare(Values.pawn,E5)
@@ -42,6 +45,7 @@ class PawnPossibleMovesTests(unittest.TestCase):
         self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
     def testPossibleMovesWhitePawnFromD4EnemyFire(self):
+        self.board.currentTurnColor = Color.white
         piece = self.testUtility.movePieceValueToSquare(Values.pawn,D4)
 
         self.testUtility.movePieceValueToSquare(-Values.pawn,E5)
@@ -56,6 +60,7 @@ class PawnPossibleMovesTests(unittest.TestCase):
     # ///////////
     
     def testPossibleMovesBlackPawnFromH7(self):
+        self.board.currentTurnColor = Color.black
         piece = self.testUtility.movePieceValueToSquare(-Values.pawn,H7)
 
         possibleMoves = self.testUtility.generateAllMoves(piece)
@@ -63,6 +68,7 @@ class PawnPossibleMovesTests(unittest.TestCase):
         self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
     def testPossibleMovesBlackPawnFromE4(self):
+        self.board.currentTurnColor = Color.black
         piece = self.testUtility.movePieceValueToSquare(-Values.pawn,E4)
         piece.hasMoved = True
 
@@ -71,6 +77,7 @@ class PawnPossibleMovesTests(unittest.TestCase):
         self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
     def testPossibleMovesBlackPawnFromDE6FriendlyFire(self):
+        self.board.currentTurnColor = Color.black
         piece = self.testUtility.movePieceValueToSquare(-Values.pawn,E6)
 
         self.testUtility.movePieceValueToSquare(-Values.pawn,F5)
@@ -81,6 +88,7 @@ class PawnPossibleMovesTests(unittest.TestCase):
         self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
     def testPossibleMovesBlackPawnFromDE6EnemyFire(self):
+        self.board.currentTurnColor = Color.black
         piece = self.testUtility.movePieceValueToSquare(-Values.pawn,E6)
 
         self.testUtility.movePieceValueToSquare(Values.pawn,F5)

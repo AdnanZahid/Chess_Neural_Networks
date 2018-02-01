@@ -14,8 +14,9 @@ class MoveStrategy:
         
         possibleMovesToSquaresList = []
         
-        for direction in self.directionsList:
-            possibleMovesToSquaresList.extend(self.generateMove(position,direction))
+        if self.color == self.board.currentTurnColor:
+            for direction in self.directionsList:
+                possibleMovesToSquaresList.extend(self.generateMove(position,direction))
         
         return possibleMovesToSquaresList
         

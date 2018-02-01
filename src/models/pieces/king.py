@@ -9,9 +9,13 @@ from src.models.pieces.strategies.limited_move_strategy import *
 class King(Piece):
     
     def __init__(self,color,position,hasMoved,delegate,board):
+        if color == Color.white:
+            self.symbol = Symbols.white_king
+        else:
+            self.symbol = Symbols.black_king
+
         self.initialize(color,position,hasMoved,delegate,board)
-        self.directionsList = []        
-        self.symbol = Symbols.king
+        self.directionsList = []
         self.value = abs(Values.king)
         
         # King directions

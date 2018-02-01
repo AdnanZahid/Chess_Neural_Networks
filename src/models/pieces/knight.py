@@ -9,9 +9,13 @@ from src.models.pieces.strategies.limited_move_strategy import *
 class Knight(Piece):
     
     def __init__(self,color,position,hasMoved,delegate,board):
+        if color == Color.white:
+            self.symbol = Symbols.white_knight
+        else:
+            self.symbol = Symbols.black_knight
+
         self.initialize(color,position,hasMoved,delegate,board)
-        self.directionsList = []       
-        self.symbol = Symbols.knight
+        self.directionsList = []
         self.value = abs(Values.knight)
         
         # Knight directions

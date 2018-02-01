@@ -9,9 +9,13 @@ from src.models.pieces.strategies.unlimited_move_strategy import *
 class Rook(Piece):
     
     def __init__(self,color,position,hasMoved,delegate,board):
+        if color == Color.white:
+            self.symbol = Symbols.white_rook
+        else:
+            self.symbol = Symbols.black_rook
+
         self.initialize(color,position,hasMoved,delegate,board)
-        self.directionsList = []       
-        self.symbol = Symbols.rook
+        self.directionsList = []
         self.value = abs(Values.rook)
         
         # Rook directions

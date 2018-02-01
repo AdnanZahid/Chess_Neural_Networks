@@ -9,9 +9,13 @@ from src.models.pieces.strategies.unlimited_move_strategy import *
 class Bishop(Piece):
     
     def __init__(self,color,position,hasMoved,delegate,board):
+        if color == Color.white:
+            self.symbol = Symbols.white_bishop
+        else:
+            self.symbol = Symbols.black_bishop
+
         self.initialize(color,position,hasMoved,delegate,board)
         self.directionsList = []
-        self.symbol = Symbols.bishop
         self.value = abs(Values.bishop)
         
         # Bishop directions

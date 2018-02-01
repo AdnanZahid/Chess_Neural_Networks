@@ -17,16 +17,19 @@ class KnightPossibleMovesTests(unittest.TestCase):
     # ///////////
     
     def testPossibleMovesWhiteKnightFromA1(self):
+        self.board.currentTurnColor = Color.white
         possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.knight,A1))
         comparisonMoves = [B3, C2]
         self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
     def testPossibleMovesWhiteKnightFromD5(self):
+        self.board.currentTurnColor = Color.white
         possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(Values.knight,D5))
         comparisonMoves = [E7, F6, C7, B6, E3, F4, C3, B4]
         self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
     def testPossibleMovesWhiteKnightFromD4FriendlyFire(self):
+        self.board.currentTurnColor = Color.white
         self.testUtility.movePieceValueToSquare(Values.knight,E6)
         self.testUtility.movePieceValueToSquare(Values.knight,E2)
         self.testUtility.movePieceValueToSquare(Values.knight,F5)
@@ -40,6 +43,7 @@ class KnightPossibleMovesTests(unittest.TestCase):
         self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
     def testPossibleMovesWhiteKnightFromD4EnemyFire(self):
+        self.board.currentTurnColor = Color.white
         self.testUtility.movePieceValueToSquare(-Values.knight,E6)
         self.testUtility.movePieceValueToSquare(-Values.knight,E2)
         self.testUtility.movePieceValueToSquare(-Values.knight,F5)
@@ -57,16 +61,19 @@ class KnightPossibleMovesTests(unittest.TestCase):
     # ///////////
     
     def testPossibleMovesBlackKnightFromH1(self):
+        self.board.currentTurnColor = Color.black
         possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.knight,H1))
         comparisonMoves = [G3, F2]
         self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
     def testPossibleMovesBlackKnightFromE4(self):
+        self.board.currentTurnColor = Color.black
         possibleMoves = self.testUtility.generateAllMoves(self.testUtility.movePieceValueToSquare(-Values.knight,E4))
         comparisonMoves = [F6, G5, D6, C5, F2, G3, D2, C3]
         self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
     def testPossibleMovesBlackKnightFromDE6FriendlyFire(self):
+        self.board.currentTurnColor = Color.black
         self.testUtility.movePieceValueToSquare(-Values.knight,F8)
         self.testUtility.movePieceValueToSquare(-Values.knight,F4)
         self.testUtility.movePieceValueToSquare(-Values.knight,G7)
@@ -80,6 +87,7 @@ class KnightPossibleMovesTests(unittest.TestCase):
         self.testUtility.checkEqualMoves(possibleMoves,comparisonMoves)
     
     def testPossibleMovesBlackKnightFromDE6EnemyFire(self):
+        self.board.currentTurnColor = Color.black
         self.testUtility.movePieceValueToSquare(Values.knight,F8)
         self.testUtility.movePieceValueToSquare(Values.knight,F4)
         self.testUtility.movePieceValueToSquare(Values.knight,G7)
