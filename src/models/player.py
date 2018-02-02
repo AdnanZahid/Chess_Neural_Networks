@@ -15,3 +15,24 @@ class Player:
             result = True
         
         return result
+
+    def setKing(self,king):
+    	self.king = king
+
+    def setKingSideRook(self,rook):
+    	self.kingSideRook = rook
+
+    def setQueenSideRook(self,rook):
+    	self.queenSideRook = rook
+
+    def getAllMoves(self):
+    	movesList = []
+    	for piece in self.piecesList:
+    		movesList.append(piece.strategy.getAllMoves())
+    	return movesList
+
+    def isUnderCheck(self):
+    	for move in self.opponent.getAllMoves():
+    		if move == self.king.position:
+    			return True
+    	return False

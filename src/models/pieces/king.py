@@ -30,6 +30,10 @@ class King(Piece):
         self.directionsList.append(( 0, -1))
         
         self.moveStrategy = LimitedMoveStrategy(self,color,self.directionsList,board)
+
+        # Set king property of player for later use (castling, check and checkmate)
+        if delegate:
+            delegate.setKing(self)
     
     def move(self,move):
         result = False

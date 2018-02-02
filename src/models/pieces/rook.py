@@ -26,6 +26,13 @@ class Rook(Piece):
         
         self.moveStrategy = UnlimitedMoveStrategy(self,color,self.directionsList,board)
 
+        # Set king(H file)/queen(A file) side rook property of player for later use (castling)
+        if delegate:
+            if file == FileIndex.kH:
+                delegate.setKingSideRook(self)
+            else:
+                delegate.setQueenSideRook(self)
+
     def move(self,move):
         result = False
         

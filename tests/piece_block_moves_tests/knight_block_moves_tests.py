@@ -26,10 +26,10 @@ class KnightBlockMovesTests(unittest.TestCase):
     
     def testBlockWhiteKnightFromD6ToE6ToF5(self):
         self.testUtility.movePieceValueToSquare(Values.knight,E4)
-        self.testUtility.movePieceValueToSquare(Values.knight,F5)
+        self.testUtility.movePieceValueToSquare(Values.knight,F6)
         self.testUtility.invalidMove(\
             self.testUtility.failToMovePiece(Values.knight,\
-                self.testUtility.getMove(D6,E4)),F5)
+                self.testUtility.getMove(D6,E4)),F6)
     
     # ///////////
     # // BLACK //
@@ -45,10 +45,10 @@ class KnightBlockMovesTests(unittest.TestCase):
     
     def testBlockBlackKnightFromD4ToE6ToF5(self):
         self.testUtility.movePieceValueToSquare(-Values.knight,E6)
-        self.testUtility.movePieceValueToSquare(-Values.knight,F5)
+        self.testUtility.movePieceValueToSquare(-Values.knight,F4)
         self.testUtility.invalidMove(\
             self.testUtility.failToMovePiece(-Values.knight,\
-                self.testUtility.getMove(D4,E6)),F5)
+                self.testUtility.getMove(D4,E6)),F4)
 
 if __name__ == '__main__':
     unittest.main()
