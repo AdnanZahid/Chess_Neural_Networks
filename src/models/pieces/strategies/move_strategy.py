@@ -10,13 +10,13 @@ class MoveStrategy:
     def getMobility(self,position):        
         return len(generateAllMoves(position))
     
-    def generateAllMoves(self,position):
+    def generateAllMoves(self):
         
         possibleMovesToSquaresList = []
         
         if self.color == self.board.currentTurnColor:
             for direction in self.directionsList:
-                possibleMovesToSquaresList.extend(self.generateMove(position,direction))
+                possibleMovesToSquaresList.extend(self.generateMove(self.piece.position,direction))
         
         return possibleMovesToSquaresList
         
