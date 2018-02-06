@@ -156,7 +156,6 @@ class Board:
                     if not(piece == EmptyPiece):
                         existingPiece.captured = True
                     
-                    piece.position = square
                     self.grid[square.rank][square.file] = piece
                     
                     if pushToStack:

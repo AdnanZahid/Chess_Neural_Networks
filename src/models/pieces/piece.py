@@ -24,10 +24,10 @@ class Piece:
     
     def updatePosition(self,toSquare,changeHasMoved):
         
-        position = toSquare
+        self.position = toSquare
         
         if changeHasMoved:
-            hasMoved = True
+            self.hasMoved = True
     
     def moveToSquare(self,toSquare):
         return self.move(EvaluationMove(self.position,toSquare))\

@@ -7,8 +7,8 @@ from src.models.squares import *
 square_size = 100
 columns, rows = 8, 8
 screen_size = (columns * square_size,rows * square_size)
-white_color = (255, 255, 255)
-black_color = (160, 82, 45)
+white_color = (236, 218, 185)
+black_color = (175, 137, 104)
 green_color = (0, 255, 0)
 
 # This class handles all the view related activity
