@@ -25,8 +25,6 @@ class TestUtility(unittest.TestCase):
         # MOVING the PIECE to the given SQUARE - EXPECTING it to PASS
         self.movePieceToSquare(piece,move.toSquare)
 
-        piece.position = move.toSquare
-
         return piece
 
     # GET PIECE and move on it to the SQUARE, asserts TRUE
