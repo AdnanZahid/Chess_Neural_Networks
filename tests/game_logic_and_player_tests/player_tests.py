@@ -61,6 +61,7 @@ class PlayerTests(unittest.TestCase):
         # Perform fool's mate on white
         self.performFoolsMateOnWhite()
         # Now check if white king is under checkmate
+        # TODO: Uncomment this line
         # self.assertTrue(self.whitePlayer.isUnderCheckMate() == True)
 
     def move(self,fromSquare,toSquare):
