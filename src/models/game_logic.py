@@ -16,7 +16,7 @@ class GameLogic:
         
         self.currentPlayer = self.whitePlayer
     
-    def move(self,move):
+    def movePiece(self,move):
         result = False
         
         if self.currentPlayer.movePiece(move,True):

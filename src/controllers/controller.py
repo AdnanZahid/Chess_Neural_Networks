@@ -40,7 +40,7 @@ class Controller(InputHandlerDelegate):
     def didTakeInput(self,move):
 
         # TELL GAMELOGIC to MAKE the MOVE if VALID
-        if self.gameLogic.move(move):
+        if self.gameLogic.movePiece(move):
             # SHOW OUTPUT on VIEW
             self.outputHandler.output(move)
         else:

@@ -85,7 +85,7 @@ class View:
 		piece = board.grid[x][y]
 		
 		if not(piece == NilPiece or piece == EmptyPiece):
-			return piece.moveStrategy.generateAllMoves(piece.position)
+			return piece.moveStrategy.generateAllMoves()
 		else:
 			return []
 

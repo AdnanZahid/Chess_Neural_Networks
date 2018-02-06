@@ -28,7 +28,7 @@ class Player:
     def getAllMoves(self):
     	movesList = []
     	for piece in self.piecesList:
-    		movesList.append(piece.strategy.getAllMoves())
+    		movesList.extend(piece.moveStrategy.generateAllMoves())
     	return movesList
 
     def isUnderCheck(self):
@@ -36,3 +36,6 @@ class Player:
     		if move == self.king.position:
     			return True
     	return False
+
+    def isUnderCheckMate(self):
+        return False
