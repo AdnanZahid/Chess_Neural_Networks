@@ -8,19 +8,21 @@ class MoveStrategy:
         self.board = board
 
     def getMobility(self, position):
-        return len(self.generateAllMoves(position))
+        return len(self.generateAllPossibleTargetSquares(position))
 
-    def generateAllMoves(self):
+    def generateAllPossibleTargetSquares(self, checkCurrentTurn = True):
 
         possibleMovesToSquaresList = []
 
-        delegate = self.piece.delegate
-        self.piece.delegate = None
+        if checkCurrentTurn == False:
+            delegate = self.piece.delegate
+            self.piece.delegate = None
 
-        if self.color == self.board.currentTurnColor:
+        if self.color == self.board.currentTurnColor or checkCurrentTurn == False:
             for direction in self.directionsList:
-                possibleMovesToSquaresList.extend(self.generateMove(self.piece.position, direction))
+                possibleMovesToSquaresList.extend(self.generatePossibleTargetSquare(self.piece.position, direction))
 
-        self.piece.delegate = delegate
+        if checkCurrentTurn == False:
+            self.piece.delegate = delegate
 
         return set(possibleMovesToSquaresList)

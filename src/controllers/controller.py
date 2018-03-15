@@ -7,6 +7,9 @@ from src.views.view import *
 class Controller(InputHandlerDelegate):
 
     def __init__(self):
+        self.setupNewGame()
+
+    def setupNewGame(self):
 
         # SET GAMELOGIC with AI or HUMAN PLAYERS
         self.gameLogic = GameLogic()
@@ -44,6 +47,8 @@ class Controller(InputHandlerDelegate):
         if self.gameLogic.movePiece(move):
             # SHOW OUTPUT on VIEW
             self.outputHandler.output(move)
+            if self.gameLogic.currentPlayer.isUnderCheckMate():
+                self.outputHandler.setIsGameOver(True)
         else:
             # CANCEL MOVE on VIEW (PUT PIECE DOWN)
             self.outputHandler.cancelMove()

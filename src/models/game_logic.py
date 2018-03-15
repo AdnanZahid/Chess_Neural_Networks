@@ -8,8 +8,8 @@ class GameLogic:
 
     def __init__(self):
         self.board = Board()
-        self.whitePlayer = Player(Color.white, self.board)
-        self.blackPlayer = Player(Color.black, self.board)
+        self.whitePlayer = Player(Color.white, self.board, self)
+        self.blackPlayer = Player(Color.black, self.board, self)
 
         self.whitePlayer.opponent = self.blackPlayer
         self.blackPlayer.opponent = self.whitePlayer

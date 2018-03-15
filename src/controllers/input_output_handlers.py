@@ -6,6 +6,10 @@ class InputHandlerDelegate:
     def didTakeInput(self, move):
         doNothing = True
 
+    @abstractmethod
+    def setupNewGame(self):
+        doNothing = True
+
 
 class InputHandler:
 

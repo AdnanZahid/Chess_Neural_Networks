@@ -17,6 +17,9 @@ green_color = (0, 255, 0)
 # This class handles all the view related activity
 class View:
 
+    def __init__(self):
+        self.gameOver = False
+
     def runGame(self, board):
         self.possibleMoves = []
         selectedPiece = EmptyPiece
@@ -47,6 +50,8 @@ class View:
 
             # Clock ticking
             time.Clock().tick(60)
+
+        self.inputHandlerDelegate.setupNewGame()
 
     def output(self, move):
         doNothing = True
@@ -88,7 +93,7 @@ class View:
         piece = board.grid[x][y]
 
         if not (piece == EmptyPiece or piece == None):
-            return piece.moveStrategy.generateAllMoves()
+            return piece.moveStrategy.generateAllPossibleTargetSquares()
         else:
             return []
 
@@ -119,4 +124,7 @@ class View:
         return xPosition, yPosition
 
     def isGameOver(self):
-        return False
+        return self.gameOver
+
+    def setIsGameOver(self, gameOver):
+        self.gameOver = gameOver

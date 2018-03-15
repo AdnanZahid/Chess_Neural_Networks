@@ -3,7 +3,7 @@ from src.models.pieces.strategies.move_strategy import *
 
 class UnlimitedMoveStrategy(MoveStrategy):
 
-    def generateMove(self, position, fileRankPair):
+    def generatePossibleTargetSquare(self, position, fileRankPair):
         possibleMovesToSquaresList = []
         newPosition = position + fileRankPair
 

@@ -20,7 +20,7 @@ class PawnPossibleMovesTests(unittest.TestCase):
         self.board.currentTurnColor = Color.white
         piece = self.testUtility.movePieceValueToSquare(Values.pawn, A2)
 
-        possibleMoves = self.testUtility.generateAllMoves(piece)
+        possibleMoves = self.testUtility.generateAllPossibleTargetSquares(piece)
         comparisonMoves = [A3, A4]
         self.testUtility.checkEqualMoves(possibleMoves, comparisonMoves)
 
@@ -29,7 +29,7 @@ class PawnPossibleMovesTests(unittest.TestCase):
         piece = self.testUtility.movePieceValueToSquare(Values.pawn, D5)
         piece.hasMoved = True
 
-        possibleMoves = self.testUtility.generateAllMoves(piece)
+        possibleMoves = self.testUtility.generateAllPossibleTargetSquares(piece)
         comparisonMoves = [D6]
         self.testUtility.checkEqualMoves(possibleMoves, comparisonMoves)
 
@@ -40,7 +40,7 @@ class PawnPossibleMovesTests(unittest.TestCase):
         self.testUtility.movePieceValueToSquare(Values.pawn, E5)
         self.testUtility.movePieceValueToSquare(Values.pawn, D5)
         self.testUtility.movePieceValueToSquare(Values.pawn, C5)
-        possibleMoves = self.testUtility.generateAllMoves(piece)
+        possibleMoves = self.testUtility.generateAllPossibleTargetSquares(piece)
         comparisonMoves = []
         self.testUtility.checkEqualMoves(possibleMoves, comparisonMoves)
 
@@ -51,7 +51,7 @@ class PawnPossibleMovesTests(unittest.TestCase):
         self.testUtility.movePieceValueToSquare(-Values.pawn, E5)
         self.testUtility.movePieceValueToSquare(-Values.pawn, D5)
         self.testUtility.movePieceValueToSquare(-Values.pawn, C5)
-        possibleMoves = self.testUtility.generateAllMoves(piece)
+        possibleMoves = self.testUtility.generateAllPossibleTargetSquares(piece)
         comparisonMoves = [E5, C5]
         self.testUtility.checkEqualMoves(possibleMoves, comparisonMoves)
 
@@ -63,7 +63,7 @@ class PawnPossibleMovesTests(unittest.TestCase):
         self.board.currentTurnColor = Color.black
         piece = self.testUtility.movePieceValueToSquare(-Values.pawn, H7)
 
-        possibleMoves = self.testUtility.generateAllMoves(piece)
+        possibleMoves = self.testUtility.generateAllPossibleTargetSquares(piece)
         comparisonMoves = [H6, H5]
         self.testUtility.checkEqualMoves(possibleMoves, comparisonMoves)
 
@@ -72,7 +72,7 @@ class PawnPossibleMovesTests(unittest.TestCase):
         piece = self.testUtility.movePieceValueToSquare(-Values.pawn, E4)
         piece.hasMoved = True
 
-        possibleMoves = self.testUtility.generateAllMoves(piece)
+        possibleMoves = self.testUtility.generateAllPossibleTargetSquares(piece)
         comparisonMoves = [E3]
         self.testUtility.checkEqualMoves(possibleMoves, comparisonMoves)
 
@@ -83,7 +83,7 @@ class PawnPossibleMovesTests(unittest.TestCase):
         self.testUtility.movePieceValueToSquare(-Values.pawn, F5)
         self.testUtility.movePieceValueToSquare(-Values.pawn, E5)
         self.testUtility.movePieceValueToSquare(-Values.pawn, D5)
-        possibleMoves = self.testUtility.generateAllMoves(piece)
+        possibleMoves = self.testUtility.generateAllPossibleTargetSquares(piece)
         comparisonMoves = []
         self.testUtility.checkEqualMoves(possibleMoves, comparisonMoves)
 
@@ -94,7 +94,7 @@ class PawnPossibleMovesTests(unittest.TestCase):
         self.testUtility.movePieceValueToSquare(Values.pawn, F5)
         self.testUtility.movePieceValueToSquare(Values.pawn, E5)
         self.testUtility.movePieceValueToSquare(Values.pawn, D5)
-        possibleMoves = self.testUtility.generateAllMoves(piece)
+        possibleMoves = self.testUtility.generateAllPossibleTargetSquares(piece)
         comparisonMoves = [F5, D5]
         self.testUtility.checkEqualMoves(possibleMoves, comparisonMoves)
 

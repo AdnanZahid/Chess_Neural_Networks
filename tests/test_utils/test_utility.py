@@ -91,8 +91,8 @@ class TestUtility(unittest.TestCase):
         return piece
 
     # GET POSSIBLE MOVES LIST from PIECE
-    def generateAllMoves(self, piece):
-        return (piece.moveStrategy.generateAllMoves())
+    def generateAllPossibleTargetSquares(self, piece):
+        return (piece.moveStrategy.generateAllPossibleTargetSquares())
 
     def checkEqualMoves(self, movesList1, movesList2):
         self.assertTrue(len(movesList1) == len(movesList2))
