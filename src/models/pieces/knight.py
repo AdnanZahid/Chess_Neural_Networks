@@ -7,14 +7,14 @@ from src.others.utility import *
 class Knight(Piece):
 
     def __init__(self, color, position, hasMoved, delegate, board):
+        super().__init__(color, position, hasMoved, delegate, board)
+
+        self.value = abs(Values.knight)
+
         if color == Color.white:
             self.symbol = Symbols.white_knight
         else:
             self.symbol = Symbols.black_knight
-
-        self.initialize(color, position, hasMoved, delegate, board)
-        self.directionsList = []
-        self.value = abs(Values.knight)
 
         # Knight directions
         self.directionsList.append((1, 2))
@@ -39,7 +39,7 @@ class Knight(Piece):
 
         # Check for check on a new board with previous configurations
         if self.delegate:
-            result = result and self.delegate.isUnderCheckOnNewBoard(self, toSquare)
+            result = result and not(self.delegate.isUnderCheckOnNewBoard(self, toSquare))
 
         return result
 

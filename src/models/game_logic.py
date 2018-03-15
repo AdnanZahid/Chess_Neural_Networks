@@ -31,6 +31,3 @@ class GameLogic:
 
     def isAITurn(self):
         return False
-
-    def input(self):
-        inputHandlerDelegate.didTakeInput(currentPlayer.generateMove())

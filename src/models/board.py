@@ -1,10 +1,10 @@
 from src.models.pieces.piece_factory import *
-from src.models.squares import *
 from src.others.error_handler import *
 
 
 # This class handles all the Board related tasks
 class Board:
+    EmptyPiece = EmptyPiece()
 
     # Initialize an EMPTY board
     def __init__(self):
@@ -37,7 +37,7 @@ class Board:
 
             # PIECE is not EMPTY or OUT OF BOUNDS
             piece = self.getPieceOnPosition(move.fromSquare)
-            if not (piece == None):
+            if not (piece == EmptyPiece or piece == None):
 
                 # This PIECE COLOR has the CURRENT TURN
                 if piece.color == self.currentTurnColor or checkCurrentTurn == False:
@@ -77,8 +77,9 @@ class Board:
         result = False
 
         try:
+            piece = self.grid[square.rank][square.file]
             # Check for a NIL or out of bounds piece
-            if not (self.grid[square.rank][square.file] == None):
+            if not (piece == None):
                 result = True
         except IndexError:
             result = False
@@ -131,11 +132,8 @@ class Board:
 
         # Can not GET a piece from out of bounds
         piece = self.grid[square.rank][square.file]
-        if not (piece == None):
-
-            # Can not GET an empty piece
-            if not (piece == EmptyPiece):
-                return piece
+        if not (piece == EmptyPiece or piece == None):
+            return piece
 
         return None
 
@@ -153,7 +151,7 @@ class Board:
         if not (existingPiece == None):
 
             # King can not be captured
-            if not (existingPiece.value == abs(Values.king)):
+            if existingPiece == EmptyPiece or not (existingPiece.value == abs(Values.king)):
 
                 # Destination square is empty
                 # And no friendly fire
@@ -252,7 +250,10 @@ class Board:
     def printBoard(self):
         for x in range(len(self.grid) - 1, -1, -1):
             for y in range(len(self.grid[0])):
-                if not (self.grid[x][y] == None):
-                    print
-                    self.grid[x][y].symbol,
+                piece = self.grid[x][y]
+                if not (piece == None):
+                    if not (piece == EmptyPiece):
+                        print(piece.symbol, sep="", end="")
+                    else:
+                        print(".", sep="", end="")
             print("\n")

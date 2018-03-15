@@ -7,14 +7,14 @@ from src.others.utility import *
 class Queen(Piece):
 
     def __init__(self, color, position, hasMoved, delegate, board):
+        super().__init__(color, position, hasMoved, delegate, board)
+
+        self.value = abs(Values.queen)
+
         if color == Color.white:
             self.symbol = Symbols.white_queen
         else:
             self.symbol = Symbols.black_queen
-
-        self.initialize(color, position, hasMoved, delegate, board)
-        self.directionsList = []
-        self.value = abs(Values.queen)
 
         # Queen directions
 

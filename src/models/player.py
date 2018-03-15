@@ -39,13 +39,17 @@ class Player:
         return False
 
     def isUnderCheckMate(self):
+        if self.isUnderCheck():
+            return self.opponent.getAllMoves() == []
         return False
 
     def isUnderCheckOnNewBoard(self, piece, toSquare):
         newBoard = copy.deepcopy(self.board)
+        newPiece = copy.deepcopy(piece)
+        newPiece.board = newBoard
 
         isUnderCheck = True
-        if newBoard.putPieceOnPosition(piece, toSquare, True):
+        if newBoard.putPieceOnPosition(newPiece, toSquare, True):
             isUnderCheck = self.isUnderCheck()
 
         return isUnderCheck

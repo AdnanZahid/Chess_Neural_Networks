@@ -9,8 +9,10 @@ class Square:
         self.order = (self.rank * 8) + self.file
 
     def __eq__(self, other):
-        return self.file == other.file \
-               and self.rank == other.rank
+        return self.order == other.order
+
+    def __hash__(self):
+        return self.order
 
     def __ne__(self, other):
         return ~(self == other)

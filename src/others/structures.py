@@ -36,6 +36,7 @@ class FileIndex:
 
 class Color:
     white = 1
+    no_color = 0
     black = -1
 
 

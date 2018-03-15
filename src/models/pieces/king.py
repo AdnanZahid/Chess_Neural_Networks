@@ -7,14 +7,14 @@ from src.others.utility import *
 class King(Piece):
 
     def __init__(self, color, position, hasMoved, delegate, board):
+        super().__init__(color, position, hasMoved, delegate, board)
+
+        self.value = abs(Values.king)
+
         if color == Color.white:
             self.symbol = Symbols.white_king
         else:
             self.symbol = Symbols.black_king
-
-        self.initialize(color, position, hasMoved, delegate, board)
-        self.directionsList = []
-        self.value = abs(Values.king)
 
         # King directions
         self.directionsList.append((1, 1))

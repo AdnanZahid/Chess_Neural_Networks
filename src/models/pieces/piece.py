@@ -1,25 +1,18 @@
+from src.models.squares import *
 from src.others.constants import *
-from src.others.structures import *
 
 
 # This class handles all the piece-centric logic
 class Piece:
-    id = 0
 
-    symbol = Symbols.empty
-    value = Values.empty
-
-    captured = False
-
-    directionsList = []
-
-    def initialize(self, color, position, hasMoved, delegate, board):
+    def __init__(self, color, position, hasMoved, delegate, board):
         self.color = color
         self.position = position
         self.hasMoved = hasMoved
         self.delegate = delegate
         self.board = board
-
+        self.captured = False
+        self.directionsList = []
         self.id = (position.rank * 10) + position.file
 
     def updatePosition(self, toSquare, changeHasMoved):
@@ -36,7 +29,7 @@ class Piece:
 
         # Check for check on a new board with previous configurations
         if self.delegate:
-            result = result and self.delegate.isUnderCheckOnNewBoard(self, toSquare)
+            result = result and not (self.delegate.isUnderCheckOnNewBoard(self, toSquare))
 
         return result
 
@@ -44,9 +37,6 @@ class Piece:
         return "{} at {}".format(self.symbol, self.position)
 
 
-class EmptyPiece(Piece):
-    def __init__(self, color, position, hasMoved, delegate):
-        self.initialize(color, position, hasMoved, delegate)
-        self.directionsList = []
+class EmptyPiece:
+    def __init__(self):
         self.symbol = Symbols.empty
-        self.value = abs(Values.empty)

@@ -5,10 +5,10 @@ from src.models.pieces.piece import *
 class ErrorHandler:
     @staticmethod
     def logError(board, piece, toSquare, error):
-        if not (piece == None or piece == EmptyPiece):
+        if not (piece == EmptyPiece or piece == None):
             print("{} to move".format(board.currentTurnColor))
-            print("{} -> {}{}-{}{}: {}".format(piece.symbol, piece.position.file, piece.position.rank, toSquare.file,
-                                               toSquare.rank, error))
+            print("{} -> {}-{}: {}".format(piece.symbol, piece.position, piece.position, toSquare,
+                                               toSquare, error))
             board.printBoard()
         else:
             print(error)

@@ -7,14 +7,14 @@ from src.others.utility import *
 class Rook(Piece):
 
     def __init__(self, color, position, hasMoved, delegate, board):
+        super().__init__(color, position, hasMoved, delegate, board)
+
+        self.value = abs(Values.rook)
+
         if color == Color.white:
             self.symbol = Symbols.white_rook
         else:
             self.symbol = Symbols.black_rook
-
-        self.initialize(color, position, hasMoved, delegate, board)
-        self.directionsList = []
-        self.value = abs(Values.rook)
 
         # Rook directions
         self.directionsList.append((1, 0))

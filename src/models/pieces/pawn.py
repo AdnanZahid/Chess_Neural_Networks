@@ -7,14 +7,13 @@ from src.others.utility import *
 class Pawn(Piece):
 
     def __init__(self, color, position, hasMoved, delegate, board):
+        super().__init__(color, position, hasMoved, delegate, board)
+        self.value = abs(Values.pawn)
+
         if color == Color.white:
             self.symbol = Symbols.white_pawn
         else:
             self.symbol = Symbols.black_pawn
-
-        self.initialize(color, position, hasMoved, delegate, board)
-        self.directionsList = []
-        self.value = abs(Values.pawn)
 
         # Pawn directions
         # The method pawnMoveDirection(number) determines the DIRECTION according to COLOR
@@ -42,10 +41,6 @@ class Pawn(Piece):
 
             fileAndRankAdvance = getFileAndRankAdvance(EvaluationMove(self.position, move.toSquare))
             result = fileAndRankAdvance == self.directionsList[2] or fileAndRankAdvance == self.directionsList[3]
-
-        # Check for check on a new board with previous configurations
-        if self.delegate:
-            result = result and self.delegate.isUnderCheckOnNewBoard(self, move.toSquare)
 
         return result
 

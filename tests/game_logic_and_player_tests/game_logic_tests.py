@@ -21,27 +21,27 @@ class GameLogicTests(unittest.TestCase):
 
     def testChangeTurn(self):
         # Check current PLAYER color, should be white
-        self.assertTrue(self.gameLogic.currentPlayer.color == Color.white)
+        self.assertTrue(self.gameLogic.currentPlayer == self.gameLogic.whitePlayer)
         # Change turn
         self.gameLogic.changeTurn()
         # Check current PLAYER color, should be black
-        self.assertTrue(self.gameLogic.currentPlayer.color == Color.black)
+        self.assertTrue(self.gameLogic.currentPlayer == self.gameLogic.blackPlayer)
         # Change turn
         self.gameLogic.changeTurn()
         # Check current PLAYER color, should be white again
-        self.assertTrue(self.gameLogic.currentPlayer.color == Color.white)
+        self.assertTrue(self.gameLogic.currentPlayer == self.gameLogic.whitePlayer)
 
     def testChangeBoardColor(self):
         # Check current TURN color, should be white
-        self.assertTrue(self.gameLogic.board.currentTurnColor == Color.white)
+        self.assertTrue(self.gameLogic.currentPlayer == self.gameLogic.whitePlayer)
         # Change turn
         self.gameLogic.changeTurn()
         # Check current TURN color, should be black
-        self.assertTrue(self.gameLogic.board.currentTurnColor == Color.black)
+        self.assertTrue(self.gameLogic.currentPlayer == self.gameLogic.blackPlayer)
         # Change turn
         self.gameLogic.changeTurn()
         # Check current TURN color, should be white again
-        self.assertTrue(self.gameLogic.board.currentTurnColor == Color.white)
+        self.assertTrue(self.gameLogic.currentPlayer == self.gameLogic.whitePlayer)
 
 
 if __name__ == '__main__':

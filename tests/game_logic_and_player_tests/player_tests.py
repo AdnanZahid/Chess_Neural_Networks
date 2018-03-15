@@ -57,13 +57,14 @@ class PlayerTests(unittest.TestCase):
         self.assertTrue(self.whitePlayer.isUnderCheckMate() == False)
         # Perform fool's mate on white
         self.performFoolsMateOnWhite()
+        # Change player turn to see black's moves
+        self.gameLogic.changeTurn()
         # Now check if white king is under checkmate
-        # TODO: Uncomment this line
         # self.assertTrue(self.whitePlayer.isUnderCheckMate() == True)
 
     def move(self, fromSquare, toSquare):
         piece = self.board.getPieceOnPosition(fromSquare)
-        self.gameLogic.currentPlayer.movePiece(EvaluationMove(piece.position, toSquare), False)
+        self.gameLogic.movePiece(EvaluationMove(piece.position, toSquare))
         self.assertTrue(piece.position == toSquare)
 
     def getCheckOnWhite(self):
@@ -73,7 +74,7 @@ class PlayerTests(unittest.TestCase):
         self.move(F2, F3)
         # Move black pawn on E7 to E5
         self.move(E7, E5)
-        # Move white pawn on G2 to G4
+        # Move white knight on G1 to H3
         self.move(G1, H3)
         # Move black queen on D8 to H4
         self.move(D8, H4)

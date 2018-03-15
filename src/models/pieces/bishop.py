@@ -7,14 +7,14 @@ from src.others.utility import *
 class Bishop(Piece):
 
     def __init__(self, color, position, hasMoved, delegate, board):
+        super().__init__(color, position, hasMoved, delegate, board)
+
+        self.value = abs(Values.bishop)
+
         if color == Color.white:
             self.symbol = Symbols.white_bishop
         else:
             self.symbol = Symbols.black_bishop
-
-        self.initialize(color, position, hasMoved, delegate, board)
-        self.directionsList = []
-        self.value = abs(Values.bishop)
 
         # Bishop directions
         self.directionsList.append((1, 1))

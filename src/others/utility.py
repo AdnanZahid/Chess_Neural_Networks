@@ -36,9 +36,9 @@ def getFileAndRankAdvance(move):
 
 def getFileAndRankSingleAdvance(fileRankPair):
     if fileRankPair[0] == 0:
-        return (0, fileRankPair[1] / abs(fileRankPair[1]))
+        return (0, fileRankPair[1] // abs(fileRankPair[1]))
 
     if fileRankPair[1] == 0:
-        return (fileRankPair[0] / abs(fileRankPair[0]), 0)
+        return (fileRankPair[0] // abs(fileRankPair[0]), 0)
 
-    return (fileRankPair[0] / abs(fileRankPair[0]), fileRankPair[1] / abs(fileRankPair[1]))
+    return (fileRankPair[0] // abs(fileRankPair[0]), fileRankPair[1] // abs(fileRankPair[1]))

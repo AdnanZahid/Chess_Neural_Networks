@@ -37,7 +37,7 @@ class View:
                         self.selectedPiece = board.grid[x][y]
                         self.possibleMoves = self.getPossibleMoves(x, y, board)
 
-                    elif not (self.selectedPiece == None or self.selectedPiece == EmptyPiece):
+                    elif not (self.selectedPiece == EmptyPiece or self.selectedPiece == None):
                         self.move(EvaluationMove(self.selectedPiece.position, Square(y, x)))
 
             # Drawing
@@ -77,7 +77,7 @@ class View:
         for x in range(len(board.grid)):
             for y in range(len(board.grid[0])):
                 piece = board.grid[x][y]
-                if not (piece == None or piece == EmptyPiece):
+                if not (piece == EmptyPiece or piece == None):
                     xPosition, yPosition = self.convertCoordinatesForGUI(x, y)
                     path = os.path.dirname(__file__) + "/images/" + piece.symbol + ".png"
                     sprite = image.load(path)
@@ -87,7 +87,7 @@ class View:
     def getPossibleMoves(self, x, y, board):
         piece = board.grid[x][y]
 
-        if not (piece == None or piece == EmptyPiece):
+        if not (piece == EmptyPiece or piece == None):
             return piece.moveStrategy.generateAllMoves()
         else:
             return []
@@ -114,8 +114,8 @@ class View:
         # Transform = +7, because view is inverted
         # Offset = +2, because first 2 columns and rows are filled with NIL values
         # Divider = square_size, because each square is a certain distance apart in GUI but adjacent in model
-        xPosition = 7 - (y / square_size) + 2
-        yPosition = ((x / square_size) + 2)
+        xPosition = 7 - (y // square_size) + 2
+        yPosition = ((x // square_size) + 2)
         return xPosition, yPosition
 
     def isGameOver(self):
