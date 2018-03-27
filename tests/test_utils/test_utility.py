@@ -94,14 +94,5 @@ class TestUtility(unittest.TestCase):
         return (MoveGenerator.generatePossibleTargetSquares(piece, self.board, self.player))
 
     def checkEqualMoves(self, movesList1, movesList2):
-
-        if movesList1 != movesList2:
-            a = 1 + 2
-
         self.assertTrue(len(movesList1) == len(movesList2))
         self.assertTrue(sorted(movesList1) == sorted(movesList2))
-
-
-if __name__ == "__main__":
-    suite = unittest.defaultTestLoader.loadTestsFromTestCase(Test)
-    unittest.TextTestRunner().run(suite)
