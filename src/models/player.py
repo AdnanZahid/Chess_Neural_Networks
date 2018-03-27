@@ -1,5 +1,3 @@
-import copy
-
 from src.models.move_generator import *
 
 
@@ -25,18 +23,22 @@ class Player:
     def move(self, move):
         piece = self.board.getPieceOnPosition(move.fromSquare)
         if MoveGenerator.canMove(piece, self.board, self, move.toSquare):
-            self.board.movePiece(piece, move.toSquare)
-            piece.updatePosition(move.toSquare)
-            return True
+            if self.board.movePiece(piece, move.toSquare):
+                piece.updatePosition(move.toSquare)
+                return True
         return False
 
     def getAllPossibleTargetSquares(self, board):
         return set(MoveGenerator.generatePossibleTargetSquaresForAllPieces(board, self, isCheckForCheck=False))
 
-    def isUnderCheck(self, board):
+    def isUnderCheck(self, board, king=None):
+        # A quick hack to check for new king which is different from original king
+        if king == None:
+            king = self.king
         # Think twice before using isCanTakeKing=True!
-        for move in MoveGenerator.generatePossibleTargetSquaresForAllPieces(board, self.opponent, isCheckForCheck=False, isCanTakeKing=True):
-            if move == self.king.position:
+        for move in MoveGenerator.generatePossibleTargetSquaresForAllPieces(board, self.opponent, isCheckForCheck=False,
+                                                                            isCanTakeKing=True):
+            if move == king.position:
                 return True
         return False
 
@@ -47,10 +49,16 @@ class Player:
                     newBoard = copy.deepcopy(board)
                     newPiece = copy.deepcopy(piece)
                     newPiece.board = newBoard
-                    for targetSquare in MoveGenerator.generatePossibleTargetSquaresForAllPieces(newBoard, self.opponent):
-                        if MoveGenerator.canMove(newPiece, newBoard, self.opponent, targetSquare):
+                    for targetSquare in MoveGenerator.generatePossibleTargetSquares(piece, newBoard, self):
+                        if MoveGenerator.canMove(newPiece, newBoard, self, targetSquare):
                             if newBoard.movePiece(newPiece, targetSquare):
-                                if not (self.isUnderCheck(newBoard)):
+                                newPiece.updatePosition(targetSquare)
+                                # A quick hack to check for new king which is different from original king
+                                if newPiece.value == Values.king:
+                                    newKing = newPiece
+                                else:
+                                    newKing = self.king
+                                if not (self.isUnderCheck(newBoard, newKing)):
                                     return False
             return True
         return False

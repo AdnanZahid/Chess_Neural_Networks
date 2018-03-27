@@ -1,3 +1,5 @@
+import copy
+
 from src.others.constants import *
 from src.others.error_handler import *
 from src.others.utility import *
@@ -32,21 +34,26 @@ class MoveGenerator:
 
         for direction in piece.directionsList:
             possibleMovesToSquaresList.extend(
-                MoveGenerator.generatePossibleTargetSquaresInDirection(piece, board, player, direction, isCheckForCheck, isCanTakeKing))
+                MoveGenerator.generatePossibleTargetSquaresInDirection(piece, board, player, direction, isCheckForCheck,
+                                                                       isCanTakeKing))
 
         return possibleMovesToSquaresList
 
     @staticmethod
     # Think twice before using isCanTakeKing=True!
-    def generatePossibleTargetSquaresInDirection(piece, board, player, direction, isCheckForCheck=True, isCanTakeKing=False):
+    def generatePossibleTargetSquaresInDirection(piece, board, player, direction, isCheckForCheck=True,
+                                                 isCanTakeKing=False):
         if piece.value == Values.king or piece.value == Values.knight or piece.value == Values.pawn:
-            return MoveGenerator.generatePossibleTargetSquaresByJumpingInDirection(piece, board, player, direction, isCheckForCheck, isCanTakeKing)
+            return MoveGenerator.generatePossibleTargetSquaresByJumpingInDirection(piece, board, player, direction,
+                                                                                   isCheckForCheck, isCanTakeKing)
         else:
-            return MoveGenerator.generatePossibleTargetSquaresBySlidingInDirection(piece, board, player, direction, isCheckForCheck, isCanTakeKing)
+            return MoveGenerator.generatePossibleTargetSquaresBySlidingInDirection(piece, board, player, direction,
+                                                                                   isCheckForCheck, isCanTakeKing)
 
     @staticmethod
     # Think twice before using isCanTakeKing=True!
-    def generatePossibleTargetSquaresByJumpingInDirection(piece, board, player, fileRankPair, isCheckForCheck=True, isCanTakeKing=False):
+    def generatePossibleTargetSquaresByJumpingInDirection(piece, board, player, fileRankPair, isCheckForCheck=True,
+                                                          isCanTakeKing=False):
         possibleMovesToSquaresList = []
         newPosition = piece.position + fileRankPair
 
@@ -58,7 +65,8 @@ class MoveGenerator:
 
     @staticmethod
     # Think twice before using isCanTakeKing=True!
-    def generatePossibleTargetSquaresBySlidingInDirection(piece, board, player, fileRankPair, isCheckForCheck=True, isCanTakeKing=False):
+    def generatePossibleTargetSquaresBySlidingInDirection(piece, board, player, fileRankPair, isCheckForCheck=True,
+                                                          isCanTakeKing=False):
         possibleMovesToSquaresList = []
         newPosition = piece.position + fileRankPair
 
@@ -81,8 +89,10 @@ class MoveGenerator:
                     # Check if PIECE can MOVE
                     if piece.canMove(board, toSquare):
                         # Can not go out of bounds
-                        try: existingPiece = board.grid[toSquare.rank][toSquare.file]
-                        except IndexError: existingPiece = None
+                        try:
+                            existingPiece = board.grid[toSquare.rank][toSquare.file]
+                        except IndexError:
+                            existingPiece = None
 
                         if not (existingPiece == None):
                             # King can not be captured (unless isCanTakeKing is True)
@@ -95,7 +105,15 @@ class MoveGenerator:
                                     if not (piece == EmptyPiece):
                                         existingPiece.captured = True
                                         if isCheckForCheck:
-                                            result = not (player.isUnderCheck(board))
+                                            # Before checking for check
+                                            # Make a move on a new board (clone of current one)
+                                            # And then check if the player is under check or not
+                                            newBoard = copy.deepcopy(board)
+                                            newPiece = copy.deepcopy(piece)
+                                            newPiece.board = newBoard
+                                            newBoard.movePiece(newPiece, toSquare)
+                                            newPiece.updatePosition(toSquare)
+                                            result = not (player.isUnderCheck(newBoard))
                                         else:
                                             result = True
                                 else:

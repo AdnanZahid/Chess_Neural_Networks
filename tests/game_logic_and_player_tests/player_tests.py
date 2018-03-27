@@ -87,8 +87,14 @@ class PlayerTests(unittest.TestCase):
         self.assertTrue(self.move(G1, H3))
         # Move black queen on D8 to H4
         self.assertTrue(self.move(D8, H4))
+        # Now check if white king is under check (it should be)
+        self.assertTrue(self.whitePlayer.isUnderCheck(self.board))
+        # Now check if white king is under checkmate (it should not be)
+        self.assertFalse(self.whitePlayer.isUnderCheckMate(self.board))
         # Move white pawn on G2 to G3
         self.assertTrue(self.move(G2, G3))
+        # Now check if white king is under check (it should not be)
+        self.assertFalse(self.whitePlayer.isUnderCheck(self.board))
 
     def move(self, fromSquare, toSquare):
         piece = self.board.getPieceOnPosition(fromSquare)
