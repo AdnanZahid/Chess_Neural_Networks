@@ -6,9 +6,8 @@ class ErrorHandler:
     @staticmethod
     def logError(board, piece, toSquare, error):
         if not (piece == EmptyPiece or piece == None):
-            print("{} to move".format(board.currentTurnColor))
             print("{} -> {}-{}: {}".format(piece.symbol, piece.position, piece.position, toSquare,
-                                               toSquare, error))
+                                           toSquare, error))
             board.printBoard()
         else:
             print(error)

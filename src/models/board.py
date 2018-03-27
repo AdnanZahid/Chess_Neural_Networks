@@ -1,5 +1,8 @@
 from src.models.pieces.piece_factory import *
+from src.models.squares import *
+from src.others.constants import *
 from src.others.error_handler import *
+from src.others.utility import *
 
 
 # This class handles all the Board related tasks
@@ -14,9 +17,6 @@ class Board:
         # Initialize piece list with Nil pieces
         self.grid = [[None for x in range(kNumberOfSquaresAlongY)] for y in range(kNumberOfSquaresAlongX)]
 
-        # Assign the CURRENT TURN COLOR to WHITE by default - Later it changes according to turns
-        self.currentTurnColor = Color.white
-
         # EVALUATION VALUE for computing AI MOVES - POSITIVE for WHITE domination and NEGATIVE for BLACK domination
         self.evaluationValue = 0
 
@@ -27,38 +27,14 @@ class Board:
         self.setupEmptyBoard()
 
     # MOVE PIECE from STARTING SQUARE to ENDING SQUARE
-    def movePiece(self, move, checkCurrentTurn):
+    def movePiece(self, piece, toSquare):
+        previousPosition = piece.position
+        # Check if PIECE can be put on the DESTINATION SQUARE
+        if self.putPieceOnPosition(piece, toSquare):
+            # Check if an EMPTY piece can be PUT on STARTING POSITION
+            return self.putEmptyPieceOnPosition(previousPosition)
 
-        result = False
-        piece = None
-
-        # STARTING and ENDING squares are not the same
-        if not (move.fromSquare == move.toSquare):
-
-            # PIECE is not EMPTY or OUT OF BOUNDS
-            piece = self.getPieceOnPosition(move.fromSquare)
-            if not (piece == EmptyPiece or piece == None):
-
-                # This PIECE COLOR has the CURRENT TURN
-                if piece.color == self.currentTurnColor or checkCurrentTurn == False:
-
-                    # Check if PIECE can MOVE
-                    if piece.moveToSquare(move.toSquare):
-
-                        # Check if PIECE can be put on the DESTINATION SQUARE
-                        if self.putPieceOnPosition(piece, move.toSquare, True):
-                            # Check if an EMPTY piece can be PUT on STARTING POSITION
-                            result = self.putEmptyPieceOnPosition(move.fromSquare)
-                    else:
-                        ErrorHandler.logError(self, piece, move.toSquare, Error.invalidMove)
-                else:
-                    ErrorHandler.logError(self, piece, move.toSquare, Error.wrongTurn)
-            else:
-                ErrorHandler.logError(self, piece, move.toSquare, Error.invalidPiece)
-        else:
-            ErrorHandler.logError(self, piece, move.toSquare, Error.samePosition)
-
-        return result
+        return False
 
     # CHECK if given SQUARE is EMPTY
     def checkIfSquareIsEmpty(self, square):
@@ -138,7 +114,7 @@ class Board:
         return None
 
     # PUT a given PIECE on the given SQUARE
-    def putPieceOnPosition(self, piece, square, pushToStack):
+    def putPieceOnPosition(self, piece, square):
 
         result = False
 
@@ -163,16 +139,7 @@ class Board:
 
                     self.grid[square.rank][square.file] = piece
 
-                    if pushToStack:
-                        # Storing the MOVESTATE in a stack - So we can UNDO them (helps in AI MOVES)
-                        self.moveStateStack.append(MoveState( \
-                            # FROM PIECE STATE
-                            PieceState(piece, piece.position, piece.hasMoved),
-                            # TO PIECE STATE
-                            PieceState(existingPiece, square, piece.hasMoved)))
-
                     result = True
-                    piece.updatePosition(square, pushToStack)
                 else:
                     ErrorHandler.logError(self, piece, square, Error.friendlyFire)
             else:
@@ -187,8 +154,8 @@ class Board:
         moveState = moveStateStack.pop()
 
         # PUT the PIECES back where they were BEFORE the MOVE
-        self.putPieceOnPosition(moveState.fromPieceState.piece, moveState.fromPieceState.position, False)
-        self.putPieceOnPosition(moveState.toPieceState.piece, moveState.toPieceState.position, False)
+        self.putPieceOnPosition(moveState.fromPieceState.piece, moveState.fromPieceState.position)
+        self.putPieceOnPosition(moveState.toPieceState.piece, moveState.toPieceState.position)
 
         # RESET HASMOVED flag of BOTH the PIECES
         moveState.fromPieceState.piece.hasMoved = moveState.fromPieceState.hasMoved
@@ -236,8 +203,7 @@ class Board:
             # Enumerate over all the FILES
             for file in allPiecesFileEnumeration:
                 # Get values from a PRE-CONFIGURED ARRAY - DEFAULT CHESS STARTING CONFIGURATION
-                piece = PieceFactory.getPiece(piecesConfigurationList[rank][file], Square(file, rank), pieceDelegate,
-                                              self)
+                piece = PieceFactory.getPiece(piecesConfigurationList[rank][file], Square(file, rank))
 
                 self.grid[rank][file] = piece
 

@@ -8,26 +8,22 @@ class GameLogic:
 
     def __init__(self):
         self.board = Board()
-        self.whitePlayer = Player(Color.white, self.board, self)
-        self.blackPlayer = Player(Color.black, self.board, self)
+        self.whitePlayer = Player(Color.white, self.board)
+        self.blackPlayer = Player(Color.black, self.board)
 
         self.whitePlayer.opponent = self.blackPlayer
         self.blackPlayer.opponent = self.whitePlayer
 
         self.currentPlayer = self.whitePlayer
 
-    def movePiece(self, move):
-        result = False
-
-        if self.currentPlayer.movePiece(move, True):
+    def move(self, move):
+        if self.currentPlayer.move(move):
             self.changeTurn()
-            result = True
-
-        return result
+            return True
+        return False
 
     def changeTurn(self):
         self.currentPlayer = self.currentPlayer.opponent
-        self.board.currentTurnColor = self.currentPlayer.color
 
     def isAITurn(self):
         return False

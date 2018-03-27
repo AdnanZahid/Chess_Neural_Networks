@@ -1,42 +1,29 @@
-from src.models.squares import *
-from src.others.constants import *
+from src.others.structures import *
 
 
 # This class handles all the piece-centric logic
 class Piece:
 
-    def __init__(self, color, position, hasMoved, delegate, board):
-        self.color = color
+    def __init__(self, position, color):
         self.position = position
-        self.hasMoved = hasMoved
-        self.delegate = delegate
-        self.board = board
+        self.color = color
+        self.hasMoved = False
         self.captured = False
         self.directionsList = []
         self.id = (position.rank * 10) + position.file
 
-    def updatePosition(self, toSquare, changeHasMoved):
+    def updatePosition(self, toSquare):
         self.position = toSquare
-
-        if changeHasMoved:
-            self.hasMoved = True
-
-    def moveToSquare(self, toSquare):
-        result = self.move(EvaluationMove(self.position, toSquare)) \
-                 and self.board.checkIfSquareIsNotNil(toSquare) \
-                 and self.board.checkIfEmptyOrEnemyPieceExists(self.color, toSquare) \
-                 and self.board.checkForClearPath(EvaluationMove(self.position, toSquare))
-
-        # Check for check on a new board with previous configurations
-        if self.delegate:
-            result = result and not (self.delegate.isUnderCheckOnNewBoard(self, toSquare))
-
-        return result
+        self.hasMoved = True
 
     def __repr__(self):
         return "{} at {}".format(self.symbol, self.position)
 
+    def canMove(self, board, toSquare):
+        return board.checkIfSquareIsNotNil(toSquare) \
+               and board.checkIfEmptyOrEnemyPieceExists(self.color, toSquare) \
+               and board.checkForClearPath(EvaluationMove(self.position, toSquare))
 
 class EmptyPiece:
     def __init__(self):
-        self.symbol = Symbols.empty
+        pass

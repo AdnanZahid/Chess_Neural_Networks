@@ -44,7 +44,7 @@ class Controller(InputHandlerDelegate):
     def didTakeInput(self, move):
 
         # TELL GAMELOGIC to MAKE the MOVE if VALID
-        if self.gameLogic.movePiece(move):
+        if self.gameLogic.move(move):
             # SHOW OUTPUT on VIEW
             self.outputHandler.output(move)
             if self.gameLogic.currentPlayer.isUnderCheckMate():

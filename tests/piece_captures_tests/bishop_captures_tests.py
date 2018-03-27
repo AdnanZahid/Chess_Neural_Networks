@@ -1,33 +1,33 @@
 from tests.test_utils.test_utility import *
-from src.others.constants import *
-from tests.test_utils.test_constants import *
-from tests.test_utils.test_utility import *
 
 
 # This class tests if bishop legal moves are blocked as intended
 class BishopCapturesTests(unittest.TestCase):
 
     def setUp(self):
-        self.board = Board()
-        self.testUtility = TestUtility(self.board)
+        self.gameLogic = GameLogic()
+        self.board = self.gameLogic.board
 
     # ///////////
     # // WHITE //
     # ///////////
 
     def testCaptureWhiteBishopFromA1ToH8(self):
-        self.testUtility.movePieceValueToSquare(-Values.bishop, H8)
-        self.testUtility.movePiece(Values.bishop, self.testUtility.getMove(A1, H8))
+        self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
+        self.testUtility.moveValueToSquare(-Values.bishop, H8)
+        self.testUtility.move(Values.bishop, self.testUtility.getMove(A1, H8))
 
     def testCaptureWhiteBishopFromH1ToA8(self):
-        self.testUtility.movePieceValueToSquare(-Values.bishop, A8)
-        self.testUtility.movePiece(Values.bishop, self.testUtility.getMove(H1, A8))
+        self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
+        self.testUtility.moveValueToSquare(-Values.bishop, A8)
+        self.testUtility.move(Values.bishop, self.testUtility.getMove(H1, A8))
 
     def testCaptureWhiteBishopFromD4ToE5ToC3(self):
-        self.testUtility.movePieceValueToSquare(-Values.bishop, E5)
-        self.testUtility.movePieceValueToSquare(-Values.bishop, C3)
+        self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
+        self.testUtility.moveValueToSquare(-Values.bishop, E5)
+        self.testUtility.moveValueToSquare(-Values.bishop, C3)
         self.testUtility.validMove( \
-            self.testUtility.movePiece(Values.bishop, \
+            self.testUtility.move(Values.bishop, \
                                        self.testUtility.getMove(D4, E5)), C3)
 
     # ///////////
@@ -35,20 +35,19 @@ class BishopCapturesTests(unittest.TestCase):
     # ///////////
 
     def testCaptureBlackBishopFromA1ToH8(self):
-        self.testUtility.movePieceValueToSquare(Values.bishop, H8)
-        self.testUtility.movePiece(-Values.bishop, self.testUtility.getMove(A1, H8))
+        self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
+        self.testUtility.moveValueToSquare(Values.bishop, H8)
+        self.testUtility.move(-Values.bishop, self.testUtility.getMove(A1, H8))
 
     def testCaptureBlackBishopFromH1ToA8(self):
-        self.testUtility.movePieceValueToSquare(Values.bishop, A8)
-        self.testUtility.movePiece(-Values.bishop, self.testUtility.getMove(H1, A8))
+        self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
+        self.testUtility.moveValueToSquare(Values.bishop, A8)
+        self.testUtility.move(-Values.bishop, self.testUtility.getMove(H1, A8))
 
     def testCaptureBlackBishopFromD4ToE5ToC3(self):
-        self.testUtility.movePieceValueToSquare(Values.bishop, E5)
-        self.testUtility.movePieceValueToSquare(Values.bishop, C3)
+        self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
+        self.testUtility.moveValueToSquare(Values.bishop, E5)
+        self.testUtility.moveValueToSquare(Values.bishop, C3)
         self.testUtility.validMove( \
-            self.testUtility.movePiece(-Values.bishop, \
+            self.testUtility.move(-Values.bishop, \
                                        self.testUtility.getMove(D4, E5)), C3)
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -1,5 +1,3 @@
-from src.models.game_logic import *
-from tests.test_utils.test_constants import *
 from tests.test_utils.test_utility import *
 
 
@@ -11,9 +9,9 @@ class PlayerTests(unittest.TestCase):
         self.board = self.gameLogic.board
         self.whitePlayer = self.gameLogic.whitePlayer
         self.blackPlayer = self.gameLogic.blackPlayer
-        self.testUtility = TestUtility(self.board)
+        self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
 
-    def testMovePiece(self):
+    def testmove(self):
         # Move white knight on B1 to C3
         self.move(B1, C3)
         # Move black knight on B8 to A6
@@ -31,40 +29,38 @@ class PlayerTests(unittest.TestCase):
         self.assertTrue(self.whitePlayer.queenSideRook == self.board.getPieceOnPosition(A1))
         self.assertTrue(self.blackPlayer.queenSideRook == self.board.getPieceOnPosition(A8))
 
-    def testgetAllPossibleTargetSquares(self):
-        self.testUtility.checkEqualMoves(self.whitePlayer.getAllPossibleTargetSquares(),
+    def testGetAllPossibleTargetSquares(self):
+        self.testUtility.checkEqualMoves(self.whitePlayer.getAllPossibleTargetSquares(self.board),
                                          [A3, B3, C3, D3, E3, F3, G3, H3,
-                                          A4, B4, C4, D4, E4, F4, G4, H4,
-                                          A3, C3, F3, H3])
+                                          A4, B4, C4, D4, E4, F4, G4, H4])
 
         self.gameLogic.changeTurn()
 
-        self.testUtility.checkEqualMoves(self.blackPlayer.getAllPossibleTargetSquares(),
+        self.testUtility.checkEqualMoves(self.blackPlayer.getAllPossibleTargetSquares(self.board),
                                          [A6, B6, C6, D6, E6, F6, G6, H6,
-                                          A5, B5, C5, D5, E5, F5, G5, H5,
-                                          A6, C6, F6, H6])
+                                          A5, B5, C5, D5, E5, F5, G5, H5])
 
     def testIsUnderCheck(self):
         # First see if white king is not under check
-        self.assertTrue(self.whitePlayer.isUnderCheck() == False)
+        self.assertFalse(self.whitePlayer.isUnderCheck(self.board))
         # Perform fool's mate on white
         self.getCheckOnWhite()
         # Change player turn to see black's moves
         self.gameLogic.changeTurn()
         # Now check if white king is under check
-        self.assertTrue(self.whitePlayer.isUnderCheck() == True)
+        self.assertTrue(self.whitePlayer.isUnderCheck(self.board))
 
     def testIsUnderCheckMate(self):
         # First see if white king is not under checkmate
-        self.assertTrue(self.whitePlayer.isUnderCheckMate() == False)
+        self.assertFalse(self.whitePlayer.isUnderCheckMate(self.board))
         # Perform fool's mate on white
         self.performFoolsMateOnWhite()
         # Change player turn to see black's moves
         self.gameLogic.changeTurn()
         # Now check if white king is under checkmate
-        self.assertTrue(self.whitePlayer.isUnderCheckMate() == True)
+        self.assertTrue(self.whitePlayer.isUnderCheckMate(self.board))
 
-    def testTryToMoveWhileInCheck(self):
+    def testTrytoMoveWhileInCheck(self):
         # 1. f3 e5
         # 2. g4 Qh4#
         # 3. a3 will fail
@@ -77,7 +73,7 @@ class PlayerTests(unittest.TestCase):
         # Move black queen on D8 to H4
         self.assertTrue(self.move(D8, H4))
         # Move white pawn on A2 to A3
-        self.assertTrue(self.move(A2, A3) == False)
+        self.assertFalse(self.move(A2, A3))
 
     def testBlockWhileInCheck(self):
         # 1. f3 e5
@@ -96,7 +92,7 @@ class PlayerTests(unittest.TestCase):
 
     def move(self, fromSquare, toSquare):
         piece = self.board.getPieceOnPosition(fromSquare)
-        self.gameLogic.movePiece(EvaluationMove(piece.position, toSquare))
+        self.gameLogic.move(EvaluationMove(piece.position, toSquare))
         return piece.position == toSquare
 
     def getCheckOnWhite(self):
@@ -122,7 +118,3 @@ class PlayerTests(unittest.TestCase):
         self.assertTrue(self.move(G2, G4))
         # Move black queen on D8 to H4
         self.assertTrue(self.move(D8, H4))
-
-
-if __name__ == '__main__':
-    unittest.main()

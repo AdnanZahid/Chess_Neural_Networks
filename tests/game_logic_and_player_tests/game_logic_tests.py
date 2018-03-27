@@ -2,7 +2,6 @@ import unittest
 
 from src.models.game_logic import *
 from src.others.structures import *
-from tests.test_utils.test_constants import *
 
 
 # This class tests if game logic is working properly
@@ -12,11 +11,11 @@ class GameLogicTests(unittest.TestCase):
         self.gameLogic = GameLogic()
         self.board = self.gameLogic.board
 
-    def testMovePiece(self):
+    def testmove(self):
         # Move knight on B1 to C3
         piece = self.board.getPieceOnPosition(B1)
         toSquare = C3
-        self.gameLogic.movePiece(EvaluationMove(piece.position, toSquare))
+        self.gameLogic.move(EvaluationMove(piece.position, toSquare))
         self.assertTrue(piece.position == toSquare)
 
     def testChangeTurn(self):
@@ -42,7 +41,3 @@ class GameLogicTests(unittest.TestCase):
         self.gameLogic.changeTurn()
         # Check current TURN color, should be white again
         self.assertTrue(self.gameLogic.currentPlayer == self.gameLogic.whitePlayer)
-
-
-if __name__ == '__main__':
-    unittest.main()

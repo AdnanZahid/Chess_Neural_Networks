@@ -4,46 +4,61 @@ from src.models.pieces.knight import *
 from src.models.pieces.pawn import *
 from src.models.pieces.queen import *
 from src.models.pieces.rook import *
+from src.others.constants import *
 
 
 class PieceFactory:
 
     @staticmethod
-    def getPiece(value, position, delegate, board):
+    def getPiece(value, position):
 
         if value == None:
-            return None
+            piece = None
 
         # //////////////////
         # // WHITE PIECES //
         # //////////////////
 
         elif value == Values.king:
-            return King(Color.white, position, False, delegate, board)
+            piece = King(position, Color.white)
+            piece.symbol = Symbols.white_king
         elif value == Values.queen:
-            return Queen(Color.white, position, False, delegate, board)
+            piece = Queen(position, Color.white)
+            piece.symbol = Symbols.white_queen
         elif value == Values.rook:
-            return Rook(Color.white, position, False, delegate, board)
+            piece = Rook(position, Color.white)
+            piece.symbol = Symbols.white_rook
         elif value == Values.knight:
-            return Knight(Color.white, position, False, delegate, board)
+            piece = Knight(position, Color.white)
+            piece.symbol = Symbols.white_knight
         elif value == Values.bishop:
-            return Bishop(Color.white, position, False, delegate, board)
+            piece = Bishop(position, Color.white)
+            piece.symbol = Symbols.white_bishop
         elif value == Values.pawn:
-            return Pawn(Color.white, position, False, delegate, board)
+            piece = Pawn(position, Color.white)
+            piece.symbol = Symbols.white_pawn
 
         # //////////////////
         # // BLACK PIECES //
         # //////////////////
 
         elif value == -Values.king:
-            return King(Color.black, position, False, delegate, board)
+            piece = King(position, Color.black)
+            piece.symbol = Symbols.black_king
         elif value == -Values.queen:
-            return Queen(Color.black, position, False, delegate, board)
+            piece = Queen(position, Color.black)
+            piece.symbol = Symbols.black_queen
         elif value == -Values.rook:
-            return Rook(Color.black, position, False, delegate, board)
+            piece = Rook(position, Color.black)
+            piece.symbol = Symbols.black_rook
         elif value == -Values.knight:
-            return Knight(Color.black, position, False, delegate, board)
+            piece = Knight(position, Color.black)
+            piece.symbol = Symbols.black_knight
         elif value == -Values.bishop:
-            return Bishop(Color.black, position, False, delegate, board)
+            piece = Bishop(position, Color.black)
+            piece.symbol = Symbols.black_bishop
         elif value == -Values.pawn:
-            return Pawn(Color.black, position, False, delegate, board)
+            piece = Pawn(position, Color.black)
+            piece.symbol = Symbols.black_pawn
+
+        return piece

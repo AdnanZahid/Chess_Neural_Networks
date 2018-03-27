@@ -1,33 +1,33 @@
 from tests.test_utils.test_utility import *
-from src.others.constants import *
-from tests.test_utils.test_constants import *
-from tests.test_utils.test_utility import *
 
 
 # This class tests if bishop legal moves are blocked as intended
 class BishopBlockMovesTests(unittest.TestCase):
 
     def setUp(self):
-        self.board = Board()
-        self.testUtility = TestUtility(self.board)
+        self.gameLogic = GameLogic()
+        self.board = self.gameLogic.board
 
     # ///////////
     # // WHITE //
     # ///////////
 
     def testBlockWhiteBishopFromA1ToH8(self):
-        self.testUtility.movePieceValueToSquare(Values.bishop, H8)
-        self.testUtility.failToMovePiece(Values.bishop, self.testUtility.getMove(A1, H8))
+        self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
+        self.testUtility.moveValueToSquare(Values.bishop, H8)
+        self.testUtility.failtoMove(Values.bishop, self.testUtility.getMove(A1, H8))
 
     def testBlockWhiteBishopFromH1ToA8(self):
-        self.testUtility.movePieceValueToSquare(Values.bishop, D5)
-        self.testUtility.failToMovePiece(Values.bishop, self.testUtility.getMove(H1, A8))
+        self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
+        self.testUtility.moveValueToSquare(Values.bishop, D5)
+        self.testUtility.failtoMove(Values.bishop, self.testUtility.getMove(H1, A8))
 
     def testBlockWhiteBishopFromD4ToE5ToC3(self):
-        self.testUtility.movePieceValueToSquare(Values.bishop, E5)
-        self.testUtility.movePieceValueToSquare(Values.bishop, C3)
+        self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
+        self.testUtility.moveValueToSquare(Values.bishop, E5)
+        self.testUtility.moveValueToSquare(Values.bishop, C3)
         self.testUtility.invalidMove( \
-            self.testUtility.failToMovePiece(Values.bishop, \
+            self.testUtility.failtoMove(Values.bishop, \
                                              self.testUtility.getMove(D4, E5)), C3)
 
     # ///////////
@@ -35,20 +35,19 @@ class BishopBlockMovesTests(unittest.TestCase):
     # ///////////
 
     def testBlockBlackBishopFromA1ToH8(self):
-        self.testUtility.movePieceValueToSquare(-Values.bishop, D4)
-        self.testUtility.failToMovePiece(-Values.bishop, self.testUtility.getMove(A1, H8))
+        self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
+        self.testUtility.moveValueToSquare(-Values.bishop, D4)
+        self.testUtility.failtoMove(-Values.bishop, self.testUtility.getMove(A1, H8))
 
     def testBlockBlackBishopFromH1ToA8(self):
-        self.testUtility.movePieceValueToSquare(-Values.bishop, D5)
-        self.testUtility.failToMovePiece(-Values.bishop, self.testUtility.getMove(H1, A8))
+        self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
+        self.testUtility.moveValueToSquare(-Values.bishop, D5)
+        self.testUtility.failtoMove(-Values.bishop, self.testUtility.getMove(H1, A8))
 
     def testBlockBlackBishopFromD4ToE5ToC3(self):
-        self.testUtility.movePieceValueToSquare(-Values.bishop, E5)
-        self.testUtility.movePieceValueToSquare(-Values.bishop, C3)
+        self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
+        self.testUtility.moveValueToSquare(-Values.bishop, E5)
+        self.testUtility.moveValueToSquare(-Values.bishop, C3)
         self.testUtility.invalidMove( \
-            self.testUtility.failToMovePiece(-Values.bishop, \
+            self.testUtility.failtoMove(-Values.bishop, \
                                              self.testUtility.getMove(D4, E5)), C3)
-
-
-if __name__ == '__main__':
-    unittest.main()
