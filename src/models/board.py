@@ -38,7 +38,6 @@ class Board:
 
     # CHECK if given SQUARE is EMPTY
     def checkIfSquareIsEmpty(self, square):
-
         result = False
 
         # Check for an EMPTY piece
@@ -49,7 +48,6 @@ class Board:
 
     # CHECK if given SQUARE is not OUT OF BOUNDS
     def checkIfSquareIsNotNil(self, square):
-
         result = False
 
         try:
@@ -64,7 +62,6 @@ class Board:
 
     # CHECK if given SQUARE is EMPTY or occupied by the ENEMY
     def checkIfEmptyOrEnemyPieceExists(self, color, square):
-
         result = False
 
         # CHECK if given SQUARE is EMPTY or occupied by the ENEMY
@@ -76,7 +73,6 @@ class Board:
 
     # CHECK for CLEAR PATH for a MOVE
     def checkForClearPath(self, move):
-
         result = True
 
         # GET a FILE RANK PAIR from a given MOVE - FILE RANK PAIR indicates the DIRECTION
@@ -105,54 +101,28 @@ class Board:
 
     # GET a PIECE from the given SQUARE
     def getPieceOnPosition(self, square):
-
         # Can not GET a piece from out of bounds
         piece = self.grid[square.rank][square.file]
         if not (piece == EmptyPiece or piece == None):
             return piece
-
         return None
 
     # PUT a given PIECE on the given SQUARE
     def putPieceOnPosition(self, piece, square):
-
         result = False
-
-        try:
-            # Can not go out of bounds
-            existingPiece = self.grid[square.rank][square.file]
-        except IndexError:
-            existingPiece = None
-
+        # Can not go out of bounds
+        try: existingPiece = self.grid[square.rank][square.file]
+        except IndexError: existingPiece = None
         if not (existingPiece == None):
-
-            # King can not be captured
-            if existingPiece == EmptyPiece or not (existingPiece.value == abs(Values.king)):
-
-                # Destination square is empty
-                # And no friendly fire
-                if existingPiece == EmptyPiece \
-                        or not (existingPiece.color == piece.color):
-
-                    if not (piece == EmptyPiece):
-                        existingPiece.captured = True
-
-                    self.grid[square.rank][square.file] = piece
-
-                    result = True
-                else:
-                    ErrorHandler.logError(self, piece, square, Error.friendlyFire)
-            else:
-                ErrorHandler.logError(self, piece, square, Error.kingCapture)
-        else:
-            ErrorHandler.logError(self, piece, square, Error.invalidDestination)
-
+            if not (piece == EmptyPiece):
+                existingPiece.captured = True
+                self.grid[square.rank][square.file] = piece
+                result = True
         return result
 
-    # UNDO the TOP MOVE in MOVESTATESTACK (helps in AI MOVES)
+    # UNDO the TOP MOVE in MOVESTATESTACK
     def undoMove(self):
-        moveState = moveStateStack.pop()
-
+        moveState = self.moveStateStack.pop()
         # PUT the PIECES back where they were BEFORE the MOVE
         self.putPieceOnPosition(moveState.fromPieceState.piece, moveState.fromPieceState.position)
         self.putPieceOnPosition(moveState.toPieceState.piece, moveState.toPieceState.position)
@@ -167,9 +137,7 @@ class Board:
 
     # PUT an EMPTY PIECE on the given SQUARE
     def putEmptyPieceOnPosition(self, square):
-
         result = False
-
         # Check if SQUARE is not OUT OF BOUNDS
         piece = self.grid[square.rank][square.file]
         if not (piece == None):
@@ -186,7 +154,6 @@ class Board:
 
     # Fill the board with PIECES of the given COLOR
     def setupPieceBoard(self, color, pieceDelegate):
-
         # Set up a LIST of PIECES to be passed to the corresponding PLAYER
         piecesList = []
 

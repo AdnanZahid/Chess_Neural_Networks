@@ -7,6 +7,7 @@ class QueenBlockMovesTests(unittest.TestCase):
     def setUp(self):
         self.gameLogic = GameLogic()
         self.board = self.gameLogic.board
+        self.board.setupEmptyBoard()
 
     # ///////////
     # // WHITE //

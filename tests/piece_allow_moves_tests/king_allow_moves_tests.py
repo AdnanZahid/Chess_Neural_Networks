@@ -7,6 +7,7 @@ class KingAllowMovesTests(unittest.TestCase):
     def setUp(self):
         self.gameLogic = GameLogic()
         self.board = self.gameLogic.board
+        self.board.setupEmptyBoard()
 
     # ///////////
     # // WHITE //
@@ -23,7 +24,7 @@ class KingAllowMovesTests(unittest.TestCase):
     def testMoveWhiteKingFromD4ToE5ToF4(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
         self.testUtility.moveToSquare(self.testUtility.move(Values.king, self.testUtility.getMove(D4, E5)),
-                                           F4)
+                                      F4)
 
     # ///////////
     # // BLACK //
@@ -40,4 +41,4 @@ class KingAllowMovesTests(unittest.TestCase):
     def testMoveBlackKingFromD4ToE5ToF4(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
         self.testUtility.moveToSquare(self.testUtility.move(-Values.king, self.testUtility.getMove(D4, E5)),
-                                           F4)
+                                      F4)

@@ -12,10 +12,10 @@ class Player:
         self.piecesList = self.board.setupPieceBoard(color, self)
 
         for piece in self.piecesList:
-            if piece.value == abs(Values.king):
+            if piece.value == Values.king:
                 # Set king property of player for later use (castling, check and checkmate)
                 self.king = piece
-            elif piece.value == abs(Values.rook):
+            elif piece.value == Values.rook:
                 # Set king(H file)/queen(A file) side rook property of player for later use (castling)
                 if piece.position.file == FileIndex.kH:
                     self.kingSideRook = piece
@@ -31,10 +31,11 @@ class Player:
         return False
 
     def getAllPossibleTargetSquares(self, board):
-        return set(MoveGenerator.generatePossibleTargetSquaresForAllPieces(board, self, False))
+        return set(MoveGenerator.generatePossibleTargetSquaresForAllPieces(board, self, isCheckForCheck=False))
 
     def isUnderCheck(self, board):
-        for move in self.getAllPossibleTargetSquares(board):
+        # Think twice before using isCanTakeKing=True!
+        for move in MoveGenerator.generatePossibleTargetSquaresForAllPieces(board, self, isCheckForCheck=False, isCanTakeKing=True):
             if move == self.king.position:
                 return True
         return False

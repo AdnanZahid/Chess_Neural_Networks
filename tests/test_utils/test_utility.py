@@ -56,7 +56,7 @@ class TestUtility(unittest.TestCase):
 
     # GET PIECE and move on it to the SQUARE, asserts FALSE
     def invalidMove(self, piece, toSquare):
-        self.assertFalse(self.board.movePiece(piece, toSquare))
+        self.assertFalse(MoveGenerator.canMove(piece, self.board, self.player, toSquare))
 
         # MOVING the PIECE to the given SQUARE on a completely NEW BOARD - EXPECTING it to PASS
         self.validMoveOnNewBoard(Board(), piece, toSquare)
@@ -91,7 +91,7 @@ class TestUtility(unittest.TestCase):
 
     # GET POSSIBLE MOVES LIST from PIECE
     def generateAllPossibleTargetSquares(self, piece):
-        return (MoveGenerator.generatePossibleTargetSquares(piece, self.board, self.player))
+        return MoveGenerator.generatePossibleTargetSquares(piece, self.board, self.player, isCheckForCheck=False)
 
     def checkEqualMoves(self, movesList1, movesList2):
         self.assertTrue(len(movesList1) == len(movesList2))

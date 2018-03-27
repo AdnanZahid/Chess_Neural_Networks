@@ -15,74 +15,95 @@ class MoveGenerator:
         return len(MoveGenerator.generatePossibleTargetSquares(piece, board, player))
 
     @staticmethod
-    def generatePossibleTargetSquaresForAllPieces(board, player, isCheckForCheck=True):
+    # Think twice before using isCanTakeKing=True!
+    def generatePossibleTargetSquaresForAllPieces(board, player, isCheckForCheck=True, isCanTakeKing=False):
         possibleMovesToSquaresList = []
 
         for piece in player.piecesList:
             possibleMovesToSquaresList.extend(
-                MoveGenerator.generatePossibleTargetSquares(piece, board, player, isCheckForCheck))
+                MoveGenerator.generatePossibleTargetSquares(piece, board, player, isCheckForCheck, isCanTakeKing))
 
         return possibleMovesToSquaresList
 
     @staticmethod
-    def generatePossibleTargetSquares(piece, board, player, isCheckForCheck=True):
+    # Think twice before using isCanTakeKing=True!
+    def generatePossibleTargetSquares(piece, board, player, isCheckForCheck=True, isCanTakeKing=False):
         possibleMovesToSquaresList = []
 
         for direction in piece.directionsList:
             possibleMovesToSquaresList.extend(
-                MoveGenerator.generatePossibleTargetSquaresInDirection(piece, board, player, direction, isCheckForCheck))
+                MoveGenerator.generatePossibleTargetSquaresInDirection(piece, board, player, direction, isCheckForCheck, isCanTakeKing))
 
         return possibleMovesToSquaresList
 
     @staticmethod
-    def generatePossibleTargetSquaresInDirection(piece, board, player, direction, isCheckForCheck=True):
-        if piece.value == Values.knight:
-            return MoveGenerator.generatePossibleTargetSquaresByJumpingInDirection(piece, board, player, direction, isCheckForCheck)
+    # Think twice before using isCanTakeKing=True!
+    def generatePossibleTargetSquaresInDirection(piece, board, player, direction, isCheckForCheck=True, isCanTakeKing=False):
+        if piece.value == Values.king or piece.value == Values.knight or piece.value == Values.pawn:
+            return MoveGenerator.generatePossibleTargetSquaresByJumpingInDirection(piece, board, player, direction, isCheckForCheck, isCanTakeKing)
         else:
-            return MoveGenerator.generatePossibleTargetSquaresBySlidingInDirection(piece, board, player, direction, isCheckForCheck)
+            return MoveGenerator.generatePossibleTargetSquaresBySlidingInDirection(piece, board, player, direction, isCheckForCheck, isCanTakeKing)
 
     @staticmethod
-    def generatePossibleTargetSquaresByJumpingInDirection(piece, board, player, fileRankPair, isCheckForCheck=True):
+    # Think twice before using isCanTakeKing=True!
+    def generatePossibleTargetSquaresByJumpingInDirection(piece, board, player, fileRankPair, isCheckForCheck=True, isCanTakeKing=False):
         possibleMovesToSquaresList = []
         newPosition = piece.position + fileRankPair
 
-        if MoveGenerator.canMove(piece, board, player, newPosition, isCheckForCheck):
+        if MoveGenerator.canMove(piece, board, player, newPosition, isCheckForCheck, isCanTakeKing):
             possibleMovesToSquaresList.append(newPosition)
             newPosition = newPosition + fileRankPair
 
         return possibleMovesToSquaresList
 
     @staticmethod
-    def generatePossibleTargetSquaresBySlidingInDirection(piece, board, player, fileRankPair, isCheckForCheck=True):
+    # Think twice before using isCanTakeKing=True!
+    def generatePossibleTargetSquaresBySlidingInDirection(piece, board, player, fileRankPair, isCheckForCheck=True, isCanTakeKing=False):
         possibleMovesToSquaresList = []
         newPosition = piece.position + fileRankPair
 
-        while MoveGenerator.canMove(piece, board, player, newPosition, isCheckForCheck):
+        while MoveGenerator.canMove(piece, board, player, newPosition, isCheckForCheck, isCanTakeKing):
             possibleMovesToSquaresList.append(newPosition)
             newPosition = newPosition + fileRankPair
 
         return possibleMovesToSquaresList
 
     @staticmethod
-    def canMove(piece, board, player, toSquare, isCheckForCheck=True):
-
+    # Think twice before using isCanTakeKing=True!
+    def canMove(piece, board, player, toSquare, isCheckForCheck=True, isCanTakeKing=False):
         result = False
-
         # STARTING and ENDING squares are not the same
         if not (piece.position == toSquare):
-
             # PIECE is not EMPTY or OUT OF BOUNDS
             if not (piece == EmptyPiece or piece == None):
-
                 # This PIECE COLOR has the CURRENT TURN
                 if piece.color == player.color:
-
                     # Check if PIECE can MOVE
                     if piece.canMove(board, toSquare):
-                        if isCheckForCheck:
-                            result = not (player.isUnderCheck(board))
+                        # Can not go out of bounds
+                        try: existingPiece = board.grid[toSquare.rank][toSquare.file]
+                        except IndexError: existingPiece = None
+
+                        if not (existingPiece == None):
+                            # King can not be captured (unless isCanTakeKing is True)
+                            # Think twice before using isCanTakeKing=True!
+                            if existingPiece == EmptyPiece or not (existingPiece.value == Values.king) or isCanTakeKing:
+                                # Destination square is empty
+                                # And no friendly fire
+                                if existingPiece == EmptyPiece \
+                                        or not (existingPiece.color == piece.color):
+                                    if not (piece == EmptyPiece):
+                                        existingPiece.captured = True
+                                        if isCheckForCheck:
+                                            result = not (player.isUnderCheck(board))
+                                        else:
+                                            result = True
+                                else:
+                                    ErrorHandler.logError(board, piece, toSquare, Error.friendlyFire)
+                            else:
+                                ErrorHandler.logError(board, piece, toSquare, Error.kingCapture)
                         else:
-                            result = True
+                            ErrorHandler.logError(board, piece, toSquare, Error.invalidDestination)
                     else:
                         ErrorHandler.logError(board, piece, toSquare, Error.invalidMove)
                 else:
@@ -97,7 +118,7 @@ class MoveGenerator:
         if piece.value == Values.pawn:
             result = result and MoveGenerator.canMovePawn(piece, board, toSquare)
         elif piece.value == Values.king:
-            result = result and MoveGenerator.canCastle(piece, board, player, toSquare)
+            result = result or MoveGenerator.canCastle(piece, board, player, toSquare)
 
         return result
 
