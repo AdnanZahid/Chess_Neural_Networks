@@ -1,7 +1,6 @@
 from src.models.pieces.piece_factory import *
 from src.models.squares import *
 from src.others.constants import *
-from src.others.error_handler import *
 from src.others.utility import *
 
 
@@ -111,8 +110,10 @@ class Board:
     def putPieceOnPosition(self, piece, square):
         result = False
         # Can not go out of bounds
-        try: existingPiece = self.grid[square.rank][square.file]
-        except IndexError: existingPiece = None
+        try:
+            existingPiece = self.grid[square.rank][square.file]
+        except IndexError:
+            existingPiece = None
         if not (existingPiece == None):
             if not (piece == EmptyPiece):
                 existingPiece.captured = True

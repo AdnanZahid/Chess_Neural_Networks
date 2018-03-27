@@ -1,8 +1,7 @@
 import os
-
 from pygame import *
 
-from src.models.pieces.piece import *
+from src.models.move_generator import *
 from src.models.squares import *
 
 # Constants
@@ -20,10 +19,12 @@ class View:
     def __init__(self):
         self.gameOver = False
 
-    def runGame(self, board):
+    def runGame(self, gameLogic):
+        board = gameLogic.board
         self.possibleMoves = []
         selectedPiece = EmptyPiece
         while not (self.isGameOver()):
+            player = gameLogic.currentPlayer
             # Initialization
             init()
             screen = display.set_mode(screen_size)
@@ -38,7 +39,7 @@ class View:
 
                     if not self.possibleMoves:
                         self.selectedPiece = board.grid[x][y]
-                        self.possibleMoves = self.getPossibleMoves(x, y, board)
+                        self.possibleMoves = self.getPossibleMoves(x, y, board, player)
 
                     elif not (self.selectedPiece == EmptyPiece or self.selectedPiece == None):
                         self.move(EvaluationMove(self.selectedPiece.position, Square(y, x)))
@@ -89,11 +90,11 @@ class View:
                     sprite = transform.scale(sprite, (square_size, square_size))
                     screen.blit(sprite, Rect(xPosition, yPosition, square_size, square_size))
 
-    def getPossibleMoves(self, x, y, board):
+    def getPossibleMoves(self, x, y, board, player):
         piece = board.grid[x][y]
 
         if not (piece == EmptyPiece or piece == None):
-            return piece.moveStrategy.generateAllPossibleTargetSquares()
+            return MoveGenerator.generatePossibleTargetSquares(piece, board, player)
         else:
             return []
 

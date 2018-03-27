@@ -38,7 +38,7 @@ class Controller(InputHandlerDelegate):
         # SET SELF as VIEW DELEGATE
         self.inputHandler.inputHandlerDelegate = self
 
-        view.runGame(self.gameLogic.board)
+        view.runGame(self.gameLogic)
 
     # PlAY HUMAN MOVE
     def didTakeInput(self, move):
@@ -47,7 +47,7 @@ class Controller(InputHandlerDelegate):
         if self.gameLogic.move(move):
             # SHOW OUTPUT on VIEW
             self.outputHandler.output(move)
-            if self.gameLogic.currentPlayer.isUnderCheckMate():
+            if self.gameLogic.currentPlayer.isUnderCheckMate(self.gameLogic.board):
                 self.outputHandler.setIsGameOver(True)
         else:
             # CANCEL MOVE on VIEW (PUT PIECE DOWN)

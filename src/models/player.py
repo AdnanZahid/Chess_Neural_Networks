@@ -35,7 +35,7 @@ class Player:
 
     def isUnderCheck(self, board):
         # Think twice before using isCanTakeKing=True!
-        for move in MoveGenerator.generatePossibleTargetSquaresForAllPieces(board, self, isCheckForCheck=False, isCanTakeKing=True):
+        for move in MoveGenerator.generatePossibleTargetSquaresForAllPieces(board, self.opponent, isCheckForCheck=False, isCanTakeKing=True):
             if move == self.king.position:
                 return True
         return False
@@ -47,8 +47,16 @@ class Player:
                     newBoard = copy.deepcopy(board)
                     newPiece = copy.deepcopy(piece)
                     newPiece.board = newBoard
-                    for targetSquare in MoveGenerator.generatePossibleTargetSquaresForAllPieces(newBoard, self):
-                        if newBoard.movePiece(newPiece.position, targetSquare):
-                            if not (self.isUnderCheck()):
-                                return False
-        return True
+                    for targetSquare in MoveGenerator.generatePossibleTargetSquaresForAllPieces(newBoard, self.opponent):
+                        if MoveGenerator.canMove(newPiece, newBoard, self.opponent, targetSquare):
+                            if newBoard.movePiece(newPiece, targetSquare):
+                                if not (self.isUnderCheck(newBoard)):
+                                    return False
+            return True
+        return False
+
+    def __repr__(self):
+        if self.color == Color.white:
+            return "White"
+        else:
+            return "Black"
