@@ -1,4 +1,4 @@
-from src.models.move_generator import *
+from src.others.move_generator import *
 
 
 # This class represents all the player information (while and black)

@@ -43,7 +43,7 @@ class MoveGenerator:
     # Think twice before using isCanTakeKing=True!
     def generatePossibleTargetSquaresInDirection(piece, board, player, direction, isCheckForCheck=True,
                                                  isCanTakeKing=False):
-        if piece.value == Values.king or piece.value == Values.knight or piece.value == Values.pawn:
+        if piece.strategy == Strategy.jumping:
             return MoveGenerator.generatePossibleTargetSquaresByJumpingInDirection(piece, board, player, direction,
                                                                                    isCheckForCheck, isCanTakeKing)
         else:
@@ -145,15 +145,22 @@ class MoveGenerator:
 
         result = False
         targetPiece = board.getPieceOnPosition(toSquare)
+        # Simple 1 step or 2 step moves
         if board.checkIfSquareIsEmpty(toSquare):
             if Utility.getFileAndRankAdvance(EvaluationMove(piece.position, toSquare)) == piece.directionsList[0]:
                 result = True
             elif Utility.getFileAndRankAdvance(EvaluationMove(piece.position, toSquare)) == piece.directionsList[1] \
                     and piece.hasMoved == False:
                 result = board.checkForClearPath(EvaluationMove(piece.position, toSquare))
+        # Simple capture (works only if target piece exists and is of opposite color)
         elif not (targetPiece == None) and not (targetPiece.color == piece.color):
             fileAndRankAdvance = Utility.getFileAndRankAdvance(EvaluationMove(piece.position, toSquare))
             result = fileAndRankAdvance == piece.directionsList[2] or fileAndRankAdvance == piece.directionsList[3]
+        elif targetPiece == None:
+            enpassantPiece = board.getPieceOnPosition(targetPiece.position - (0, Pawn.pawnMoveDirection(piece.color, 1)))
+            if not(enpassantPiece == None):
+                fileAndRankAdvance = Utility.getFileAndRankAdvance(EvaluationMove(piece.position, enpassantPiece.position))
+                result = fileAndRankAdvance == piece.directionsList[2] or fileAndRankAdvance == piece.directionsList[3]
 
         return result
 

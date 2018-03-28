@@ -94,11 +94,49 @@ class UtilityTests(unittest.TestCase):
     def testGetFileAndRankSingleAdvance(self):
         self.assertTrue(Utility.getFileAndRankSingleAdvance((1, 0)) == (1, 0))
         self.assertTrue(Utility.getFileAndRankSingleAdvance((-1, 0)) == (-1, 0))
-        self.assertTrue(Utility.getFileAndRankSingleAdvance((-5, 1)) == (-1, 1))
+        self.assertTrue(Utility.getFileAndRankSingleAdvance((-5, 1)) == (-5, 1))
         self.assertTrue(Utility.getFileAndRankSingleAdvance((0, 0)) == (0, 0))
         self.assertTrue(Utility.getFileAndRankSingleAdvance((0, 1)) == (0, 1))
         self.assertTrue(Utility.getFileAndRankSingleAdvance((-3, 0)) == (-1, 0))
-        self.assertTrue(Utility.getFileAndRankSingleAdvance((-6, -1)) == (-1, -1))
+        self.assertTrue(Utility.getFileAndRankSingleAdvance((-6, -1)) == (-6, -1))
         self.assertTrue(Utility.getFileAndRankSingleAdvance((0, 0)) == (0, 0))
+        self.assertTrue(Utility.getFileAndRankSingleAdvance((5, 0)) == (1, 0))
+        self.assertTrue(Utility.getFileAndRankSingleAdvance((4, 2)) == (2, 1))
+        self.assertTrue(Utility.getFileAndRankSingleAdvance((2, 1)) == (2, 1))
+        self.assertTrue(Utility.getFileAndRankSingleAdvance((5, 4)) == (5, 4))
+        self.assertTrue(Utility.getFileAndRankSingleAdvance((2, 4)) == (1, 2))
+        self.assertTrue(Utility.getFileAndRankSingleAdvance((1, 2)) == (1, 2))
+        self.assertTrue(Utility.getFileAndRankSingleAdvance((-1, 1)) == (-1, 1))
+        self.assertTrue(Utility.getFileAndRankSingleAdvance((-5, -5)) == (-1, -1))
 
-    # def testIsMoveInCorrectDirection(self):
+    def testIsMoveInCorrectDirection(self):
+        directionsList1 = []
+        directionsList1.append((1, 2))
+        directionsList1.append((2, 1))
+        directionsList1.append((-1, 2))
+        directionsList1.append((-2, 1))
+        directionsList1.append((1, -2))
+        directionsList1.append((2, -1))
+        directionsList1.append((-1, -2))
+        directionsList1.append((-2, -1))
+
+        self.assertTrue(Utility.isMoveInCorrectDirection(EvaluationMove(E1, F3), directionsList1, Strategy.jumping))
+
+        directionsList2 = []
+        directionsList2.append((1, 1))
+        directionsList2.append((1, -1))
+        directionsList2.append((-1, 1))
+        directionsList2.append((-1, -1))
+        directionsList2.append((1, 0))
+        directionsList2.append((0, 1))
+        directionsList2.append((-1, 0))
+        directionsList2.append((0, -1))
+
+        self.assertTrue(Utility.isMoveInCorrectDirection(EvaluationMove(B4, C3), directionsList2, Strategy.sliding))
+
+    def testAbsoluteGCD(self):
+        self.assertTrue(Utility.absoluteGCD(1, 0) == 1)
+        self.assertTrue(Utility.absoluteGCD(0, -1) == 1)
+        self.assertTrue(Utility.absoluteGCD(-5, 1) == 1)
+        self.assertTrue(Utility.absoluteGCD(2, 4) == 2)
+        self.assertTrue(Utility.absoluteGCD(0, 0) == 0)

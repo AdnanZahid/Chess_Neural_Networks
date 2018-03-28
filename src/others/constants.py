@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # Here are all the constants
 kMaxPlies = 2
 

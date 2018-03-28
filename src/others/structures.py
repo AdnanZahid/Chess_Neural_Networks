@@ -36,8 +36,11 @@ class FileIndex:
 
 class Color:
     white = 1
-    no_color = 0
     black = -1
+
+
+class Strategy:
+    jumping, sliding = range(2)
 
 
 # RANK ENUMERATION for all squares on the board

@@ -1,7 +1,7 @@
 import os
 from pygame import *
 
-from src.models.move_generator import *
+from src.others.move_generator import *
 from src.models.squares import *
 
 # Constants

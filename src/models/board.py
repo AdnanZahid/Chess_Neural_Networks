@@ -1,4 +1,4 @@
-from src.models.pieces.piece_factory import *
+from src.others.piece_factory import *
 from src.models.squares import *
 from src.others.constants import *
 

@@ -1,9 +1,11 @@
 import unittest
 
 # from castling_and_enpassant_moves_tests.castling_moves_tests import *
-# from castling_and_enpassant_moves_tests.enpassant_moves_tests import *
+from castling_and_enpassant_moves_tests.enpassant_moves_tests import *
 # from game_logic_and_player_tests.game_logic_tests import *
 # from game_logic_and_player_tests.player_tests import *
+# from other_tests.square_tests import *
+# from other_tests.utility_tests import *
 # from piece_allow_moves_tests.bishop_allow_moves_tests import *
 # from piece_allow_moves_tests.king_allow_moves_tests import *
 # from piece_allow_moves_tests.knight_allow_moves_tests import *
@@ -28,14 +30,18 @@ import unittest
 # from piece_captures_tests.pawn_captures_tests import *
 # from piece_captures_tests.queen_captures_tests import *
 # from piece_captures_tests.rook_captures_tests import *
+# from piece_disallow_moves_tests.bishop_disallow_moves_tests import *
+# from piece_disallow_moves_tests.king_disallow_moves_tests import *
+# from piece_disallow_moves_tests.knight_disallow_moves_tests import *
+# from piece_disallow_moves_tests.pawn_disallow_moves_tests import *
+# from piece_disallow_moves_tests.queen_disallow_moves_tests import *
+# from piece_disallow_moves_tests.rook_disallow_moves_tests import *
 # from piece_possible_moves_tests.bishop_possible_moves_tests import *
 # from piece_possible_moves_tests.king_possible_moves_tests import *
 # from piece_possible_moves_tests.knight_possible_moves_tests import *
 # from piece_possible_moves_tests.pawn_possible_moves_tests import *
 # from piece_possible_moves_tests.queen_possible_moves_tests import *
 # from piece_possible_moves_tests.rook_possible_moves_tests import *
-from other_tests.square_tests import *
-from other_tests.utility_tests import *
 
 if __name__ == "__main__":
     unittest.main()

@@ -4,9 +4,10 @@ from src.others.utility import *
 # This class handles all the piece-centric logic
 class Piece:
 
-    def __init__(self, position, color):
+    def __init__(self, position, color, strategy):
         self.position = position
         self.color = color
+        self.strategy = strategy
         self.hasMoved = False
         self.captured = False
         self.directionsList = []
@@ -21,8 +22,7 @@ class Piece:
 
     def canMove(self, board, toSquare):
         move = EvaluationMove(self.position, toSquare)
-
-        return Utility.isMoveInCorrectDirection(move, self.directionsList) \
+        return Utility.isMoveInCorrectDirection(move, self.directionsList, self.strategy) \
                and board.checkIfSquareIsNotNil(toSquare) \
                and board.checkIfEmptyOrEnemyPieceExists(self.color, toSquare) \
                and board.checkForClearPath(move)

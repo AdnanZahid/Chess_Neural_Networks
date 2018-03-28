@@ -5,9 +5,15 @@ from src.others.constants import *
 # This class handles all the queen logic
 class Queen(Piece):
 
-    def __init__(self, position, color):
-        super().__init__(position, color)
+    def __init__(self, position, color, strategy):
+        super().__init__(position, color, strategy)
         self.value = Values.queen
+
+        # Symbol
+        if color == Color.white:
+            self.symbol = Symbols.white_queen
+        else:
+            self.symbol = Symbols.black_queen
 
         # Queen directions
 

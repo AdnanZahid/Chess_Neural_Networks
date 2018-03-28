@@ -27,6 +27,8 @@ class Square:
         return self.order < other.order
 
     def __repr__(self):
+        if Square.fileString(self.file) == "Invalid file" or self.rank < 2 or self.rank > 9:
+            return "Invalid square"
         return "{}{}".format(Square.fileString(self.file), self.rank - 1)
 
     @staticmethod
@@ -48,7 +50,7 @@ class Square:
         elif file == FileIndex.kH:
             return "H"
         else:
-            return "Invalid"
+            return "Invalid file"
 
 
 # This defines all board squares as global constants
