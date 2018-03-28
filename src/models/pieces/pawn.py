@@ -18,11 +18,11 @@ class Pawn(Piece):
         # Pawn directions
 
         # The method pawnMoveDirection(number) determines the DIRECTION according to COLOR
-        self.directionsList.append((0, Pawn.pawnMoveDirection(self.color, 1)))
-        self.directionsList.append((0, Pawn.pawnMoveDirection(self.color, 2)))
+        self.directionsList.append((0, self.pawnMoveDirection(1)))
+        self.directionsList.append((0, self.pawnMoveDirection(2)))
 
-        self.directionsList.append((-1, Pawn.pawnMoveDirection(self.color, 1)))
-        self.directionsList.append((1, Pawn.pawnMoveDirection(self.color, 1)))
+        self.directionsList.append((-1, self.pawnMoveDirection(1)))
+        self.directionsList.append((1, self.pawnMoveDirection(1)))
 
     def canMove(self, board, toSquare, player=None):
 
@@ -30,7 +30,7 @@ class Pawn(Piece):
         targetPiece = board.getPieceOnPosition(toSquare)
         # Simple 1 step or 2 step moves
         if board.checkIfSquareIsEmpty(toSquare):
-            enpassantPiece = board.getPieceOnPosition(toSquare - (0, Pawn.pawnMoveDirection(self.color, 1)))
+            enpassantPiece = board.getPieceOnPosition(toSquare - (0, self.pawnMoveDirection(1)))
             if Utility.getFileAndRankAdvance(EvaluationMove(self.position, toSquare)) == self.directionsList[0]:
                 result = True
             elif Utility.getFileAndRankAdvance(EvaluationMove(self.position, toSquare)) == self.directionsList[1] \
@@ -54,6 +54,5 @@ class Pawn(Piece):
         move = EvaluationMove(self.position, toSquare)
         return result and super().canMove(board, toSquare)
 
-    @staticmethod
-    def pawnMoveDirection(color, number):
-        return color * number
+    def pawnMoveDirection(self, number):
+        return self.color * number

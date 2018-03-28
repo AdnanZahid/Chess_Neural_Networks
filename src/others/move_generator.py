@@ -1,6 +1,6 @@
 import copy
 
-from src.models.pieces.pawn import *
+from src.others.constants import *
 from src.others.error_handler import *
 
 
