@@ -43,6 +43,10 @@ class Strategy:
     jumping, sliding = range(2)
 
 
+class MoveType:
+    enpassant, castling, normal = range(3)
+
+
 # RANK ENUMERATION for all squares on the board
 allPiecesRankEnumeration = range(RankIndex.k1, RankIndex.k8 + 1)
 

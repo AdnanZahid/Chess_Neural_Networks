@@ -39,16 +39,19 @@ class Pawn(Piece):
             #######################################################
             # Start of enpassant case (if enpassant piece exists) #
             #######################################################
-            elif not (enpassantPiece == None) and enpassantPiece == board.movedPawn and not (
-                    enpassantPiece.color == self.color):
+            elif enpassantPiece \
+                    and enpassantPiece == board.movedPawn \
+                    and not (enpassantPiece.color == self.color):
                 fileAndRankAdvance = Utility.getFileAndRankAdvance(
                     EvaluationMove(self.position, toSquare))
-                result = fileAndRankAdvance == self.directionsList[2] or fileAndRankAdvance == self.directionsList[3]
+                if fileAndRankAdvance == self.directionsList[2] or fileAndRankAdvance == self.directionsList[3]:
+                    result = True
+                    player.lastMoveType = MoveType.castling
             #####################################################
             # End of enpassant case (if enpassant piece exists) #
             #####################################################
         # Simple capture (works only if target piece exists and is of opposite color)
-        elif not (targetPiece == None) and not (targetPiece.color == self.color):
+        elif targetPiece and not (targetPiece.color == self.color):
             fileAndRankAdvance = Utility.getFileAndRankAdvance(EvaluationMove(self.position, toSquare))
             result = fileAndRankAdvance == self.directionsList[2] or fileAndRankAdvance == self.directionsList[3]
 

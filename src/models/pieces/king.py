@@ -34,8 +34,8 @@ class King(Piece):
         self.directionsList.append((2, 0))
         self.directionsList.append((-2, 0))
 
-        result = False
-        if board.getPieceOnPosition(toSquare) == None and not (player == None):
+        wasCastlingSuccessful = False
+        if board.getPieceOnPosition(toSquare) == None and player:
 
             kingSideRookPositionBeforeCastling = toSquare + (1, 0)
             queenSideRookPositionBeforeCastling = toSquare - (2, 0)
@@ -45,18 +45,26 @@ class King(Piece):
             if player.kingSideRook.position == toSquare + (1, 0):
                 rook = player.kingSideRook
                 if not (player.king.hasMoved) and not (rook.hasMoved) and not (rook.captured):
-                    result = player.kingSideRook.canMovePiece(board, kingSideRookPositionAfterCastling) and super().canMovePiece(
-                        board, toSquare)
+                    if player.kingSideRook.canMovePiece(board, kingSideRookPositionAfterCastling):
+                        if super().canMovePiece(board, toSquare):
+                            board.castledRook = player.kingSideRook
+                            wasCastlingSuccessful = True
             elif player.queenSideRook.position == toSquare - (2, 0):
                 rook = player.queenSideRook
                 if not (player.king.hasMoved) and not (rook.hasMoved) and not (rook.captured):
-                    result = player.queenSideRook.canMovePiece(board,
-                                                          queenSideRookPositionAfterCastling) and super().canMovePiece(board,
-                                                                                                                  toSquare)
+                    if player.queenSideRook.canMovePiece(board, queenSideRookPositionAfterCastling):
+                        if super().canMovePiece(board, toSquare):
+                            board.castledRook = player.queenSideRook
+                            wasCastlingSuccessful = True
 
         # Remove castling directions
         self.directionsList.remove((2, 0))
         self.directionsList.remove((-2, 0))
 
+        if wasCastlingSuccessful:
+            player.lastMoveType = MoveType.castling
+        else:
+            player.lastMoveType = MoveType.normal
+
         move = EvaluationMove(self.position, toSquare)
-        return result or super().canMovePiece(board, toSquare)
+        return wasCastlingSuccessful or super().canMovePiece(board, toSquare)

@@ -20,22 +20,18 @@ class Board:
         # If the piece moved is pawn
         # Store it in moved pawn property
         self.movedPawn = None
+        # Indicates which rook was castled
+        self.castledRook = None
 
     # MOVE PIECE from STARTING SQUARE to ENDING SQUARE
-    def movePiece(self, piece, toSquare):
-        result = False
+    def movePiece(self, piece, toSquare, player=None):
         previousPosition = piece.position
         # Check if PIECE can be put on the DESTINATION SQUARE
-        if self.putPieceOnPosition(piece, toSquare):
+        if self.putPieceOnPosition(piece, toSquare, player):
             # Check if an EMPTY piece can be PUT on STARTING POSITION
-            if self.putEmptyPieceOnPosition(previousPosition):
-                result = True
-                # If the piece moved is pawn
-                # Store it in moved pawn property
-                if piece.value == Values.pawn:
-                    self.movedPawn = piece
+            return self.putEmptyPieceOnPosition(previousPosition)
 
-        return result
+        return False
 
     # CHECK if given SQUARE is EMPTY
     def checkIfSquareIsEmpty(self, square):
@@ -54,7 +50,7 @@ class Board:
         try:
             piece = self.grid[square.rank][square.file]
             # Check for a NIL or out of bounds piece
-            if not (piece == None):
+            if piece:
                 result = True
         except IndexError:
             result = False
@@ -67,7 +63,7 @@ class Board:
 
         # CHECK if given SQUARE is EMPTY or occupied by the ENEMY
         piece = self.grid[square.rank][square.file]
-        if not (piece == None):
+        if piece:
             result = piece == EmptyPiece or not (piece.color == color)
 
         return result
@@ -109,17 +105,19 @@ class Board:
         return None
 
     # PUT a given PIECE on the given SQUARE
-    def putPieceOnPosition(self, piece, square):
+    def putPieceOnPosition(self, piece, square, player=None):
         result = False
         # Can not go out of bounds
         try:
             existingPiece = self.grid[square.rank][square.file]
         except IndexError:
             existingPiece = None
-        if not (existingPiece == None):
+        if existingPiece:
             if not (piece == EmptyPiece):
                 existingPiece.captured = True
                 self.grid[square.rank][square.file] = piece
+                if player and not (existingPiece == EmptyPiece) and existingPiece in player.opponent.piecesList:
+                    player.opponent.piecesList.remove(existingPiece)
                 result = True
         return result
 
@@ -143,7 +141,7 @@ class Board:
         result = False
         # Check if SQUARE is not OUT OF BOUNDS
         piece = self.grid[square.rank][square.file]
-        if not (piece == None):
+        if piece:
             self.grid[square.rank][square.file] = EmptyPiece
             result = True
 
@@ -187,7 +185,7 @@ class Board:
         for x in range(len(self.grid) - 1, -1, -1):
             for y in range(len(self.grid[0])):
                 piece = self.grid[x][y]
-                if not (piece == None):
+                if piece:
                     if not (piece == EmptyPiece):
                         print(piece.symbol, sep="", end="")
                     else:

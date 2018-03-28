@@ -8,6 +8,8 @@ class Player:
         self.color = color
         self.board = board
         self.piecesList = self.board.setupPieceBoard(color, self)
+        # Will be used to determine whether the last move was enpassant or castling
+        self.lastMoveType = None
 
         for piece in self.piecesList:
             if piece.value == Values.king:

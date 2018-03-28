@@ -1,6 +1,6 @@
 import copy
 
-from src.others.constants import *
+from src.models.squares import *
 from src.others.error_handler import *
 
 
@@ -30,8 +30,14 @@ class MoveGenerator:
     # Think twice before using isCanTakeKing=True!
     def generatePossibleTargetSquares(piece, board, player, isCheckForCheck=True, isCanTakeKing=False):
         possibleMovesToSquaresList = []
+        directionsList = piece.directionsList
 
-        for direction in piece.directionsList:
+        if piece.value == Values.king:
+            # Add castling directions
+            directionsList.append((2, 0))
+            directionsList.append((-2, 0))
+
+        for direction in directionsList:
             possibleMovesToSquaresList.extend(
                 MoveGenerator.generatePossibleTargetSquaresInDirection(piece, board, player, direction, isCheckForCheck,
                                                                        isCanTakeKing))
@@ -93,7 +99,7 @@ class MoveGenerator:
                         except IndexError:
                             existingPiece = None
 
-                        if not (existingPiece == None):
+                        if existingPiece:
                             # King can not be captured (unless isCanTakeKing is True)
                             # Think twice before using isCanTakeKing=True!
                             if existingPiece == EmptyPiece or not (existingPiece.value == Values.king) or isCanTakeKing:
@@ -116,26 +122,57 @@ class MoveGenerator:
                                         else:
                                             result = True
                                 else:
-                                    ErrorHandler.logError(board, piece, toSquare, Error.friendlyFire)
+                                    if isCheckForCheck: ErrorHandler.logError(board, piece, toSquare,
+                                                                              Error.friendlyFire)
                             else:
-                                ErrorHandler.logError(board, piece, toSquare, Error.kingCapture)
+                                if isCheckForCheck: ErrorHandler.logError(board, piece, toSquare, Error.kingCapture)
                         else:
-                            ErrorHandler.logError(board, piece, toSquare, Error.invalidDestination)
+                            if isCheckForCheck: ErrorHandler.logError(board, piece, toSquare, Error.invalidDestination)
                     else:
-                        ErrorHandler.logError(board, piece, toSquare, Error.invalidMove)
+                        if isCheckForCheck: ErrorHandler.logError(board, piece, toSquare, Error.invalidMove)
                 else:
-                    ErrorHandler.logError(board, piece, toSquare, Error.wrongTurn)
+                    if isCheckForCheck: ErrorHandler.logError(board, piece, toSquare, Error.wrongTurn)
             else:
-                ErrorHandler.logError(board, piece, toSquare, Error.invalidPiece)
+                if isCheckForCheck: ErrorHandler.logError(board, piece, toSquare, Error.invalidPiece)
         else:
-            ErrorHandler.logError(board, piece, toSquare, Error.samePosition)
+            if isCheckForCheck: ErrorHandler.logError(board, piece, toSquare, Error.samePosition)
 
         return result
 
     @staticmethod
     def movePiece(piece, board, player, toSquare):
         if MoveGenerator.canMovePiece(piece, board, player, toSquare):
-            if board.movePiece(piece, toSquare):
+            if board.movePiece(piece, toSquare, player):
                 piece.updatePosition(toSquare)
+
+                # If moved pawn exists (enpassant pawn), remove it (capture it)
+                if player.lastMoveType == MoveType.enpassant:
+                    if board.movedPawn:
+                        board.putEmptyPieceOnPosition(board.movedPawn.position)
+                        board.movedPawn = None
+
+                # If castled rook exists, move it next to king - in other words complete caslting
+                elif player.lastMoveType == MoveType.castling:
+                    castledRook = board.castledRook
+                    if castledRook:
+                        # Put the rook at at an appropriate position after castling
+                        if player.kingSideRook == castledRook:
+                            castledRookUpdatedPosition = Square(FileIndex.kF, castledRook.position.rank)
+                            board.putPieceOnPosition(castledRook, castledRookUpdatedPosition)
+                        elif player.queenSideRook == castledRook:
+                            castledRookUpdatedPosition = Square(FileIndex.kD, castledRook.position.rank)
+                            board.putPieceOnPosition(castledRook, castledRookUpdatedPosition)
+                        # Put an empty piece in place of rook
+                        board.putEmptyPieceOnPosition(castledRook.position)
+                        board.castledRook = None
+                        castledRook.updatePosition(castledRookUpdatedPosition)
+
+                # If the piece moved is pawn
+                # Store it in moved pawn property
+                if piece.value == Values.pawn:
+                    board.movedPawn = piece
+                else:
+                    board.movedPawn = None
+
                 return True
         return False

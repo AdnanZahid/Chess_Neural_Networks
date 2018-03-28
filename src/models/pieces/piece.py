@@ -1,3 +1,4 @@
+from src.others.constants import *
 from src.others.utility import *
 
 
@@ -21,6 +22,9 @@ class Piece:
         return "{} at {}".format(self.symbol, self.position)
 
     def canMovePiece(self, board, toSquare, player=None):
+        if not (self.value == Values.king) and player:
+            player.lastMoveType = MoveType.normal
+
         move = EvaluationMove(self.position, toSquare)
         return Utility.isMoveInCorrectDirection(move, self.directionsList, self.strategy) \
                and board.checkIfSquareIsNotNil(toSquare) \
