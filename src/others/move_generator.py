@@ -1,8 +1,7 @@
 import copy
 
-from src.others.constants import *
+from src.models.pieces.pawn import *
 from src.others.error_handler import *
-from src.others.utility import *
 
 
 # This class handles all the Board related tasks
@@ -147,20 +146,21 @@ class MoveGenerator:
         targetPiece = board.getPieceOnPosition(toSquare)
         # Simple 1 step or 2 step moves
         if board.checkIfSquareIsEmpty(toSquare):
+            enpassantPiece = board.getPieceOnPosition(toSquare - (0, Pawn.pawnMoveDirection(piece.color, 1)))
             if Utility.getFileAndRankAdvance(EvaluationMove(piece.position, toSquare)) == piece.directionsList[0]:
                 result = True
             elif Utility.getFileAndRankAdvance(EvaluationMove(piece.position, toSquare)) == piece.directionsList[1] \
                     and piece.hasMoved == False:
                 result = board.checkForClearPath(EvaluationMove(piece.position, toSquare))
+            # Enpassant case (if enpassant piece exists)
+            elif not (enpassantPiece == None):
+                fileAndRankAdvance = Utility.getFileAndRankAdvance(
+                    EvaluationMove(piece.position, toSquare))
+                result = fileAndRankAdvance == piece.directionsList[2] or fileAndRankAdvance == piece.directionsList[3]
         # Simple capture (works only if target piece exists and is of opposite color)
         elif not (targetPiece == None) and not (targetPiece.color == piece.color):
             fileAndRankAdvance = Utility.getFileAndRankAdvance(EvaluationMove(piece.position, toSquare))
             result = fileAndRankAdvance == piece.directionsList[2] or fileAndRankAdvance == piece.directionsList[3]
-        elif targetPiece == None:
-            enpassantPiece = board.getPieceOnPosition(targetPiece.position - (0, Pawn.pawnMoveDirection(piece.color, 1)))
-            if not(enpassantPiece == None):
-                fileAndRankAdvance = Utility.getFileAndRankAdvance(EvaluationMove(piece.position, enpassantPiece.position))
-                result = fileAndRankAdvance == piece.directionsList[2] or fileAndRankAdvance == piece.directionsList[3]
 
         return result
 
