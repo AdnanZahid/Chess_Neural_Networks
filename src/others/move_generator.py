@@ -152,11 +152,16 @@ class MoveGenerator:
             elif Utility.getFileAndRankAdvance(EvaluationMove(piece.position, toSquare)) == piece.directionsList[1] \
                     and piece.hasMoved == False:
                 result = board.checkForClearPath(EvaluationMove(piece.position, toSquare))
-            # Enpassant case (if enpassant piece exists)
-            elif not (enpassantPiece == None):
+            #######################################################
+            # Start of enpassant case (if enpassant piece exists) #
+            #######################################################
+            elif not (enpassantPiece == None) and not (enpassantPiece.color == piece.color):
                 fileAndRankAdvance = Utility.getFileAndRankAdvance(
                     EvaluationMove(piece.position, toSquare))
                 result = fileAndRankAdvance == piece.directionsList[2] or fileAndRankAdvance == piece.directionsList[3]
+            #####################################################
+            # End of enpassant case (if enpassant piece exists) #
+            #####################################################
         # Simple capture (works only if target piece exists and is of opposite color)
         elif not (targetPiece == None) and not (targetPiece.color == piece.color):
             fileAndRankAdvance = Utility.getFileAndRankAdvance(EvaluationMove(piece.position, toSquare))
