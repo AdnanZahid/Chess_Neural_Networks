@@ -28,11 +28,11 @@ class King(Piece):
         self.directionsList.append((-1, 0))
         self.directionsList.append((0, -1))
 
-        # Castling directions
+    def canMovePiece(self, board, toSquare, player=None):
+
+        # Add castling directions
         self.directionsList.append((2, 0))
         self.directionsList.append((-2, 0))
-
-    def canMove(self, board, toSquare, player=None):
 
         result = False
         if board.getPieceOnPosition(toSquare) == None and not (player == None):
@@ -45,11 +45,18 @@ class King(Piece):
             if player.kingSideRook.position == toSquare + (1, 0):
                 rook = player.kingSideRook
                 if not (player.king.hasMoved) and not (rook.hasMoved) and not (rook.captured):
-                    result = player.kingSideRook.canMove(board, kingSideRookPositionAfterCastling) and super().canMove(board, toSquare)
+                    result = player.kingSideRook.canMovePiece(board, kingSideRookPositionAfterCastling) and super().canMovePiece(
+                        board, toSquare)
             elif player.queenSideRook.position == toSquare - (2, 0):
                 rook = player.queenSideRook
                 if not (player.king.hasMoved) and not (rook.hasMoved) and not (rook.captured):
-                    result = player.queenSideRook.canMove(board, queenSideRookPositionAfterCastling) and super().canMove(board, toSquare)
+                    result = player.queenSideRook.canMovePiece(board,
+                                                          queenSideRookPositionAfterCastling) and super().canMovePiece(board,
+                                                                                                                  toSquare)
+
+        # Remove castling directions
+        self.directionsList.remove((2, 0))
+        self.directionsList.remove((-2, 0))
 
         move = EvaluationMove(self.position, toSquare)
-        return result or super().canMove(board, toSquare)
+        return result or super().canMovePiece(board, toSquare)

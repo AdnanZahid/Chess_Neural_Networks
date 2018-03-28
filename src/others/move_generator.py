@@ -56,7 +56,7 @@ class MoveGenerator:
         possibleMovesToSquaresList = []
         newPosition = piece.position + fileRankPair
 
-        if MoveGenerator.canMove(piece, board, player, newPosition, isCheckForCheck, isCanTakeKing):
+        if MoveGenerator.canMovePiece(piece, board, player, newPosition, isCheckForCheck, isCanTakeKing):
             possibleMovesToSquaresList.append(newPosition)
             newPosition = newPosition + fileRankPair
 
@@ -69,7 +69,7 @@ class MoveGenerator:
         possibleMovesToSquaresList = []
         newPosition = piece.position + fileRankPair
 
-        while MoveGenerator.canMove(piece, board, player, newPosition, isCheckForCheck, isCanTakeKing):
+        while MoveGenerator.canMovePiece(piece, board, player, newPosition, isCheckForCheck, isCanTakeKing):
             possibleMovesToSquaresList.append(newPosition)
             newPosition = newPosition + fileRankPair
 
@@ -77,7 +77,7 @@ class MoveGenerator:
 
     @staticmethod
     # Think twice before using isCanTakeKing=True!
-    def canMove(piece, board, player, toSquare, isCheckForCheck=True, isCanTakeKing=False):
+    def canMovePiece(piece, board, player, toSquare, isCheckForCheck=True, isCanTakeKing=False):
         result = False
         # STARTING and ENDING squares are not the same
         if not (piece.position == toSquare):
@@ -86,7 +86,7 @@ class MoveGenerator:
                 # This PIECE COLOR has the CURRENT TURN
                 if piece.color == player.color:
                     # Check if PIECE can MOVE
-                    if piece.canMove(board, toSquare, player):
+                    if piece.canMovePiece(board, toSquare, player):
                         # Can not go out of bounds
                         try:
                             existingPiece = board.grid[toSquare.rank][toSquare.file]
@@ -131,3 +131,11 @@ class MoveGenerator:
             ErrorHandler.logError(board, piece, toSquare, Error.samePosition)
 
         return result
+
+    @staticmethod
+    def movePiece(piece, board, player, toSquare):
+        if MoveGenerator.canMovePiece(piece, board, player, toSquare):
+            if board.movePiece(piece, toSquare):
+                piece.updatePosition(toSquare)
+                return True
+        return False

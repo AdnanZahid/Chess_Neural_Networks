@@ -28,13 +28,13 @@ class TestUtility(unittest.TestCase):
 
     # GET PIECE and move it to the SQUARE, asserts TRUE
     def moveToSquare(self, piece, toSquare):
-        self.assertTrue(MoveGenerator.canMove(piece, self.board, self.player, toSquare))
+        self.assertTrue(MoveGenerator.canMovePiece(piece, self.board, self.player, toSquare))
         self.assertTrue(self.board.movePiece(piece, toSquare))
         piece.updatePosition(toSquare)
 
     # GET PIECE and FAIL to move it to the SQUARE, asserts FALSE
     def failToMoveToSquare(self, piece, toSquare):
-        self.assertFalse(MoveGenerator.canMove(piece, self.board, self.player, toSquare))
+        self.assertFalse(MoveGenerator.canMovePiece(piece, self.board, self.player, toSquare))
 
     # GET PIECE by PieceValue and perform the MOVE on it, returns FALSE
     def failToMove(self, pieceValue, move):
@@ -62,7 +62,7 @@ class TestUtility(unittest.TestCase):
 
     # GET PIECE and move on it to the SQUARE, asserts FALSE
     def invalidMove(self, piece, toSquare):
-        self.assertFalse(MoveGenerator.canMove(piece, self.board, self.player, toSquare))
+        self.assertFalse(MoveGenerator.canMovePiece(piece, self.board, self.player, toSquare))
 
         # MOVING the PIECE to the given SQUARE on a completely NEW BOARD - EXPECTING it to PASS
         self.validMoveOnNewBoard(Board(), piece, toSquare)

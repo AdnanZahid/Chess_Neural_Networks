@@ -1,6 +1,5 @@
-from src.others.piece_factory import *
 from src.models.squares import *
-from src.others.constants import *
+from src.others.piece_factory import *
 
 
 # This class handles all the Board related tasks
@@ -9,14 +8,8 @@ class Board:
 
     # Initialize an EMPTY board
     def __init__(self):
-        self.kNumberOfSquaresAlongX = piecesConfigurationList[0].count
-        self.kNumberOfSquaresAlongY = piecesConfigurationList.count
-
-        # Initialize piece list with Nil pieces
+        # Initialize piece list with NIL pieces
         self.grid = [[None for x in range(kNumberOfSquaresAlongY)] for y in range(kNumberOfSquaresAlongX)]
-
-        # EVALUATION VALUE for computing AI MOVES - POSITIVE for WHITE domination and NEGATIVE for BLACK domination
-        self.evaluationValue = 0
 
         # A STACK for storing MOVESTATES - So we can UNDO them (helps in AI MOVES)
         self.moveStateStack = []
@@ -24,15 +17,25 @@ class Board:
         # Fill the board with EMPTY pieces (piece type EMPTY)
         self.setupEmptyBoard()
 
+        # If the piece moved is pawn
+        # Store it in moved pawn property
+        self.movedPawn = None
+
     # MOVE PIECE from STARTING SQUARE to ENDING SQUARE
     def movePiece(self, piece, toSquare):
+        result = False
         previousPosition = piece.position
         # Check if PIECE can be put on the DESTINATION SQUARE
         if self.putPieceOnPosition(piece, toSquare):
             # Check if an EMPTY piece can be PUT on STARTING POSITION
-            return self.putEmptyPieceOnPosition(previousPosition)
+            if self.putEmptyPieceOnPosition(previousPosition):
+                result = True
+                # If the piece moved is pawn
+                # Store it in moved pawn property
+                if piece.value == Values.pawn:
+                    self.movedPawn = piece
 
-        return False
+        return result
 
     # CHECK if given SQUARE is EMPTY
     def checkIfSquareIsEmpty(self, square):

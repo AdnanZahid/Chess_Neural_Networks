@@ -24,7 +24,7 @@ class Pawn(Piece):
         self.directionsList.append((-1, self.pawnMoveDirection(1)))
         self.directionsList.append((1, self.pawnMoveDirection(1)))
 
-    def canMove(self, board, toSquare, player=None):
+    def canMovePiece(self, board, toSquare, player=None):
 
         result = False
         targetPiece = board.getPieceOnPosition(toSquare)
@@ -39,7 +39,8 @@ class Pawn(Piece):
             #######################################################
             # Start of enpassant case (if enpassant piece exists) #
             #######################################################
-            elif not (enpassantPiece == None) and not (enpassantPiece.color == self.color):
+            elif not (enpassantPiece == None) and enpassantPiece == board.movedPawn and not (
+                    enpassantPiece.color == self.color):
                 fileAndRankAdvance = Utility.getFileAndRankAdvance(
                     EvaluationMove(self.position, toSquare))
                 result = fileAndRankAdvance == self.directionsList[2] or fileAndRankAdvance == self.directionsList[3]
@@ -52,7 +53,7 @@ class Pawn(Piece):
             result = fileAndRankAdvance == self.directionsList[2] or fileAndRankAdvance == self.directionsList[3]
 
         move = EvaluationMove(self.position, toSquare)
-        return result and super().canMove(board, toSquare)
+        return result and super().canMovePiece(board, toSquare)
 
     def pawnMoveDirection(self, number):
         return self.color * number

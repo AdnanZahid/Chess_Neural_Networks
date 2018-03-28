@@ -22,11 +22,7 @@ class Player:
 
     def move(self, move):
         piece = self.board.getPieceOnPosition(move.fromSquare)
-        if MoveGenerator.canMove(piece, self.board, self, move.toSquare):
-            if self.board.movePiece(piece, move.toSquare):
-                piece.updatePosition(move.toSquare)
-                return True
-        return False
+        return MoveGenerator.movePiece(piece, self.board, self, move.toSquare)
 
     def getAllPossibleTargetSquares(self, board):
         return set(MoveGenerator.generatePossibleTargetSquaresForAllPieces(board, self, isCheckForCheck=False))
@@ -50,7 +46,7 @@ class Player:
                     newPiece = copy.deepcopy(piece)
                     newPiece.board = newBoard
                     for targetSquare in MoveGenerator.generatePossibleTargetSquares(piece, newBoard, self):
-                        if MoveGenerator.canMove(newPiece, newBoard, self, targetSquare):
+                        if MoveGenerator.canMovePiece(newPiece, newBoard, self, targetSquare):
                             if newBoard.movePiece(newPiece, targetSquare):
                                 newPiece.updatePosition(targetSquare)
                                 # A quick hack to check for new king which is different from original king
