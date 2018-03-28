@@ -13,15 +13,15 @@ class BishopDisallowMovesTests(unittest.TestCase):
     # // WHITE //
     # ///////////
 
-    def testMoveWhiteBishopFromA1ToH8(self):
+    def testFailToMoveWhiteBishopFromA1ToA8(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
         self.testUtility.failToMove(Values.bishop, self.testUtility.getMove(A1, A8))
 
-    def testMoveWhiteBishopFromH1ToA8(self):
+    def testFailToMoveWhiteBishopFromH1ToA1(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
         self.testUtility.failToMove(Values.bishop, self.testUtility.getMove(H1, A1))
 
-    def testMoveWhiteBishopFromD4ToE5ToF4(self):
+    def testFailToMoveWhiteBishopFromD4ToD5ToF4(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
         self.testUtility.failToMoveToSquare(
             self.testUtility.failToMove(Values.bishop, self.testUtility.getMove(D4, D5)),
@@ -31,15 +31,15 @@ class BishopDisallowMovesTests(unittest.TestCase):
     # // BLACK //
     # ///////////
 
-    def testMoveBlackBishopFromA1ToH8(self):
+    def testFailToMoveBlackBishopFromA1ToA8(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
         self.testUtility.failToMove(-Values.bishop, self.testUtility.getMove(A1, A8))
 
-    def testMoveBlackBishopFromH1ToA8(self):
+    def testFailToMoveBlackBishopFromH1ToA1(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
         self.testUtility.failToMove(-Values.bishop, self.testUtility.getMove(H1, A1))
 
-    def testMoveBlackBishopFromD4ToE5ToF4(self):
+    def testFailToMoveBlackBishopFromD4ToD5ToF4(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
         self.testUtility.failToMoveToSquare(
             self.testUtility.failToMove(-Values.bishop, self.testUtility.getMove(D4, D5)),

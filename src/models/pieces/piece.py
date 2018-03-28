@@ -20,7 +20,7 @@ class Piece:
     def __repr__(self):
         return "{} at {}".format(self.symbol, self.position)
 
-    def canMove(self, board, toSquare):
+    def canMove(self, board, toSquare, player=None):
         move = EvaluationMove(self.position, toSquare)
         return Utility.isMoveInCorrectDirection(move, self.directionsList, self.strategy) \
                and board.checkIfSquareIsNotNil(toSquare) \

@@ -86,7 +86,7 @@ class MoveGenerator:
                 # This PIECE COLOR has the CURRENT TURN
                 if piece.color == player.color:
                     # Check if PIECE can MOVE
-                    if piece.canMove(board, toSquare):
+                    if piece.canMove(board, toSquare, player):
                         # Can not go out of bounds
                         try:
                             existingPiece = board.grid[toSquare.rank][toSquare.file]
@@ -130,61 +130,4 @@ class MoveGenerator:
         else:
             ErrorHandler.logError(board, piece, toSquare, Error.samePosition)
 
-        # Pawn and king logic is handled separately because they depend on other pieces too
-        # Such as normal pawn moves, enpassant and castling
-        if piece.value == Values.pawn:
-            result = result and MoveGenerator.canMovePawn(piece, board, toSquare)
-        elif piece.value == Values.king:
-            result = result or MoveGenerator.canCastle(piece, board, player, toSquare, result)
-
         return result
-
-    @staticmethod
-    def canMovePawn(piece, board, toSquare):
-
-        result = False
-        targetPiece = board.getPieceOnPosition(toSquare)
-        # Simple 1 step or 2 step moves
-        if board.checkIfSquareIsEmpty(toSquare):
-            enpassantPiece = board.getPieceOnPosition(toSquare - (0, Pawn.pawnMoveDirection(piece.color, 1)))
-            if Utility.getFileAndRankAdvance(EvaluationMove(piece.position, toSquare)) == piece.directionsList[0]:
-                result = True
-            elif Utility.getFileAndRankAdvance(EvaluationMove(piece.position, toSquare)) == piece.directionsList[1] \
-                    and piece.hasMoved == False:
-                result = board.checkForClearPath(EvaluationMove(piece.position, toSquare))
-            #######################################################
-            # Start of enpassant case (if enpassant piece exists) #
-            #######################################################
-            elif not (enpassantPiece == None) and not (enpassantPiece.color == piece.color):
-                fileAndRankAdvance = Utility.getFileAndRankAdvance(
-                    EvaluationMove(piece.position, toSquare))
-                result = fileAndRankAdvance == piece.directionsList[2] or fileAndRankAdvance == piece.directionsList[3]
-            #####################################################
-            # End of enpassant case (if enpassant piece exists) #
-            #####################################################
-        # Simple capture (works only if target piece exists and is of opposite color)
-        elif not (targetPiece == None) and not (targetPiece.color == piece.color):
-            fileAndRankAdvance = Utility.getFileAndRankAdvance(EvaluationMove(piece.position, toSquare))
-            result = fileAndRankAdvance == piece.directionsList[2] or fileAndRankAdvance == piece.directionsList[3]
-
-        return result
-
-    @staticmethod
-    def canCastle(piece, board, player, toSquare, kingMoveResult):
-        if kingMoveResult and board.getPieceOnPosition(toSquare) == None:
-
-            kingSideRookPositionBeforeCastling = toSquare + (1, 0)
-            queenSideRookPositionBeforeCastling = toSquare - (2, 0)
-            kingSideRookPositionAfterCastling = toSquare - (1, 0)
-            queenSideRookPositionAfterCastling = toSquare + (1, 0)
-
-            if player.kingSideRook.position == toSquare + (1, 0):
-                rook = player.kingSideRook
-                if not (player.king.hasMoved) and not (rook.hasMoved) and not (rook.captured):
-                    return player.kingSideRook.canMove(board, kingSideRookPositionAfterCastling)
-            elif player.queenSideRook.position == toSquare - (2, 0):
-                rook = player.queenSideRook
-                if not (player.king.hasMoved) and not (rook.hasMoved) and not (rook.captured):
-                    return player.queenSideRook.canMove(board, queenSideRookPositionAfterCastling)
-
-        return False

@@ -24,6 +24,36 @@ class Pawn(Piece):
         self.directionsList.append((-1, Pawn.pawnMoveDirection(self.color, 1)))
         self.directionsList.append((1, Pawn.pawnMoveDirection(self.color, 1)))
 
+    def canMove(self, board, toSquare, player=None):
+
+        result = False
+        targetPiece = board.getPieceOnPosition(toSquare)
+        # Simple 1 step or 2 step moves
+        if board.checkIfSquareIsEmpty(toSquare):
+            enpassantPiece = board.getPieceOnPosition(toSquare - (0, Pawn.pawnMoveDirection(self.color, 1)))
+            if Utility.getFileAndRankAdvance(EvaluationMove(self.position, toSquare)) == self.directionsList[0]:
+                result = True
+            elif Utility.getFileAndRankAdvance(EvaluationMove(self.position, toSquare)) == self.directionsList[1] \
+                    and self.hasMoved == False:
+                result = board.checkForClearPath(EvaluationMove(self.position, toSquare))
+            #######################################################
+            # Start of enpassant case (if enpassant piece exists) #
+            #######################################################
+            elif not (enpassantPiece == None) and not (enpassantPiece.color == self.color):
+                fileAndRankAdvance = Utility.getFileAndRankAdvance(
+                    EvaluationMove(self.position, toSquare))
+                result = fileAndRankAdvance == self.directionsList[2] or fileAndRankAdvance == self.directionsList[3]
+            #####################################################
+            # End of enpassant case (if enpassant piece exists) #
+            #####################################################
+        # Simple capture (works only if target piece exists and is of opposite color)
+        elif not (targetPiece == None) and not (targetPiece.color == self.color):
+            fileAndRankAdvance = Utility.getFileAndRankAdvance(EvaluationMove(self.position, toSquare))
+            result = fileAndRankAdvance == self.directionsList[2] or fileAndRankAdvance == self.directionsList[3]
+
+        move = EvaluationMove(self.position, toSquare)
+        return result and super().canMove(board, toSquare)
+
     @staticmethod
     def pawnMoveDirection(color, number):
         return color * number

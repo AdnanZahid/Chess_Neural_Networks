@@ -13,15 +13,15 @@ class KingDisallowMovesTests(unittest.TestCase):
     # // WHITE //
     # ///////////
 
-    def testMoveWhiteKingFromA1ToB2(self):
+    def testFailToMoveWhiteKingFromA1ToC2(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
         self.testUtility.failToMove(Values.king, self.testUtility.getMove(A1, C2))
 
-    def testMoveWhiteKingFromG7ToG8(self):
+    def testFailToMoveWhiteKingFromG7ToB8(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
         self.testUtility.failToMove(Values.king, self.testUtility.getMove(G7, B8))
 
-    def testMoveWhiteKingFromD4ToE5ToF4(self):
+    def testFailToMoveWhiteKingFromA4ToE5ToF4(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
         self.testUtility.failToMoveToSquare(self.testUtility.failToMove(Values.king, self.testUtility.getMove(A4, E5)),
                                       F4)
@@ -30,15 +30,15 @@ class KingDisallowMovesTests(unittest.TestCase):
     # // BLACK //
     # ///////////
 
-    def testMoveBlackKingFromA1ToB2(self):
+    def testFailToMoveBlackKingFromD1ToB2(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
         self.testUtility.failToMove(-Values.king, self.testUtility.getMove(D1, B2))
 
-    def testMoveBlackKingFromG7ToG8(self):
+    def testFailToMoveBlackKingFromA7ToG8(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
         self.testUtility.failToMove(-Values.king, self.testUtility.getMove(A7, G8))
 
-    def testMoveBlackKingFromD4ToE5ToF4(self):
+    def testFailToMoveBlackKingFromA4ToE5ToF4(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
         self.testUtility.failToMoveToSquare(self.testUtility.failToMove(-Values.king, self.testUtility.getMove(A4, E5)),
                                             F4)
