@@ -26,9 +26,14 @@ class TestUtility(unittest.TestCase):
 
         return piece
 
-    # GET PIECE and move on it to the SQUARE, asserts TRUE
+    # GET PIECE and move it to the SQUARE, asserts TRUE
     def moveToSquare(self, piece, toSquare):
+        self.assertTrue(MoveGenerator.canMove(piece, self.board, self.player, toSquare))
         self.assertTrue(self.board.movePiece(piece, toSquare))
+
+    # GET PIECE and FAIL to move it to the SQUARE, asserts FALSE
+    def failToMoveToSquare(self, piece, toSquare):
+        self.assertFalse(MoveGenerator.canMove(piece, self.board, self.player, toSquare))
 
     # GET PIECE by PieceValue and perform the MOVE on it, returns FALSE
     def failtoMove(self, pieceValue, move):

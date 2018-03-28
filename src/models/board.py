@@ -1,7 +1,6 @@
 from src.models.pieces.piece_factory import *
 from src.models.squares import *
 from src.others.constants import *
-from src.others.utility import *
 
 
 # This class handles all the Board related tasks
@@ -75,19 +74,19 @@ class Board:
         result = True
 
         # GET a FILE RANK PAIR from a given MOVE - FILE RANK PAIR indicates the DIRECTION
-        fileRankPair = getFileAndRankAdvance(EvaluationMove(move.fromSquare, move.toSquare))
+        fileRankPair = Utility.getFileAndRankAdvance(EvaluationMove(move.fromSquare, move.toSquare))
 
         # GET the STARTING POSITION
         positionToCheck = move.fromSquare
 
         # GET the POSITION BEFORE the ENDING POSITION - Call it SECOND LAST SQUARE
-        secondLastSquare = move.toSquare - getFileAndRankSingleAdvance(fileRankPair)
+        secondLastSquare = move.toSquare - Utility.getFileAndRankSingleAdvance(fileRankPair)
 
         # CHECK IF STARTING POSITION and SECOND LAST SQUARE are not the SAME - In other words, CHECK if we have to CHECK for a CLEAR PATH
         while not (positionToCheck == secondLastSquare):
 
             # INCREMENT the CURRENT POSITION STEP by STEP towards the FINAL POSITION
-            positionToCheck = positionToCheck + getFileAndRankSingleAdvance(fileRankPair)
+            positionToCheck = positionToCheck + Utility.getFileAndRankSingleAdvance(fileRankPair)
 
             # CHECK IF the CURRENT POSITION is EMPTY - Hence FIND OUT if a CLEAR PATH exists
             result = self.checkIfSquareIsEmpty(positionToCheck)

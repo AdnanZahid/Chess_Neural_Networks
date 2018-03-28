@@ -136,7 +136,7 @@ class MoveGenerator:
         if piece.value == Values.pawn:
             result = result and MoveGenerator.canMovePawn(piece, board, toSquare)
         elif piece.value == Values.king:
-            result = result or MoveGenerator.canCastle(piece, board, player, toSquare)
+            result = result or MoveGenerator.canCastle(piece, board, player, toSquare, result)
 
         return result
 
@@ -146,26 +146,33 @@ class MoveGenerator:
         result = False
         targetPiece = board.getPieceOnPosition(toSquare)
         if board.checkIfSquareIsEmpty(toSquare):
-            if getFileAndRankAdvance(EvaluationMove(piece.position, toSquare)) == piece.directionsList[0]:
+            if Utility.getFileAndRankAdvance(EvaluationMove(piece.position, toSquare)) == piece.directionsList[0]:
                 result = True
-            elif getFileAndRankAdvance(EvaluationMove(piece.position, toSquare)) == piece.directionsList[1] \
+            elif Utility.getFileAndRankAdvance(EvaluationMove(piece.position, toSquare)) == piece.directionsList[1] \
                     and piece.hasMoved == False:
                 result = board.checkForClearPath(EvaluationMove(piece.position, toSquare))
         elif not (targetPiece == None) and not (targetPiece.color == piece.color):
-            fileAndRankAdvance = getFileAndRankAdvance(EvaluationMove(piece.position, toSquare))
+            fileAndRankAdvance = Utility.getFileAndRankAdvance(EvaluationMove(piece.position, toSquare))
             result = fileAndRankAdvance == piece.directionsList[2] or fileAndRankAdvance == piece.directionsList[3]
 
         return result
 
     @staticmethod
-    def canCastle(piece, board, player, toSquare):
-        if player.kingSideRook.position == toSquare - (1, 0):
-            rook = player.kingSideRook
-            if not (player.king.hasMoved) and not (rook.hasMoved) and not (rook.captured):
-                return True
-        elif player.queenSideRook.position == toSquare + (2, 0):
-            rook = player.queenSideRook
-            if not (player.king.hasMoved) and not (rook.hasMoved) and not (rook.captured):
-                return True
+    def canCastle(piece, board, player, toSquare, kingMoveResult):
+        if kingMoveResult and board.getPieceOnPosition(toSquare) == None:
+
+            kingSideRookPositionBeforeCastling = toSquare + (1, 0)
+            queenSideRookPositionBeforeCastling = toSquare - (2, 0)
+            kingSideRookPositionAfterCastling = toSquare - (1, 0)
+            queenSideRookPositionAfterCastling = toSquare + (1, 0)
+
+            if player.kingSideRook.position == toSquare + (1, 0):
+                rook = player.kingSideRook
+                if not (player.king.hasMoved) and not (rook.hasMoved) and not (rook.captured):
+                    return player.kingSideRook.canMove(board, kingSideRookPositionAfterCastling)
+            elif player.queenSideRook.position == toSquare - (2, 0):
+                rook = player.queenSideRook
+                if not (player.king.hasMoved) and not (rook.hasMoved) and not (rook.captured):
+                    return player.queenSideRook.canMove(board, queenSideRookPositionAfterCastling)
 
         return False

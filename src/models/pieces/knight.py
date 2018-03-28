@@ -23,5 +23,8 @@ class Knight(Piece):
         self.directionsList.append((-2, -1))
 
     def canMove(self, board, toSquare):
-        return board.checkIfSquareIsNotNil(toSquare) \
-               and board.checkIfEmptyOrEnemyPieceExists(self.color, toSquare)
+        move = EvaluationMove(self.position, toSquare)
+
+        return Utility.isMoveInCorrectDirection(move, self.directionsList) \
+               and board.checkIfSquareIsNotNil(toSquare) \
+               and board.checkForClearPath(move)

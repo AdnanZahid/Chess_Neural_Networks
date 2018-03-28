@@ -1,4 +1,4 @@
-from src.others.structures import *
+from src.others.utility import *
 
 
 # This class handles all the piece-centric logic
@@ -20,9 +20,13 @@ class Piece:
         return "{} at {}".format(self.symbol, self.position)
 
     def canMove(self, board, toSquare):
-        return board.checkIfSquareIsNotNil(toSquare) \
+        move = EvaluationMove(self.position, toSquare)
+
+        return Utility.isMoveInCorrectDirection(move, self.directionsList) \
+               and board.checkIfSquareIsNotNil(toSquare) \
                and board.checkIfEmptyOrEnemyPieceExists(self.color, toSquare) \
-               and board.checkForClearPath(EvaluationMove(self.position, toSquare))
+               and board.checkForClearPath(move)
+
 
 class EmptyPiece:
     def __init__(self):
