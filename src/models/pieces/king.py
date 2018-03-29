@@ -63,8 +63,7 @@ class King(Piece):
 
         if wasCastlingSuccessful:
             player.lastMoveType = MoveType.castling
+            return wasCastlingSuccessful
         else:
             player.lastMoveType = MoveType.normal
-
-        move = EvaluationMove(self.position, toSquare)
-        return wasCastlingSuccessful or super().canMovePiece(board, toSquare)
+            return super().canMovePiece(board, toSquare)

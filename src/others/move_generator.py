@@ -1,6 +1,7 @@
 import copy
 
 from src.models.squares import *
+from src.others.constants import *
 from src.others.error_handler import *
 
 

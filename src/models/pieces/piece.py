@@ -1,6 +1,4 @@
-from src.others.constants import *
 from src.others.utility import *
-
 
 # This class handles all the piece-centric logic
 class Piece:
@@ -22,7 +20,7 @@ class Piece:
         return "{} at {}".format(self.symbol, self.position)
 
     def canMovePiece(self, board, toSquare, player=None):
-        if not (self.value == Values.king) and player:
+        if player:
             player.lastMoveType = MoveType.normal
 
         move = EvaluationMove(self.position, toSquare)
