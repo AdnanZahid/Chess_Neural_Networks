@@ -57,7 +57,6 @@ class Player:
                 # And then check if the new player is under check or not
                 newBoard = copy.deepcopy(board)
                 newPiece = copy.deepcopy(piece)
-                newPiece.board = newBoard
                 for targetSquare in MoveGenerator.generatePossibleTargetSquares(piece, newBoard, newPlayer):
                     if MoveGenerator.movePiece(newPiece, newBoard, newPlayer, targetSquare):
                         newPiece.updatePosition(targetSquare)
@@ -66,7 +65,7 @@ class Player:
                             newKing = newPiece
                         else:
                             newKing = self.king
-                        if not (self.isUnderCheck(newBoard, newKing.position)):
+                        if not (newPlayer.isUnderCheck(newBoard, newKing.position)):
                             return False
             return True
         return False

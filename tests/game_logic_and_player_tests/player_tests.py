@@ -56,11 +56,31 @@ class PlayerTests(unittest.TestCase):
         # Now check if white king is under checkmate
         self.assertTrue(self.whitePlayer.isUnderCheckMate(self.board))
 
-    def testCaptureWhiteQueenThatHasEnteredBlacksCamp(self):
+    def testCaptureWhiteQueenThatHasEnteredBlacksCampByRook(self):
         # Infilterate blacks camp with white queen (and get captured)
         self.infilterateBlacksCampWithWhiteQueen()
         # Capture white's queen on D8 by black's rook on F8
         self.assertTrue(self.move(F8, D8))
+
+    def testCaptureWhiteQueenThatHasEnteredBlacksCampByBishopAfterItCapturesTheRook(self):
+        # Infilterate blacks camp with white queen (and get captured)
+        self.infilterateBlacksCampWithWhiteQueen()
+        # Move black pawn on A7 to A6
+        self.assertTrue(self.move(A7, A6))
+        # Move white queen on D8 to F8
+        self.assertTrue(self.move(D8, F8))
+        # Now check if black bishop on C5 can move at all
+        self.assertFalse(MoveGenerator.generatePossibleTargetSquares(self.board.getPieceOnPosition(C5), self.board, self.blackPlayer) == [])
+
+    def testBlockWhiteQueenThatHasEnteredBlacksCampByKnightAfterItCapturesTheRook(self):
+        # Infilterate blacks camp with white queen (and get captured)
+        self.infilterateBlacksCampWithWhiteQueen()
+        # Move black pawn on F8 to E8
+        self.assertTrue(self.move(F8, E8))
+        # Move white queen on D8 to E8
+        self.assertTrue(self.move(D8, E8))
+        # Now check if black king is under checkmate (it should fail)
+        self.assertFalse(self.blackPlayer.isUnderCheckMate(self.board))
 
     def testTrytoMoveWhileInCheckVariation1(self):
         # 1. f3 e5

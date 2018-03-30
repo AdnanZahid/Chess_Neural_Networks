@@ -117,7 +117,6 @@ class MoveGenerator:
                                             newPlayer = copy.deepcopy(player)
                                             newPlayerOpponent = copy.deepcopy(player.opponent)
                                             newPlayer.opponent = newPlayerOpponent
-                                            newPiece.board = newBoard
                                             newBoard.movePiece(newPiece, toSquare, newPlayer)
                                             newPiece.updatePosition(toSquare)
                                             # A quick hack to check for new king position which is different from original king

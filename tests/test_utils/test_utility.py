@@ -55,7 +55,6 @@ class TestUtility(unittest.TestCase):
 
     # GET PIECE and move on it to the SQUARE on a completely NEW BOARD, asserts TRUE
     def validMoveOnNewBoard(self, board, piece, toSquare):
-        piece.board = board
         board.putPieceOnPosition(piece, piece.position)
         self.assertTrue(board.movePiece(piece, toSquare))
 
