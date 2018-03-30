@@ -46,7 +46,7 @@ class Controller(InputHandlerDelegate):
         # TELL GAMELOGIC to MAKE the MOVE if VALID
         if self.gameLogic.move(move):
             # SHOW OUTPUT on VIEW
-            self.outputHandler.output(move)
+            self.outputHandler.output()
             if self.gameLogic.currentPlayer.isUnderCheckMate(self.gameLogic.board):
                 self.outputHandler.setIsGameOver(True)
         else:

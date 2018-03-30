@@ -54,6 +54,7 @@ class View:
         self.inputHandlerDelegate.setupNewGame()
 
     def output(self):
+        # Nothing to do here since PyGame runs in a game loop architecture (instead of a turn based architecture)
         pass
 
     def move(self, move):
