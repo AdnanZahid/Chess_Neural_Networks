@@ -99,10 +99,7 @@ class Board:
     # GET a PIECE from the given SQUARE
     def getPieceOnPosition(self, square):
         # Can not GET a piece from out of bounds
-        piece = self.grid[square.rank][square.file]
-        if not (piece == EmptyPiece or piece == None):
-            return piece
-        return None
+        return self.grid[square.rank][square.file]
 
     # PUT a given PIECE on the given SQUARE
     def putPieceOnPosition(self, piece, square, player=None):

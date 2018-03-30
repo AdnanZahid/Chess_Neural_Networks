@@ -74,8 +74,9 @@ class MoveGenerator:
         possibleMovesToSquaresList = []
         newPosition = piece.position + fileRankPair
 
-        while MoveGenerator.canMovePiece(piece, board, player, newPosition, isCheckForCheck, isCanTakeKing):
-            possibleMovesToSquaresList.append(newPosition)
+        while board.getPieceOnPosition(newPosition):
+            if MoveGenerator.canMovePiece(piece, board, player, newPosition, isCheckForCheck, isCanTakeKing):
+                possibleMovesToSquaresList.append(newPosition)
             newPosition = newPosition + fileRankPair
 
         return possibleMovesToSquaresList
