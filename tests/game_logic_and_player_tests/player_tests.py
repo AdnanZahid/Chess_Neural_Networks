@@ -41,7 +41,7 @@ class PlayerTests(unittest.TestCase):
                                           A5, B5, C5, D5, E5, F5, G5, H5])
 
     def testIsUnderCheck(self):
-        # First see if white king is not under check
+        # First see if white king is under check (it should not be)
         self.assertFalse(self.whitePlayer.isUnderCheck(self.board))
         # Perform fool's mate on white
         self.getCheckOnWhite()
@@ -49,7 +49,7 @@ class PlayerTests(unittest.TestCase):
         self.assertTrue(self.whitePlayer.isUnderCheck(self.board))
 
     def testIsUnderCheckMate(self):
-        # First see if white king is not under checkmate
+        # First see if white king is under checkmate (it should not be)
         self.assertFalse(self.whitePlayer.isUnderCheckMate(self.board))
         # Perform fool's mate on white
         self.performFoolsMateOnWhite()
@@ -57,14 +57,12 @@ class PlayerTests(unittest.TestCase):
         self.assertTrue(self.whitePlayer.isUnderCheckMate(self.board))
 
     def testCaptureWhiteQueenThatHasEnteredBlacksCamp(self):
-        # First see if white king is not under checkmate
-        self.assertFalse(self.whitePlayer.isUnderCheckMate(self.board))
         # Infilterate blacks camp with white queen (and get captured)
-        self.infilterateBlacksCampWithWhiteQueenAndGetCaptured()
-        # Now check if white king is under checkmate
-        self.assertFalse(self.whitePlayer.isUnderCheckMate(self.board))
+        self.infilterateBlacksCampWithWhiteQueen()
+        # Capture white's queen on D8 by black's rook on F8
+        self.assertTrue(self.move(F8, D8))
 
-    def testTrytoMoveWhileInCheck(self):
+    def testTrytoMoveWhileInCheckVariation1(self):
         # 1. f3 e5
         # 2. g4 Qh4#
         # 3. a3 will fail
@@ -76,8 +74,18 @@ class PlayerTests(unittest.TestCase):
         self.assertTrue(self.move(G2, G4))
         # Move black queen on D8 to H4
         self.assertTrue(self.move(D8, H4))
-        # Move white pawn on A2 to A3
+        # Move white pawn on A2 to A3 (will fail)
         self.assertFalse(self.move(A2, A3))
+
+    def testTrytoMoveWhileInCheckVariation2(self):
+        # Infilterate blacks camp with white queen (and get captured)
+        self.infilterateBlacksCampWithWhiteQueen()
+        # Move black pawn from A7 to A6
+        self.assertTrue(self.move(A7, A6))
+        # Move white queen from D8 to F8
+        self.assertTrue(self.move(D8, F8))
+        # Move black pawn from A6 to A5 (will fail)
+        self.assertFalse(self.move(A6, A5))
 
     def testBlockWhileInCheck(self):
         # 1. f3 e5
@@ -129,7 +137,7 @@ class PlayerTests(unittest.TestCase):
         # Move black queen on D8 to H4
         self.assertTrue(self.move(D8, H4))
 
-    def infilterateBlacksCampWithWhiteQueenAndGetCaptured(self):
+    def infilterateBlacksCampWithWhiteQueen(self):
         # 1. e4 e5
         # 2. kf3 kf6
         # 3. bc4 bc5
@@ -163,5 +171,3 @@ class PlayerTests(unittest.TestCase):
         self.assertTrue(self.move(D5, E4))
         # Move white queen on D1 to D8 (capture black's queen)
         self.assertTrue(self.move(D1, D8))
-        # Capture white's queen on D8 by black's rook on F8
-        self.assertTrue(self.move(F8, D8))
