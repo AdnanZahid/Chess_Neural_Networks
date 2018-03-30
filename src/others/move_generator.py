@@ -1,7 +1,6 @@
 import copy
 
 from src.models.squares import *
-from src.others.constants import *
 from src.others.error_handler import *
 
 
@@ -65,7 +64,6 @@ class MoveGenerator:
 
         if MoveGenerator.canMovePiece(piece, board, player, newPosition, isCheckForCheck, isCanTakeKing):
             possibleMovesToSquaresList.append(newPosition)
-            newPosition = newPosition + fileRankPair
 
         return possibleMovesToSquaresList
 
@@ -93,7 +91,7 @@ class MoveGenerator:
                 # This PIECE COLOR has the CURRENT TURN
                 if piece.color == player.color:
                     # Check if PIECE can MOVE
-                    if piece.canMovePiece(board, toSquare, player):
+                    if piece.canMovePiece(board, toSquare, player, isCheckForCastling=isCheckForCheck):
                         # Can not go out of bounds
                         try:
                             existingPiece = board.grid[toSquare.rank][toSquare.file]
@@ -122,24 +120,31 @@ class MoveGenerator:
                                             newPiece.board = newBoard
                                             newBoard.movePiece(newPiece, toSquare, newPlayer)
                                             newPiece.updatePosition(toSquare)
-                                            result = not (newPlayer.isUnderCheck(newBoard))
+                                            # A quick hack to check for new king position which is different from original king
+                                            newKing = None
+                                            if newPiece.value == Values.king:
+                                                newKing = newPiece
+                                            if newKing:
+                                                result = not (newPlayer.isUnderCheck(newBoard, newKing.position))
+                                            else:
+                                                result = not (newPlayer.isUnderCheck(newBoard))
                                         else:
                                             result = True
                                 else:
-                                    if isCheckForCheck: ErrorHandler.logError(board, piece, toSquare,
+                                    if isCheckForCheck: ErrorHandler.logError(piece, toSquare,
                                                                               Error.friendlyFire)
                             else:
-                                if isCheckForCheck: ErrorHandler.logError(board, piece, toSquare, Error.kingCapture)
+                                if isCheckForCheck: ErrorHandler.logError(piece, toSquare, Error.kingCapture)
                         else:
-                            if isCheckForCheck: ErrorHandler.logError(board, piece, toSquare, Error.invalidDestination)
+                            if isCheckForCheck: ErrorHandler.logError(piece, toSquare, Error.invalidDestination)
                     else:
-                        if isCheckForCheck: ErrorHandler.logError(board, piece, toSquare, Error.invalidMove)
+                        if isCheckForCheck: ErrorHandler.logError(piece, toSquare, Error.invalidMove)
                 else:
-                    if isCheckForCheck: ErrorHandler.logError(board, piece, toSquare, Error.wrongTurn)
+                    if isCheckForCheck: ErrorHandler.logError(piece, toSquare, Error.wrongTurn)
             else:
-                if isCheckForCheck: ErrorHandler.logError(board, piece, toSquare, Error.invalidPiece)
+                if isCheckForCheck: ErrorHandler.logError(piece, toSquare, Error.invalidPiece)
         else:
-            if isCheckForCheck: ErrorHandler.logError(board, piece, toSquare, Error.samePosition)
+            if isCheckForCheck: ErrorHandler.logError(piece, toSquare, Error.samePosition)
 
         return result
 

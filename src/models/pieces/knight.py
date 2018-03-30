@@ -30,7 +30,7 @@ class Knight(Piece):
 
     # Separate method for knight since knight doesn't need "board.checkForClearPath(move)"
     # Which is used in Piece (parent class)
-    def canMovePiece(self, board, toSquare, player=None):
+    def canMovePiece(self, board, toSquare, player=None, isCheckForCastling=True):
 
         move = EvaluationMove(self.position, toSquare)
         result = Utility.isMoveInCorrectDirection(move, self.directionsList, self.strategy) \

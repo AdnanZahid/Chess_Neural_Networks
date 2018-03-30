@@ -22,7 +22,6 @@ class View:
     def runGame(self, gameLogic):
         board = gameLogic.board
         self.possibleMoves = []
-        selectedPiece = EmptyPiece
         while not (self.isGameOver()):
             player = gameLogic.currentPlayer
             # Initialization
@@ -32,7 +31,7 @@ class View:
             # Events
             for e in event.get():
                 if e.type == QUIT:
-                    gameOver = True
+                    pass
                 elif e.type == MOUSEBUTTONUP:
                     position = mouse.get_pos()
                     x, y = self.convertCoordinatesForModel(position[0], position[1])
@@ -54,8 +53,8 @@ class View:
 
         self.inputHandlerDelegate.setupNewGame()
 
-    def output(self, move):
-        doNothing = True
+    def output(self):
+        pass
 
     def move(self, move):
         self.inputHandlerDelegate.didTakeInput(move)

@@ -4,7 +4,7 @@ from src.models.pieces.piece import *
 # This class handles all sorts of errors centrally
 class ErrorHandler:
     @staticmethod
-    def logError(board, piece, toSquare, error):
+    def logError(piece, toSquare, error):
         if not (piece == EmptyPiece or piece == None):
             print("{} ({}) -> {} --- Error: {}".format(piece.symbol, piece.position, toSquare, error))
         else:

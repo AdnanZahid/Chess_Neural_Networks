@@ -32,7 +32,7 @@ class RookCapturesTests(unittest.TestCase):
         self.testUtility.moveValueToSquare(-Values.rook, F4)
         self.testUtility.validMove( \
             self.testUtility.move(Values.rook, \
-                                       self.testUtility.getMove(D4, E4)), F4)
+                                  self.testUtility.getMove(D4, E4)), F4)
 
     # ///////////
     # // BLACK //
@@ -54,4 +54,4 @@ class RookCapturesTests(unittest.TestCase):
         self.testUtility.moveValueToSquare(Values.rook, F4)
         self.testUtility.validMove( \
             self.testUtility.move(-Values.rook, \
-                                       self.testUtility.getMove(D4, E4)), F4)
+                                  self.testUtility.getMove(D4, E4)), F4)

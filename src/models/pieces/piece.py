@@ -46,7 +46,7 @@ class Piece:
     def __repr__(self):
         return "{} at {}".format(self.symbol, self.position)
 
-    def canMovePiece(self, board, toSquare, player=None):
+    def canMovePiece(self, board, toSquare, player=None, isCheckForCastling=True):
         if player:
             player.lastMoveType = MoveType.normal
 

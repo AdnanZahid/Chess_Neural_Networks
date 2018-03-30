@@ -4,30 +4,30 @@ from abc import abstractmethod
 class InputHandlerDelegate:
     @abstractmethod
     def didTakeInput(self, move):
-        doNothing = True
+        pass
 
     @abstractmethod
     def setupNewGame(self):
-        doNothing = True
+        pass
 
 
 class InputHandler:
 
     @abstractmethod
     def input(self):
-        doNothing = True
+        pass
 
 
 class OutputHandler:
 
     @abstractmethod
     def setup(self):
-        doNothing = True
+        pass
 
     @abstractmethod
-    def output(self, move):
-        doNothing = True
+    def output(self):
+        pass
 
     @abstractmethod
     def cancelMove(self):
-        doNothing = True
+        pass

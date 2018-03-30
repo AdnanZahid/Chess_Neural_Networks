@@ -9,7 +9,7 @@ class Board:
     # Initialize an EMPTY board
     def __init__(self):
         # Initialize piece list with NIL pieces
-        self.grid = [[None for x in range(kNumberOfSquaresAlongY)] for y in range(kNumberOfSquaresAlongX)]
+        self.grid = [[None for _ in range(kNumberOfSquaresAlongY)] for _ in range(kNumberOfSquaresAlongX)]
 
         # A STACK for storing MOVESTATES - So we can UNDO them (helps in AI MOVES)
         self.moveStateStack = []
@@ -156,7 +156,7 @@ class Board:
                 self.grid[rank][file] = EmptyPiece
 
     # Fill the board with PIECES of the given COLOR
-    def setupPieceBoard(self, color, pieceDelegate):
+    def setupPieceBoard(self, color):
         # Set up a LIST of PIECES to be passed to the corresponding PLAYER
         piecesList = []
 

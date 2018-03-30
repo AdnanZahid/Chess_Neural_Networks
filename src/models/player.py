@@ -7,7 +7,7 @@ class Player:
     def __init__(self, color, board):
         self.color = color
         self.board = board
-        self.piecesList = self.board.setupPieceBoard(color, self)
+        self.piecesList = self.board.setupPieceBoard(color)
         # Will be used to determine whether the last move was enpassant or castling
         self.lastMoveType = None
 
@@ -35,16 +35,14 @@ class Player:
     def getAllPossibleTargetSquares(self, board):
         return MoveGenerator.generatePossibleTargetSquaresForAllPieces(board, self, isCheckForCheck=False)
 
-    def isUnderCheck(self, board, king=None):
-        # A quick hack to check for new king which is different from original king
-        if king == None:
-            king = self.king
+    def isUnderCheck(self, board, position=None):
+        # A quick hack to check for new king position which is different from original king
+        if not (position) and self.king:
+            position = self.king.position
         # Think twice before using isCanTakeKing=True!
-        for move in MoveGenerator.generatePossibleTargetSquaresForAllPieces(board, self.opponent, isCheckForCheck=False,
-                                                                            isCanTakeKing=True):
-            if move == king.position:
-                return True
-        return False
+        return position in MoveGenerator.generatePossibleTargetSquaresForAllPieces(board, self.opponent,
+                                                                                   isCheckForCheck=False,
+                                                                                   isCanTakeKing=True)
 
     def isUnderCheckMate(self, board):
         # Make a move on a new board, piece and player (clone of current one)
@@ -53,24 +51,23 @@ class Player:
         newPlayerOpponent = copy.deepcopy(self.opponent)
         newPlayer.opponent = newPlayerOpponent
         if newPlayer.isUnderCheck(board):
-            for move in self.getAllPossibleTargetSquares(board):
-                for piece in self.piecesList:
-                    # Before checking for check
-                    # Make a move on a new board, piece (clones of current ones)
-                    # And then check if the new player is under check or not
-                    newBoard = copy.deepcopy(board)
-                    newPiece = copy.deepcopy(piece)
-                    newPiece.board = newBoard
-                    for targetSquare in MoveGenerator.generatePossibleTargetSquares(piece, newBoard, newPlayer):
-                        if MoveGenerator.movePiece(newPiece, newBoard, newPlayer, targetSquare):
-                            newPiece.updatePosition(targetSquare)
-                            # A quick hack to check for new king which is different from original king
-                            if newPiece.value == Values.king:
-                                newKing = newPiece
-                            else:
-                                newKing = self.king
-                            if not (self.isUnderCheck(newBoard, newKing)):
-                                return False
+            for piece in self.piecesList:
+                # Before checking for check
+                # Make a move on a new board, piece (clones of current ones)
+                # And then check if the new player is under check or not
+                newBoard = copy.deepcopy(board)
+                newPiece = copy.deepcopy(piece)
+                newPiece.board = newBoard
+                for targetSquare in MoveGenerator.generatePossibleTargetSquares(piece, newBoard, newPlayer):
+                    if MoveGenerator.movePiece(newPiece, newBoard, newPlayer, targetSquare):
+                        newPiece.updatePosition(targetSquare)
+                        # A quick hack to check for new king position which is different from original king
+                        if newPiece.value == Values.king:
+                            newKing = newPiece
+                        else:
+                            newKing = self.king
+                        if not (self.isUnderCheck(newBoard, newKing.position)):
+                            return False
             return True
         return False
 

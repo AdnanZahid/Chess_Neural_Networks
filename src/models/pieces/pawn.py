@@ -24,7 +24,7 @@ class Pawn(Piece):
         self.directionsList.append((-1, self.pawnMoveDirection(1)))
         self.directionsList.append((1, self.pawnMoveDirection(1)))
 
-    def canMovePiece(self, board, toSquare, player=None):
+    def canMovePiece(self, board, toSquare, player=None, isCheckForCastling=True):
 
         result = False
         enpassantMoveResult = False

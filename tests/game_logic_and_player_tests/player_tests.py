@@ -21,11 +21,11 @@ class PlayerTests(unittest.TestCase):
         self.assertTrue(self.whitePlayer.king == self.board.getPieceOnPosition(E1))
         self.assertTrue(self.blackPlayer.king == self.board.getPieceOnPosition(E8))
 
-    def setKingSideRook(self, rook):
+    def setKingSideRook(self):
         self.assertTrue(self.whitePlayer.kingSideRook == self.board.getPieceOnPosition(H1))
         self.assertTrue(self.blackPlayer.kingSideRook == self.board.getPieceOnPosition(H8))
 
-    def setQueenSideRook(self, rook):
+    def setQueenSideRook(self):
         self.assertTrue(self.whitePlayer.queenSideRook == self.board.getPieceOnPosition(A1))
         self.assertTrue(self.blackPlayer.queenSideRook == self.board.getPieceOnPosition(A8))
 
