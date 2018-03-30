@@ -20,10 +20,15 @@ class Piece:
 
         if self.value == Values.pawn:
             from src.others.piece_factory import PieceFactory
-            if (self.color == Color.white and self.position.rank == RankIndex.k8):
-                self = PieceFactory.getPiece(Values.queen, self.position)
-            if self.color == Color.black and self.position.rank == RankIndex.k1:
-                self = PieceFactory.getPiece(-Values.queen, self.position)
+            queen = None
+            if self.color == Color.white and self.position.rank == RankIndex.k8:
+                queen = PieceFactory.getPiece(Values.queen, self.position)
+            elif self.color == Color.black and self.position.rank == RankIndex.k1:
+                queen = PieceFactory.getPiece(-Values.queen, self.position)
+
+            if queen:
+                self.__dict__ = queen.__dict__
+                self.__class__ = queen.__class__
 
     def __eq__(self, other):
         # "other" variable may be EmptyPiece
