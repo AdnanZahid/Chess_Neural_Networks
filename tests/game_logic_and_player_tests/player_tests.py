@@ -45,8 +45,6 @@ class PlayerTests(unittest.TestCase):
         self.assertFalse(self.whitePlayer.isUnderCheck(self.board))
         # Perform fool's mate on white
         self.getCheckOnWhite()
-        # Change player turn to see black's moves
-        self.gameLogic.changeTurn()
         # Now check if white king is under check
         self.assertTrue(self.whitePlayer.isUnderCheck(self.board))
 
@@ -55,10 +53,16 @@ class PlayerTests(unittest.TestCase):
         self.assertFalse(self.whitePlayer.isUnderCheckMate(self.board))
         # Perform fool's mate on white
         self.performFoolsMateOnWhite()
-        # Change player turn to see black's moves
-        self.gameLogic.changeTurn()
         # Now check if white king is under checkmate
         self.assertTrue(self.whitePlayer.isUnderCheckMate(self.board))
+
+    def testCaptureWhiteQueenThatHasEnteredBlacksCamp(self):
+        # First see if white king is not under checkmate
+        self.assertFalse(self.whitePlayer.isUnderCheckMate(self.board))
+        # Infilterate blacks camp with white queen (and get captured)
+        self.infilterateBlacksCampWithWhiteQueenAndGetCaptured()
+        # Now check if white king is under checkmate
+        self.assertFalse(self.whitePlayer.isUnderCheckMate(self.board))
 
     def testTrytoMoveWhileInCheck(self):
         # 1. f3 e5
@@ -124,3 +128,40 @@ class PlayerTests(unittest.TestCase):
         self.assertTrue(self.move(G2, G4))
         # Move black queen on D8 to H4
         self.assertTrue(self.move(D8, H4))
+
+    def infilterateBlacksCampWithWhiteQueenAndGetCaptured(self):
+        # 1. e4 e5
+        # 2. kf3 kf6
+        # 3. bc4 bc5
+        # 4. 0-0 0-0
+        # 5. d4 d5
+        # 6. d4xe5 d5xe4
+        # 7. qd1xd8 rf8xd8
+        # Move white pawn on E2 to E4
+        self.assertTrue(self.move(E2, E4))
+        # Move black pawn on E7 to E5
+        self.assertTrue(self.move(E7, E5))
+        # Move white knight on G1 to F3
+        self.assertTrue(self.move(G1, F3))
+        # Move black queen on G8 to F6
+        self.assertTrue(self.move(G8, F6))
+        # Move white bishop on F1 to C4
+        self.assertTrue(self.move(F1, C4))
+        # Move black bishop on F1 to C4
+        self.assertTrue(self.move(F8, C5))
+        # Castle white's king side
+        self.assertTrue(self.move(E1, G1))
+        # Castle black's king side
+        self.assertTrue(self.move(E8, G8))
+        # Move white pawn on D2 to D4
+        self.assertTrue(self.move(D2, D4))
+        # Move black pawn on D7 to D5
+        self.assertTrue(self.move(D7, D5))
+        # Capture black pawn on E5 by D4
+        self.assertTrue(self.move(D4, E5))
+        # Capture white pawn on E4 by D5
+        self.assertTrue(self.move(D5, E4))
+        # Move white queen on D1 to D8 (capture black's queen)
+        self.assertTrue(self.move(D1, D8))
+        # Capture white's queen on D8 by black's rook on F8
+        self.assertTrue(self.move(F8, D8))
