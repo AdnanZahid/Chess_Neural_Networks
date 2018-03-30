@@ -47,14 +47,22 @@ class Player:
         return False
 
     def isUnderCheckMate(self, board):
-        if self.isUnderCheck(board):
+        # Make a move on a new board, piece and player (clone of current one)
+        # And then check if the new player is under check or not
+        newPlayer = copy.deepcopy(self)
+        newPlayerOpponent = copy.deepcopy(self.opponent)
+        newPlayer.opponent = newPlayerOpponent
+        if newPlayer.isUnderCheck(board):
             for move in self.getAllPossibleTargetSquares(board):
                 for piece in self.piecesList:
+                    # Before checking for check
+                    # Make a move on a new board, piece (clones of current ones)
+                    # And then check if the new player is under check or not
                     newBoard = copy.deepcopy(board)
                     newPiece = copy.deepcopy(piece)
                     newPiece.board = newBoard
-                    for targetSquare in MoveGenerator.generatePossibleTargetSquares(piece, newBoard, self):
-                        if MoveGenerator.movePiece(newPiece, newBoard, self, targetSquare):
+                    for targetSquare in MoveGenerator.generatePossibleTargetSquares(piece, newBoard, newPlayer):
+                        if MoveGenerator.movePiece(newPiece, newBoard, newPlayer, targetSquare):
                             newPiece.updatePosition(targetSquare)
                             # A quick hack to check for new king which is different from original king
                             if newPiece.value == Values.king:

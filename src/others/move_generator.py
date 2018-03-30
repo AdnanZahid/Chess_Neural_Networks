@@ -112,8 +112,8 @@ class MoveGenerator:
                                         existingPiece.captured = True
                                         if isCheckForCheck:
                                             # Before checking for check
-                                            # Make a move on a new board (clone of current one)
-                                            # And then check if the player is under check or not
+                                            # Make a move on a new board, piece and player (clones of current ones)
+                                            # And then check if the new player is under check or not
                                             newBoard = copy.deepcopy(board)
                                             newPiece = copy.deepcopy(piece)
                                             newPlayer = copy.deepcopy(player)
