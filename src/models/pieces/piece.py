@@ -1,3 +1,4 @@
+from src.others.constants import *
 from src.others.utility import *
 
 
@@ -16,6 +17,13 @@ class Piece:
     def updatePosition(self, toSquare):
         self.position = toSquare
         self.hasMoved = True
+
+        if self.value == Values.pawn:
+            from src.others.piece_factory import PieceFactory
+            if (self.color == Color.white and self.position.rank == RankIndex.k8):
+                self = PieceFactory.getPiece(Values.queen, self.position)
+            if self.color == Color.black and self.position.rank == RankIndex.k1:
+                self = PieceFactory.getPiece(-Values.queen, self.position)
 
     def __eq__(self, other):
         # "other" variable may be EmptyPiece
