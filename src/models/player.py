@@ -33,7 +33,7 @@ class Player:
         return MoveGenerator.movePiece(piece, self.board, self, move.toSquare)
 
     def getAllPossibleTargetSquares(self, board):
-        return set(MoveGenerator.generatePossibleTargetSquaresForAllPieces(board, self, isCheckForCheck=False))
+        return MoveGenerator.generatePossibleTargetSquaresForAllPieces(board, self, isCheckForCheck=False)
 
     def isUnderCheck(self, board, king=None):
         # A quick hack to check for new king which is different from original king

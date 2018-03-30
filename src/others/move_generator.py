@@ -25,7 +25,7 @@ class MoveGenerator:
             possibleMovesToSquaresList.extend(
                 MoveGenerator.generatePossibleTargetSquares(piece, board, player, isCheckForCheck, isCanTakeKing))
 
-        return possibleMovesToSquaresList
+        return set(possibleMovesToSquaresList)
 
     @staticmethod
     # Think twice before using isCanTakeKing=True!
