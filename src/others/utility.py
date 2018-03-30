@@ -82,4 +82,4 @@ class Utility:
 
     @staticmethod
     def removeAllOccurencesFromList(list, valueToRemove):
-        return [value for value in list if value != valueToRemove]
+        return [value for value in list if not (value == valueToRemove)]

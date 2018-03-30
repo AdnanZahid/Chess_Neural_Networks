@@ -11,7 +11,7 @@ class PlayerTests(unittest.TestCase):
         self.blackPlayer = self.gameLogic.blackPlayer
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
 
-    def testmove(self):
+    def testMove(self):
         # Move white knight on B1 to C3
         self.move(B1, C3)
         # Move black knight on B8 to A6

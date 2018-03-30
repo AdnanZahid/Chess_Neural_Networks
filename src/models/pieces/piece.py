@@ -17,6 +17,19 @@ class Piece:
         self.position = toSquare
         self.hasMoved = True
 
+    def __eq__(self, other):
+        # "other" variable may be EmptyPiece
+        # In that case return False, since piece can never be equal to EmptyPiece
+        if other == EmptyPiece or other == None:
+            return False
+        return self.id == other.id
+
+    def __hash__(self):
+        return self.id
+
+    def __ne__(self, other):
+        return ~(self == other)
+
     def __repr__(self):
         return "{} at {}".format(self.symbol, self.position)
 

@@ -54,16 +54,15 @@ class Player:
                     newPiece = copy.deepcopy(piece)
                     newPiece.board = newBoard
                     for targetSquare in MoveGenerator.generatePossibleTargetSquares(piece, newBoard, self):
-                        if MoveGenerator.canMovePiece(newPiece, newBoard, self, targetSquare):
-                            if newBoard.movePiece(newPiece, targetSquare):
-                                newPiece.updatePosition(targetSquare)
-                                # A quick hack to check for new king which is different from original king
-                                if newPiece.value == Values.king:
-                                    newKing = newPiece
-                                else:
-                                    newKing = self.king
-                                if not (self.isUnderCheck(newBoard, newKing)):
-                                    return False
+                        if MoveGenerator.movePiece(newPiece, newBoard, self, targetSquare):
+                            newPiece.updatePosition(targetSquare)
+                            # A quick hack to check for new king which is different from original king
+                            if newPiece.value == Values.king:
+                                newKing = newPiece
+                            else:
+                                newKing = self.king
+                            if not (self.isUnderCheck(newBoard, newKing)):
+                                return False
             return True
         return False
 

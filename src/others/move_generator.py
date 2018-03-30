@@ -116,10 +116,13 @@ class MoveGenerator:
                                             # And then check if the player is under check or not
                                             newBoard = copy.deepcopy(board)
                                             newPiece = copy.deepcopy(piece)
+                                            newPlayer = copy.deepcopy(player)
+                                            newPlayerOpponent = copy.deepcopy(player.opponent)
+                                            newPlayer.opponent = newPlayerOpponent
                                             newPiece.board = newBoard
-                                            newBoard.movePiece(newPiece, toSquare)
+                                            newBoard.movePiece(newPiece, toSquare, newPlayer)
                                             newPiece.updatePosition(toSquare)
-                                            result = not (player.isUnderCheck(newBoard))
+                                            result = not (newPlayer.isUnderCheck(newBoard))
                                         else:
                                             result = True
                                 else:
