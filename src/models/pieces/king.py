@@ -40,8 +40,8 @@ class King(Piece):
             kingSideRookPositionAfterCastling = toSquare - (1, 0)
             queenSideRookPositionAfterCastling = toSquare + (1, 0)
 
-            kingSideIntermediateSquare = toSquare + (1, 0)
-            queenSideIntermediateSquare = toSquare - (1, 0)
+            kingSideIntermediateSquare = player.king.position + (1, 0)
+            queenSideIntermediateSquare = player.king.position - (1, 0)
 
             if player.kingSideRook and player.kingSideRook.position == toSquare + (1, 0):
                 rook = player.kingSideRook
