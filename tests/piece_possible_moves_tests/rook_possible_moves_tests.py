@@ -7,7 +7,10 @@ class RookPossibleMovesTests(unittest.TestCase):
     def setUp(self):
         self.gameLogic = GameLogic()
         self.board = self.gameLogic.board
+        # These 3 methods will wipe the slate clean so we can begin anew
         self.board.setupEmptyBoard()
+        self.gameLogic.whitePlayer.clearPlayerData()
+        self.gameLogic.blackPlayer.clearPlayerData()
 
     # ///////////
     # // WHITE //

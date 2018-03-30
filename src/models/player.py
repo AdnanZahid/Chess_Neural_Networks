@@ -22,6 +22,12 @@ class Player:
                 else:
                     self.queenSideRook = piece
 
+    def clearPlayerData(self):
+        self.piecesList = []
+        self.king = None
+        self.kingSideRook = None
+        self.kingSideRook = None
+
     def move(self, move):
         piece = self.board.getPieceOnPosition(move.fromSquare)
         return MoveGenerator.movePiece(piece, self.board, self, move.toSquare)

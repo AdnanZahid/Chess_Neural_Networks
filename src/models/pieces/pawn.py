@@ -27,6 +27,7 @@ class Pawn(Piece):
     def canMovePiece(self, board, toSquare, player=None):
 
         result = False
+        enpassantMoveResult = False
         targetPiece = board.getPieceOnPosition(toSquare)
         # Simple 1 step or 2 step moves
         if board.checkIfSquareIsEmpty(toSquare):
@@ -46,7 +47,7 @@ class Pawn(Piece):
                     EvaluationMove(self.position, toSquare))
                 if fileAndRankAdvance == self.directionsList[2] or fileAndRankAdvance == self.directionsList[3]:
                     result = True
-                    player.lastMoveType = MoveType.castling
+                    enpassantMoveResult = True
             #####################################################
             # End of enpassant case (if enpassant piece exists) #
             #####################################################
@@ -55,8 +56,15 @@ class Pawn(Piece):
             fileAndRankAdvance = Utility.getFileAndRankAdvance(EvaluationMove(self.position, toSquare))
             result = fileAndRankAdvance == self.directionsList[2] or fileAndRankAdvance == self.directionsList[3]
 
-        move = EvaluationMove(self.position, toSquare)
-        return result and super().canMovePiece(board, toSquare)
+        result = result and super().canMovePiece(board, toSquare)
+
+        if result:
+            if enpassantMoveResult:
+                player.lastMoveType = MoveType.enpassant
+            else:
+                player.lastMoveType = MoveType.normal
+
+        return result
 
     def pawnMoveDirection(self, number):
         return self.color * number

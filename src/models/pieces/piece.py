@@ -1,5 +1,6 @@
 from src.others.utility import *
 
+
 # This class handles all the piece-centric logic
 class Piece:
 
@@ -24,10 +25,14 @@ class Piece:
             player.lastMoveType = MoveType.normal
 
         move = EvaluationMove(self.position, toSquare)
-        return Utility.isMoveInCorrectDirection(move, self.directionsList, self.strategy) \
-               and board.checkIfSquareIsNotNil(toSquare) \
-               and board.checkIfEmptyOrEnemyPieceExists(self.color, toSquare) \
-               and board.checkForClearPath(move)
+        result = Utility.isMoveInCorrectDirection(move, self.directionsList, self.strategy) \
+                 and board.checkIfSquareIsNotNil(toSquare) \
+                 and board.checkIfEmptyOrEnemyPieceExists(self.color, toSquare) \
+                 and board.checkForClearPath(move)
+
+        if result and player:
+            player.lastMoveType = MoveType.normal
+        return result
 
 
 class EmptyPiece:

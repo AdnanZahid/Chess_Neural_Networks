@@ -28,8 +28,7 @@ class TestUtility(unittest.TestCase):
 
     # GET PIECE and move it to the SQUARE, asserts TRUE
     def moveToSquare(self, piece, toSquare):
-        self.assertTrue(MoveGenerator.canMovePiece(piece, self.board, self.player, toSquare))
-        self.assertTrue(self.board.movePiece(piece, toSquare))
+        self.assertTrue(MoveGenerator.movePiece(piece, self.board, self.player, toSquare))
         piece.updatePosition(toSquare)
 
     # GET PIECE and FAIL to move it to the SQUARE, asserts FALSE

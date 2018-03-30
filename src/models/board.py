@@ -117,7 +117,8 @@ class Board:
                 existingPiece.captured = True
                 self.grid[square.rank][square.file] = piece
                 if player and not (existingPiece == EmptyPiece) and existingPiece in player.opponent.piecesList:
-                    player.opponent.piecesList.remove(existingPiece)
+                    # Remove existing piece from pieces list (all occurences)
+                    player.opponent.piecesList.removeAllOccurencesFromList(existingPiece)
                 result = True
         return result
 

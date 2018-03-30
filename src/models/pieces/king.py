@@ -35,21 +35,21 @@ class King(Piece):
         self.directionsList.append((-2, 0))
 
         wasCastlingSuccessful = False
-        if board.getPieceOnPosition(toSquare) == None and player:
+        if player.king and board.getPieceOnPosition(toSquare) == None and player:
 
             kingSideRookPositionBeforeCastling = toSquare + (1, 0)
             queenSideRookPositionBeforeCastling = toSquare - (2, 0)
             kingSideRookPositionAfterCastling = toSquare - (1, 0)
             queenSideRookPositionAfterCastling = toSquare + (1, 0)
 
-            if player.kingSideRook.position == toSquare + (1, 0):
+            if player.kingSideRook and player.kingSideRook.position == toSquare + (1, 0):
                 rook = player.kingSideRook
                 if not (player.king.hasMoved) and not (rook.hasMoved) and not (rook.captured):
                     if player.kingSideRook.canMovePiece(board, kingSideRookPositionAfterCastling):
                         if super().canMovePiece(board, toSquare):
                             board.castledRook = player.kingSideRook
                             wasCastlingSuccessful = True
-            elif player.queenSideRook.position == toSquare - (2, 0):
+            elif player.queenSideRook and player.queenSideRook.position == toSquare - (2, 0):
                 rook = player.queenSideRook
                 if not (player.king.hasMoved) and not (rook.hasMoved) and not (rook.captured):
                     if player.queenSideRook.canMovePiece(board, queenSideRookPositionAfterCastling):
@@ -57,9 +57,9 @@ class King(Piece):
                             board.castledRook = player.queenSideRook
                             wasCastlingSuccessful = True
 
-        # Remove castling directions
-        self.directionsList.remove((2, 0))
-        self.directionsList.remove((-2, 0))
+        # Remove castling directions (all occurences)
+        self.directionsList = Utility.removeAllOccurencesFromList(self.directionsList, (2, 0))
+        self.directionsList = Utility.removeAllOccurencesFromList(self.directionsList, (-2, 0))
 
         if wasCastlingSuccessful:
             player.lastMoveType = MoveType.castling

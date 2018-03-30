@@ -13,47 +13,47 @@ class CastlingMovesTests(unittest.TestCase):
     # // WHITE //
     # ///////////
 
-    # def testWhiteCastleKingSide(self):
-    #     self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
-    #     king = self.testUtility.moveValueToSquare(Values.king, E1)
-    #     self.testUtility.moveToSquare(king, G1)
-    #
-    # def testWhiteCastleQueenSide(self):
-    #     self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
-    #     king = self.testUtility.moveValueToSquare(Values.king, E1)
-    #     self.testUtility.moveToSquare(king, C1)
-    #
-    # def testWhiteCastleKingSideInvalid(self):
-    #     self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
-    #     king = self.testUtility.moveValueToSquare(Values.king, E1)
-    #     self.testUtility.moveValueToSquare(Values.knight, G1)
-    #     self.testUtility.failToMoveToSquare(king, G1)
-    #
-    # def testWhiteCastleQueenSideInvalid(self):
-    #     self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
-    #     king = self.testUtility.moveValueToSquare(Values.king, E1)
-    #     self.testUtility.moveValueToSquare(-Values.knight, D1)
-    #     self.testUtility.failToMoveToSquare(king, C1)
+    def testWhiteCastleKingSide(self):
+        self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
+        king = self.testUtility.moveValueToSquare(Values.king, E1)
+        self.testUtility.moveToSquare(king, G1)
+
+    def testWhiteCastleQueenSide(self):
+        self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
+        king = self.testUtility.moveValueToSquare(Values.king, E1)
+        self.testUtility.moveToSquare(king, C1)
+
+    def testWhiteCastleKingSideInvalid(self):
+        self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
+        king = self.testUtility.moveValueToSquare(Values.king, E1)
+        self.testUtility.moveValueToSquare(Values.knight, G1)
+        self.testUtility.failToMoveToSquare(king, G1)
+
+    def testWhiteCastleQueenSideInvalid(self):
+        self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
+        king = self.testUtility.moveValueToSquare(Values.king, E1)
+        self.testUtility.moveValueToSquare(-Values.knight, D1)
+        self.testUtility.failToMoveToSquare(king, C1)
 
     # ///////////
     # // BLACK //
     # ///////////
 
-    # def testBlackCastleKingSide(self):
-    #     self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
-    #     king = self.testUtility.moveValueToSquare(-Values.king, E8)
-    #     self.testUtility.moveToSquare(king, G8)
-    #
-    # def testBlackCastleQueenSide(self):
-    #     self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
-    #     king = self.testUtility.moveValueToSquare(-Values.king, E8)
-    #     self.testUtility.moveToSquare(king, C8)
-    #
-    # def testBlackCastleKingSideInvalid(self):
-    #     self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
-    #     king = self.testUtility.moveValueToSquare(-Values.king, E8)
-    #     self.testUtility.moveValueToSquare(-Values.bishop, F8)
-    #     self.testUtility.failToMoveToSquare(king, G8)
+    def testBlackCastleKingSide(self):
+        self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
+        king = self.testUtility.moveValueToSquare(-Values.king, E8)
+        self.testUtility.moveToSquare(king, G8)
+
+    def testBlackCastleQueenSide(self):
+        self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
+        king = self.testUtility.moveValueToSquare(-Values.king, E8)
+        self.testUtility.moveToSquare(king, C8)
+
+    def testBlackCastleKingSideInvalid(self):
+        self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
+        king = self.testUtility.moveValueToSquare(-Values.king, E8)
+        self.testUtility.moveValueToSquare(-Values.bishop, F8)
+        self.testUtility.failToMoveToSquare(king, G8)
 
     def testBlackCastleQueenSideInvalid(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)

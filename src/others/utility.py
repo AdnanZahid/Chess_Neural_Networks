@@ -79,3 +79,7 @@ class Utility:
         while b:
             a, b = b, a % b
         return abs(a)
+
+    @staticmethod
+    def removeAllOccurencesFromList(list, valueToRemove):
+        return [value for value in list if value != valueToRemove]
