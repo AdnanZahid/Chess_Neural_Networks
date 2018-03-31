@@ -13,7 +13,7 @@ class GameLogicTests(unittest.TestCase):
 
     def testmove(self):
         # Move knight on B1 to C3
-        piece = self.board.getPieceOnPosition(B1)
+        piece = self.board.getNonEmptyPieceOnPosition(B1)
         toSquare = C3
         self.gameLogic.move(EvaluationMove(piece.position, toSquare))
         self.assertTrue(piece.position == toSquare)

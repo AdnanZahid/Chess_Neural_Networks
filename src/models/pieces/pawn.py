@@ -28,10 +28,10 @@ class Pawn(Piece):
 
         result = False
         enpassantMoveResult = False
-        targetPiece = board.getPieceOnPosition(toSquare)
+        targetPiece = board.getNonEmptyPieceOnPosition(toSquare)
         # Simple 1 step or 2 step moves
         if board.checkIfSquareIsEmpty(toSquare):
-            enpassantPiece = board.getPieceOnPosition(toSquare - (0, self.pawnMoveDirection(1)))
+            enpassantPiece = board.getNonEmptyPieceOnPosition(toSquare - (0, self.pawnMoveDirection(1)))
             if Utility.getFileAndRankAdvance(EvaluationMove(self.position, toSquare)) == self.directionsList[0]:
                 result = True
             elif Utility.getFileAndRankAdvance(EvaluationMove(self.position, toSquare)) == self.directionsList[1] \

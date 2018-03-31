@@ -96,9 +96,22 @@ class Board:
 
         return result
 
-    # GET a PIECE from the given SQUARE
+    # GET a PIECE from the given SQUARE (may be a valid piece or None)
+    def getNonEmptyPieceOnPosition(self, square):
+        # Will either return:
+        # 1. A valid piece
+        # 2. A None piece (if it goes out of bounds of chess playable area)
+        piece = self.grid[square.rank][square.file]
+        if not (piece == EmptyPiece or piece == None):
+            return piece
+        return None
+
+    # GET a PIECE from the given SQUARE (may be a valid piece, empty or None)
     def getPieceOnPosition(self, square):
-        # Can not GET a piece from out of bounds
+        # Will either return:
+        # 1. A valid piece
+        # 2. An empty piece
+        # 3. A None piece (if it goes out of bounds of chess playable area)
         return self.grid[square.rank][square.file]
 
     # PUT a given PIECE on the given SQUARE

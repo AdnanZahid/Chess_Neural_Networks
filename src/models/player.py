@@ -29,7 +29,7 @@ class Player:
         self.kingSideRook = None
 
     def move(self, move):
-        piece = self.board.getPieceOnPosition(move.fromSquare)
+        piece = self.board.getNonEmptyPieceOnPosition(move.fromSquare)
         return MoveGenerator.movePiece(piece, self.board, self, move.toSquare)
 
     def getAllPossibleTargetSquares(self, board):
