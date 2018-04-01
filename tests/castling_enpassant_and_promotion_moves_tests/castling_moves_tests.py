@@ -64,24 +64,24 @@ class CastlingMovesTests(unittest.TestCase):
     def performCastlingSetup(self):
         # Take away white pieces in the way of castling
         # Put empty piece on B1
-        self.assertTrue(self.board.putEmptyPieceOnPosition(B1))
+        self.board.putEmptyPieceOnPosition(B1)
         # Put empty piece on C1
-        self.assertTrue(self.board.putEmptyPieceOnPosition(C1))
+        self.board.putEmptyPieceOnPosition(C1)
         # Put empty piece on D1
-        self.assertTrue(self.board.putEmptyPieceOnPosition(D1))
+        self.board.putEmptyPieceOnPosition(D1)
         # Put empty piece on F1
-        self.assertTrue(self.board.putEmptyPieceOnPosition(F1))
+        self.board.putEmptyPieceOnPosition(F1)
         # Put empty piece on G1
-        self.assertTrue(self.board.putEmptyPieceOnPosition(G1))
+        self.board.putEmptyPieceOnPosition(G1)
 
         # Take away black pieces in the way of castling
         # Put empty piece on B8
-        self.assertTrue(self.board.putEmptyPieceOnPosition(B8))
+        self.board.putEmptyPieceOnPosition(B8)
         # Put empty piece on C8
-        self.assertTrue(self.board.putEmptyPieceOnPosition(C8))
+        self.board.putEmptyPieceOnPosition(C8)
         # Put empty piece on D8
-        self.assertTrue(self.board.putEmptyPieceOnPosition(D8))
+        self.board.putEmptyPieceOnPosition(D8)
         # Put empty piece on F8
-        self.assertTrue(self.board.putEmptyPieceOnPosition(F8))
+        self.board.putEmptyPieceOnPosition(F8)
         # Put empty piece on G8
-        self.assertTrue(self.board.putEmptyPieceOnPosition(G8))
+        self.board.putEmptyPieceOnPosition(G8)

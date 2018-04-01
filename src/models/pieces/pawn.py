@@ -36,7 +36,7 @@ class Pawn(Piece):
                 result = True
             elif Utility.getFileAndRankAdvance(EvaluationMove(self.position, toSquare)) == self.directionsList[1] \
                     and self.hasMoved == False:
-                result = board.checkForClearPath(EvaluationMove(self.position, toSquare))
+                result = True
             #######################################################
             # Start of enpassant case (if enpassant piece exists) #
             #######################################################

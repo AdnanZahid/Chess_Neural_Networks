@@ -5,7 +5,7 @@ from src.others.move_generator import *
 
 # Constants
 square_size = 100
-columns, rows = kNumberOfSquaresAlongX, kNumberOfSquaresAlongY
+columns, rows = kNumberOfSquaresAlongFile, kNumberOfSquaresAlongRank
 screen_size = (columns * square_size, rows * square_size)
 white_color = (236, 218, 185)
 black_color = (175, 137, 104)
@@ -33,14 +33,14 @@ class View:
                     pass
                 elif e.type == MOUSEBUTTONUP:
                     position = mouse.get_pos()
-                    x, y = self.convertCoordinatesForModel(position[0], position[1])
+                    file, rank = self.convertCoordinatesForModel(position[0], position[1])
 
                     if not self.possibleMoves:
-                        self.selectedPiece = board.grid[x][y]
-                        self.possibleMoves = self.getPossibleMoves(x, y, board, player)
+                        self.selectedPiece = board.getPieceOnPosition(Square(file, rank))
+                        self.possibleMoves = self.getPossibleMoves(file, rank, board, player)
 
                     elif not (self.selectedPiece == EmptyPiece or self.selectedPiece == None):
-                        self.move(EvaluationMove(self.selectedPiece.position, Square(y, x)))
+                        self.move(EvaluationMove(self.selectedPiece.position, Square(file, rank)))
 
             # Drawing
             screen.fill(white_color)
@@ -71,26 +71,26 @@ class View:
         self.drawPossibleMoves(screen)
 
     def drawSquares(self, screen):
-        for x in range(columns):
-            for y in range(rows):
-                if (x + y) % 2:
-                    draw.rect(screen, white_color, Rect(x * square_size, y * square_size, square_size, square_size))
+        for file in range(columns):
+            for rank in range(rows):
+                if (file + rank) % 2:
+                    draw.rect(screen, white_color, Rect(file * square_size, rank * square_size, square_size, square_size))
                 else:
-                    draw.rect(screen, black_color, Rect(x * square_size, y * square_size, square_size, square_size))
+                    draw.rect(screen, black_color, Rect(file * square_size, rank * square_size, square_size, square_size))
 
     def drawPieces(self, screen, board):
-        for x in range(len(board.grid)):
-            for y in range(len(board.grid[0])):
-                piece = board.grid[x][y]
+        for file in range(kNumberOfSquaresAlongFile):
+            for rank in range(kNumberOfSquaresAlongRank):
+                piece = board.getPieceOnPosition(Square(file, rank))
                 if not (piece == EmptyPiece or piece == None):
-                    xPosition, yPosition = self.convertCoordinatesForGUI(x, y)
+                    x, y = self.convertCoordinatesForGUI(file, rank)
                     path = os.path.dirname(__file__) + "/images/" + piece.symbol + ".png"
                     sprite = image.load(path)
                     sprite = transform.scale(sprite, (square_size, square_size))
-                    screen.blit(sprite, Rect(xPosition, yPosition, square_size, square_size))
+                    screen.blit(sprite, Rect(x, y, square_size, square_size))
 
-    def getPossibleMoves(self, x, y, board, player):
-        piece = board.grid[x][y]
+    def getPossibleMoves(self, file, rank, board, player):
+        piece = board.getPieceOnPosition(Square(file, rank))
 
         if not (piece == EmptyPiece or piece == None):
             return MoveGenerator.generatePossibleTargetSquares(piece, board, player)
@@ -105,21 +105,21 @@ class View:
             surface.fill(green_color)
             screen.blit(surface, (x, y))
 
-    def convertCoordinatesForGUI(self, x, y):
+    def convertCoordinatesForGUI(self, file, rank):
         # Transform according to our view
         # Transform = rows - 1, because view is inverted
         # Multiplier = square_size, because each square needs to be a certain distance apart
-        xPosition = y * square_size
-        yPosition = (rows - 1 - x) * square_size
-        return xPosition, yPosition
+        x = file * square_size
+        y = (rows - 1 - rank) * square_size
+        return x, y
 
-    def convertCoordinatesForModel(self, x, y):
+    def convertCoordinatesForModel(self, file, rank):
         # Transform according to our view
         # Transform = rows - 1, because view is inverted
         # Divider = square_size, because each square is a certain distance apart in GUI but adjacent in model
-        xPosition = rows - 1 - y // square_size
-        yPosition = x // square_size
-        return xPosition, yPosition
+        x = rows - 1 - rank // square_size
+        y = file // square_size
+        return x, y
 
     def isGameOver(self):
         return self.gameOver

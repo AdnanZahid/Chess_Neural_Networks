@@ -11,7 +11,7 @@ class GameLogicTests(unittest.TestCase):
         self.gameLogic = GameLogic()
         self.board = self.gameLogic.board
 
-    def testmove(self):
+    def testMove(self):
         # Move knight on B1 to C3
         piece = self.board.getPieceOnPosition(B1)
         toSquare = C3

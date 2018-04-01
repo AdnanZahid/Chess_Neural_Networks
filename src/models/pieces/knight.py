@@ -34,8 +34,7 @@ class Knight(Piece):
 
         move = EvaluationMove(self.position, toSquare)
         result = Utility.isMoveInCorrectDirection(move, self.directionsList, self.strategy) \
-                 and board.checkIfSquareIsNotNone(toSquare) \
-                 and board.checkForClearPath(move)
+                 and board.checkIfEmptyOrEnemyPieceExists(self.color, toSquare)
 
         if result:
             player.lastMoveType = MoveType.normal

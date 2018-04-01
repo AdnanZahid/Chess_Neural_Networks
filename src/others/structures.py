@@ -4,11 +4,6 @@ class EvaluationMove:
         self.fromSquare = fromSquare
         self.toSquare = toSquare
 
-    # def __init__(self,fromSquare,toSquare,evaluationValue):
-    #     self.fromSquare = fromSquare
-    #     self.toSquare = toSquare
-    #     self.evaluationValue = evaluationValue
-
     def __repr__(self):
         return "{} -> {}".format(self.fromSquare, self.toSquare)
 

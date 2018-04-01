@@ -40,7 +40,7 @@ class Utility:
         return Utility.fileAdvanceCheck(EvaluationMove(move.fromSquare, move.toSquare)) and Utility.rankAdvanceCheck(
             EvaluationMove(move.fromSquare, move.toSquare))
 
-    # This function determines how many steps to take in X and Y direction to reach the final position given the starting position
+    # This function determines how many steps to take in file and rank to reach the final position given the starting position
     @staticmethod
     def getFileAndRankAdvance(move):
         return (move.toSquare.file - move.fromSquare.file, move.toSquare.rank - move.fromSquare.rank)

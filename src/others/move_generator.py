@@ -86,11 +86,7 @@ class MoveGenerator:
                     # Check if PIECE can MOVE
                     if piece.canMovePiece(board, toSquare, player, isCheckForCastling=isCheckForCheck):
                         # Can not go out of bounds
-                        try:
-                            existingPiece = board.grid[toSquare.rank][toSquare.file]
-                        except IndexError:
-                            existingPiece = None
-
+                        existingPiece = board.getPieceOnPosition(toSquare)
                         if existingPiece:
                             # Destination square is empty
                             # And no friendly fire

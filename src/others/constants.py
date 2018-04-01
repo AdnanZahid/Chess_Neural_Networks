@@ -1,8 +1,8 @@
 # Here are all the constants
 kMaxPlies = 2
 
-kNumberOfSquaresAlongX = 8
-kNumberOfSquaresAlongY = 8
+kNumberOfSquaresAlongFile = 8
+kNumberOfSquaresAlongRank = 8
 
 
 class Symbols:

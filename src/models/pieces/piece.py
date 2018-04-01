@@ -47,12 +47,8 @@ class Piece:
         return "{} at {}".format(self.symbol, self.position)
 
     def canMovePiece(self, board, toSquare, player=None, isCheckForCastling=True):
-        if player:
-            player.lastMoveType = MoveType.normal
-
         move = EvaluationMove(self.position, toSquare)
         result = Utility.isMoveInCorrectDirection(move, self.directionsList, self.strategy) \
-                 and board.checkIfSquareIsNotNone(toSquare) \
                  and board.checkIfEmptyOrEnemyPieceExists(self.color, toSquare) \
                  and board.checkForClearPath(move)
 
