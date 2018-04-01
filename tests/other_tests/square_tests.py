@@ -9,10 +9,10 @@ class SquareTests(unittest.TestCase):
         self.assertTrue(F7 == F7)
 
     def testHash(self):
-        self.assertTrue(A1.order == 18)
-        self.assertTrue(A3.order == 34)
-        self.assertTrue(F7.order == 71)
-        self.assertTrue(C2.order == 28)
+        self.assertTrue(A1.order == 0)
+        self.assertTrue(A3.order == 16)
+        self.assertTrue(F7.order == 53)
+        self.assertTrue(C2.order == 10)
 
     def testNotEquals(self):
         self.assertFalse(C2 == G6)

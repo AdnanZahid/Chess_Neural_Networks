@@ -27,11 +27,11 @@ class MoveState:
 
 
 class RankIndex:
-    k__2, k__1, k1, k2, k3, k4, k5, k6, k7, k8, k_1, k_2 = range(12)
+    k1, k2, k3, k4, k5, k6, k7, k8 = range(8)
 
 
 class FileIndex:
-    k__2, k__1, kA, kB, kC, kD, kE, kF, kG, kH, k_1, k_2 = range(12)
+    kA, kB, kC, kD, kE, kF, kG, kH = range(8)
 
 
 class Color:

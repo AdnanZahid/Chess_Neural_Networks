@@ -11,9 +11,7 @@ class PieceFactory:
 
     @staticmethod
     def getPiece(value, position):
-
-        if value == None:
-            piece = None
+        piece = None
 
         # Color assignment
         if value > 0:

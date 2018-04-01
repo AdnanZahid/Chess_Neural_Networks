@@ -35,7 +35,7 @@ class King(Piece):
         self.directionsList.append((-2, 0))
 
         wasCastlingSuccessful = False
-        if player.king and board.getNonEmptyPieceOnPosition(toSquare) == None and player:
+        if player.king and board.getPieceOnPosition(toSquare) == EmptyPiece and player:
 
             kingSideRookPositionAfterCastling = toSquare - (1, 0)
             queenSideRookPositionAfterCastling = toSquare + (1, 0)

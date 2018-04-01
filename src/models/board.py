@@ -8,7 +8,7 @@ class Board:
 
     # Initialize an EMPTY board
     def __init__(self):
-        # Initialize piece list with NIL pieces
+        # Initialize piece list with None pieces
         self.grid = [[None for _ in range(kNumberOfSquaresAlongY)] for _ in range(kNumberOfSquaresAlongX)]
 
         # A STACK for storing MOVESTATES - So we can UNDO them (helps in AI MOVES)
@@ -44,12 +44,12 @@ class Board:
         return result
 
     # CHECK if given SQUARE is not OUT OF BOUNDS
-    def checkIfSquareIsNotNil(self, square):
+    def checkIfSquareIsNotNone(self, square):
         result = False
 
         try:
             piece = self.grid[square.rank][square.file]
-            # Check for a NIL or out of bounds piece
+            # Check for a None or out of bounds piece
             if piece:
                 result = True
         except IndexError:
@@ -96,23 +96,17 @@ class Board:
 
         return result
 
-    # GET a PIECE from the given SQUARE (may be a valid piece or None)
-    def getNonEmptyPieceOnPosition(self, square):
-        # Will either return:
-        # 1. A valid piece
-        # 2. A None piece (if it goes out of bounds of chess playable area)
-        piece = self.grid[square.rank][square.file]
-        if not (piece == EmptyPiece or piece == None):
-            return piece
-        return None
-
-    # GET a PIECE from the given SQUARE (may be a valid piece, empty or None)
+    # GET a PIECE from the given SQUARE (may be a valid piece or empty space)
     def getPieceOnPosition(self, square):
+        if square.rank < 0 or square.file < 0:
+            return None
         # Will either return:
         # 1. A valid piece
-        # 2. An empty piece
-        # 3. A None piece (if it goes out of bounds of chess playable area)
-        return self.grid[square.rank][square.file]
+        # 2. A empty space
+        try:
+            return self.grid[square.rank][square.file]
+        except IndexError:
+            return None
 
     # PUT a given PIECE on the given SQUARE
     def putPieceOnPosition(self, piece, square, player=None):

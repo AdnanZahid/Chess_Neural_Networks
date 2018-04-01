@@ -2,7 +2,6 @@ import os
 from pygame import *
 
 from src.others.move_generator import *
-from src.models.squares import *
 
 # Constants
 square_size = 100
@@ -107,21 +106,19 @@ class View:
             screen.blit(surface, (x, y))
 
     def convertCoordinatesForGUI(self, x, y):
-        # Transform and offset according to our view
+        # Transform according to our view
         # Transform = +7, because view is inverted
-        # Offset = -2, because first 2 columns and rows are filled with NIL values
         # Multiplier = square_size, because each square needs to be a certain distance apart
-        xPosition = (y - 2) * square_size
-        yPosition = (7 - (x - 2)) * square_size
+        xPosition = y * square_size
+        yPosition = (7 - x) * square_size
         return xPosition, yPosition
 
     def convertCoordinatesForModel(self, x, y):
-        # Transform and offset according to our view
+        # Transform according to our view
         # Transform = +7, because view is inverted
-        # Offset = +2, because first 2 columns and rows are filled with NIL values
         # Divider = square_size, because each square is a certain distance apart in GUI but adjacent in model
-        xPosition = 7 - (y // square_size) + 2
-        yPosition = ((x // square_size) + 2)
+        xPosition = 7 - y // square_size
+        yPosition = x // square_size
         return xPosition, yPosition
 
     def isGameOver(self):

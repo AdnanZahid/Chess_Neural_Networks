@@ -52,7 +52,7 @@ class Piece:
 
         move = EvaluationMove(self.position, toSquare)
         result = Utility.isMoveInCorrectDirection(move, self.directionsList, self.strategy) \
-                 and board.checkIfSquareIsNotNil(toSquare) \
+                 and board.checkIfSquareIsNotNone(toSquare) \
                  and board.checkIfEmptyOrEnemyPieceExists(self.color, toSquare) \
                  and board.checkForClearPath(move)
 

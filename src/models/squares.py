@@ -27,9 +27,9 @@ class Square:
         return self.order < other.order
 
     def __repr__(self):
-        if Square.fileString(self.file) == "Invalid file" or self.rank < 2 or self.rank > 9:
+        if Square.fileString(self.file) == "Invalid file" or self.rank < RankIndex.k1 or self.rank > RankIndex.k8:
             return "Invalid square"
-        return "{}{}".format(Square.fileString(self.file), self.rank - 1)
+        return "{}{}".format(Square.fileString(self.file), self.rank + 1)
 
     @staticmethod
     def fileString(file):

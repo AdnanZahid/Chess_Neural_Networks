@@ -69,7 +69,7 @@ class TestUtility(unittest.TestCase):
     def getMove(self, fromSquare, toSquare):
         return EvaluationMove(fromSquare, toSquare)
 
-    # GET PIECE by PieceValue, place it on the SQUARE and then try getting a non-nil value
+    # GET PIECE by PieceValue, place it on the SQUARE and then try getting a non-None value
     def isPieceExists(self, pieceValue, square):
         # GETTING a PIECE from the PIECE FACTORY - Given the PIECE VALUE and STARTING SQUARE
         piece = PieceFactory.getPiece(pieceValue, square)
@@ -77,11 +77,11 @@ class TestUtility(unittest.TestCase):
         # PUTTING the PIECE on the given SQUARE - self.assertS TRUE
         self.assertTrue(self.board.putPieceOnPosition(piece, square))
 
-        # GET PIECE from the given SQUARE - self.assertS NON NIL
-        self.assertIsNotNone(self.board.getNonEmptyPieceOnPosition(square))
+        # GET PIECE from the given SQUARE - self.assertS NON None
+        self.assertIsNotNone(self.board.getPieceOnPosition(square))
 
         # COMPARE the given PIECE and PIECE returned from the SQUARE - self.assertS TRUE
-        self.assertTrue(piece == self.board.getNonEmptyPieceOnPosition(square))
+        self.assertTrue(piece == self.board.getPieceOnPosition(square))
 
     # GET PIECE by PieceValue and then place it on the SQUARE
     def moveValueToSquare(self, pieceValue, square):

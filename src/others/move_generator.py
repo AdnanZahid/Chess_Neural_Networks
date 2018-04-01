@@ -37,7 +37,8 @@ class MoveGenerator:
 
         for direction in directionsList:
             possibleMovesToSquaresList.extend(
-                MoveGenerator.generatePossibleTargetSquaresInDirection(piece, board, player, direction, isCheckForCheck))
+                MoveGenerator.generatePossibleTargetSquaresInDirection(piece, board, player, direction,
+                                                                       isCheckForCheck))
 
         return possibleMovesToSquaresList
 
@@ -55,8 +56,9 @@ class MoveGenerator:
         possibleMovesToSquaresList = []
         newPosition = piece.position + fileRankPair
 
-        if MoveGenerator.canMovePiece(piece, board, player, newPosition, isCheckForCheck):
-            possibleMovesToSquaresList.append(newPosition)
+        if board.getPieceOnPosition(newPosition):
+            if MoveGenerator.canMovePiece(piece, board, player, newPosition, isCheckForCheck):
+                possibleMovesToSquaresList.append(newPosition)
 
         return possibleMovesToSquaresList
 

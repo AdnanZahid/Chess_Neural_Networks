@@ -18,16 +18,16 @@ class PlayerTests(unittest.TestCase):
         self.move(G8, F6)
 
     def testSetKing(self):
-        self.assertTrue(self.whitePlayer.king == self.board.getNonEmptyPieceOnPosition(E1))
-        self.assertTrue(self.blackPlayer.king == self.board.getNonEmptyPieceOnPosition(E8))
+        self.assertTrue(self.whitePlayer.king == self.board.getPieceOnPosition(E1))
+        self.assertTrue(self.blackPlayer.king == self.board.getPieceOnPosition(E8))
 
     def setKingSideRook(self):
-        self.assertTrue(self.whitePlayer.kingSideRook == self.board.getNonEmptyPieceOnPosition(H1))
-        self.assertTrue(self.blackPlayer.kingSideRook == self.board.getNonEmptyPieceOnPosition(H8))
+        self.assertTrue(self.whitePlayer.kingSideRook == self.board.getPieceOnPosition(H1))
+        self.assertTrue(self.blackPlayer.kingSideRook == self.board.getPieceOnPosition(H8))
 
     def setQueenSideRook(self):
-        self.assertTrue(self.whitePlayer.queenSideRook == self.board.getNonEmptyPieceOnPosition(A1))
-        self.assertTrue(self.blackPlayer.queenSideRook == self.board.getNonEmptyPieceOnPosition(A8))
+        self.assertTrue(self.whitePlayer.queenSideRook == self.board.getPieceOnPosition(A1))
+        self.assertTrue(self.blackPlayer.queenSideRook == self.board.getPieceOnPosition(A8))
 
     def testGetAllPossibleTargetSquares(self):
         self.testUtility.checkEqualMoves(self.whitePlayer.getAllPossibleTargetSquares(self.board),
@@ -70,7 +70,7 @@ class PlayerTests(unittest.TestCase):
         # Move white queen on D8 to F8
         self.assertTrue(self.move(D8, F8))
         # Now check if black bishop on C5 can move at all
-        self.assertFalse(MoveGenerator.generatePossibleTargetSquares(self.board.getNonEmptyPieceOnPosition(C5), self.board, self.blackPlayer) == [])
+        self.assertFalse(MoveGenerator.generatePossibleTargetSquares(self.board.getPieceOnPosition(C5), self.board, self.blackPlayer) == [])
 
     def testBlockWhiteQueenThatHasEnteredBlacksCampByKnightAfterItCapturesTheRook(self):
         # Infilterate blacks camp with white queen (and get captured)
@@ -129,7 +129,7 @@ class PlayerTests(unittest.TestCase):
         self.assertFalse(self.whitePlayer.isUnderCheck(self.board))
 
     def move(self, fromSquare, toSquare):
-        piece = self.board.getNonEmptyPieceOnPosition(fromSquare)
+        piece = self.board.getPieceOnPosition(fromSquare)
         self.gameLogic.move(EvaluationMove(piece.position, toSquare))
         return piece.position == toSquare
 

@@ -1,13 +1,12 @@
 # Here are all the constants
 kMaxPlies = 2
 
-kNumberOfSquaresAlongX = 12
-kNumberOfSquaresAlongY = 12
+kNumberOfSquaresAlongX = 8
+kNumberOfSquaresAlongY = 8
 
 
 class Symbols:
     newLine = "\n"
-    nil = " "
     empty = "·"
     white_pawn = "♙"
     white_knight = "♘"
@@ -24,7 +23,6 @@ class Symbols:
 
 
 class Values:
-    nil = -1
     empty = 0
     pawn = 100
     knight = 300
@@ -34,7 +32,6 @@ class Values:
     king = 2000
 
 
-X = Values.nil
 i = Values.empty
 P = -Values.pawn
 N = -Values.knight
@@ -52,18 +49,12 @@ k = -K
 
 piecesConfigurationList = [
 
-    [X, X, X, X, X, X, X, X, X, X, X, X],
-    [X, X, X, X, X, X, X, X, X, X, X, X],
-
-    [X, X, r, n, b, q, k, b, n, r, X, X],
-    [X, X, p, p, p, p, p, p, p, p, X, X],
-    [X, X, i, i, i, i, i, i, i, i, X, X],
-    [X, X, i, i, i, i, i, i, i, i, X, X],
-    [X, X, i, i, i, i, i, i, i, i, X, X],
-    [X, X, i, i, i, i, i, i, i, i, X, X],
-    [X, X, P, P, P, P, P, P, P, P, X, X],
-    [X, X, R, N, B, Q, K, B, N, R, X, X],
-
-    [X, X, X, X, X, X, X, X, X, X, X, X],
-    [X, X, X, X, X, X, X, X, X, X, X, X]
+    [r, n, b, q, k, b, n, r],
+    [p, p, p, p, p, p, p, p],
+    [i, i, i, i, i, i, i, i],
+    [i, i, i, i, i, i, i, i],
+    [i, i, i, i, i, i, i, i],
+    [i, i, i, i, i, i, i, i],
+    [P, P, P, P, P, P, P, P],
+    [R, N, B, Q, K, B, N, R]
 ]
