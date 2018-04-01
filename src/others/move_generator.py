@@ -16,19 +16,17 @@ class MoveGenerator:
         return len(MoveGenerator.generatePossibleTargetSquares(piece, board, player))
 
     @staticmethod
-    # Think twice before using isCanTakeKing=True!
-    def generatePossibleTargetSquaresForAllPieces(board, player, isCheckForCheck=True, isCanTakeKing=False):
+    def generatePossibleTargetSquaresForAllPieces(board, player, isCheckForCheck=True):
         possibleMovesToSquaresList = []
 
         for piece in player.piecesList:
             possibleMovesToSquaresList.extend(
-                MoveGenerator.generatePossibleTargetSquares(piece, board, player, isCheckForCheck, isCanTakeKing))
+                MoveGenerator.generatePossibleTargetSquares(piece, board, player, isCheckForCheck))
 
         return set(possibleMovesToSquaresList)
 
     @staticmethod
-    # Think twice before using isCanTakeKing=True!
-    def generatePossibleTargetSquares(piece, board, player, isCheckForCheck=True, isCanTakeKing=False):
+    def generatePossibleTargetSquares(piece, board, player, isCheckForCheck=True):
         possibleMovesToSquaresList = []
         directionsList = piece.directionsList
 
@@ -39,51 +37,43 @@ class MoveGenerator:
 
         for direction in directionsList:
             possibleMovesToSquaresList.extend(
-                MoveGenerator.generatePossibleTargetSquaresInDirection(piece, board, player, direction, isCheckForCheck,
-                                                                       isCanTakeKing))
+                MoveGenerator.generatePossibleTargetSquaresInDirection(piece, board, player, direction, isCheckForCheck))
 
         return possibleMovesToSquaresList
 
     @staticmethod
-    # Think twice before using isCanTakeKing=True!
-    def generatePossibleTargetSquaresInDirection(piece, board, player, direction, isCheckForCheck=True,
-                                                 isCanTakeKing=False):
+    def generatePossibleTargetSquaresInDirection(piece, board, player, direction, isCheckForCheck=True):
         if piece.strategy == Strategy.jumping:
             return MoveGenerator.generatePossibleTargetSquaresByJumpingInDirection(piece, board, player, direction,
-                                                                                   isCheckForCheck, isCanTakeKing)
+                                                                                   isCheckForCheck)
         else:
             return MoveGenerator.generatePossibleTargetSquaresBySlidingInDirection(piece, board, player, direction,
-                                                                                   isCheckForCheck, isCanTakeKing)
+                                                                                   isCheckForCheck)
 
     @staticmethod
-    # Think twice before using isCanTakeKing=True!
-    def generatePossibleTargetSquaresByJumpingInDirection(piece, board, player, fileRankPair, isCheckForCheck=True,
-                                                          isCanTakeKing=False):
+    def generatePossibleTargetSquaresByJumpingInDirection(piece, board, player, fileRankPair, isCheckForCheck=True):
         possibleMovesToSquaresList = []
         newPosition = piece.position + fileRankPair
 
-        if MoveGenerator.canMovePiece(piece, board, player, newPosition, isCheckForCheck, isCanTakeKing):
+        if MoveGenerator.canMovePiece(piece, board, player, newPosition, isCheckForCheck):
             possibleMovesToSquaresList.append(newPosition)
 
         return possibleMovesToSquaresList
 
     @staticmethod
-    # Think twice before using isCanTakeKing=True!
-    def generatePossibleTargetSquaresBySlidingInDirection(piece, board, player, fileRankPair, isCheckForCheck=True,
-                                                          isCanTakeKing=False):
+    def generatePossibleTargetSquaresBySlidingInDirection(piece, board, player, fileRankPair, isCheckForCheck=True):
         possibleMovesToSquaresList = []
         newPosition = piece.position + fileRankPair
 
         while board.getPieceOnPosition(newPosition):
-            if MoveGenerator.canMovePiece(piece, board, player, newPosition, isCheckForCheck, isCanTakeKing):
+            if MoveGenerator.canMovePiece(piece, board, player, newPosition, isCheckForCheck):
                 possibleMovesToSquaresList.append(newPosition)
             newPosition = newPosition + fileRankPair
 
         return possibleMovesToSquaresList
 
     @staticmethod
-    # Think twice before using isCanTakeKing=True!
-    def canMovePiece(piece, board, player, toSquare, isCheckForCheck=True, isCanTakeKing=False):
+    def canMovePiece(piece, board, player, toSquare, isCheckForCheck=True):
         result = False
         # STARTING and ENDING squares are not the same
         if not (piece.position == toSquare):
@@ -100,41 +90,36 @@ class MoveGenerator:
                             existingPiece = None
 
                         if existingPiece:
-                            # King can not be captured (unless isCanTakeKing is True)
-                            # Think twice before using isCanTakeKing=True!
-                            if existingPiece == EmptyPiece or not (existingPiece.value == Values.king) or isCanTakeKing:
-                                # Destination square is empty
-                                # And no friendly fire
-                                if existingPiece == EmptyPiece \
-                                        or not (existingPiece.color == piece.color):
-                                    if not (piece == EmptyPiece):
-                                        existingPiece.captured = True
-                                        if isCheckForCheck:
-                                            # Before checking for check
-                                            # Make a move on a new board, piece and player (clones of current ones)
-                                            # And then check if the new player is under check or not
-                                            newBoard = copy.deepcopy(board)
-                                            newPiece = copy.deepcopy(piece)
-                                            newPlayer = copy.deepcopy(player)
-                                            newPlayerOpponent = copy.deepcopy(player.opponent)
-                                            newPlayer.opponent = newPlayerOpponent
-                                            newBoard.movePiece(newPiece, toSquare, newPlayer)
-                                            newPiece.updatePosition(toSquare)
-                                            # A quick hack to check for new king position which is different from original king
-                                            newKing = None
-                                            if newPiece.value == Values.king:
-                                                newKing = newPiece
-                                            if newKing:
-                                                result = not (newPlayer.isUnderCheck(newBoard, newKing.position))
-                                            else:
-                                                result = not (newPlayer.isUnderCheck(newBoard))
+                            # Destination square is empty
+                            # And no friendly fire
+                            if existingPiece == EmptyPiece \
+                                    or not (existingPiece.color == piece.color):
+                                if not (piece == EmptyPiece):
+                                    existingPiece.captured = True
+                                    if isCheckForCheck:
+                                        # Before checking for check
+                                        # Make a move on a new board, piece and player (clones of current ones)
+                                        # And then check if the new player is under check or not
+                                        newBoard = copy.deepcopy(board)
+                                        newPiece = copy.deepcopy(piece)
+                                        newPlayer = copy.deepcopy(player)
+                                        newPlayerOpponent = copy.deepcopy(player.opponent)
+                                        newPlayer.opponent = newPlayerOpponent
+                                        newBoard.movePiece(newPiece, toSquare, newPlayer)
+                                        newPiece.updatePosition(toSquare)
+                                        # A quick hack to check for new king position which is different from original king
+                                        newKing = None
+                                        if newPiece.value == Values.king:
+                                            newKing = newPiece
+                                        if newKing:
+                                            result = not (newPlayer.isUnderCheck(newBoard, newKing.position))
                                         else:
-                                            result = True
-                                else:
-                                    if isCheckForCheck: ErrorHandler.logError(piece, toSquare,
-                                                                              Error.friendlyFire)
+                                            result = not (newPlayer.isUnderCheck(newBoard))
+                                    else:
+                                        result = True
                             else:
-                                if isCheckForCheck: ErrorHandler.logError(piece, toSquare, Error.kingCapture)
+                                if isCheckForCheck: ErrorHandler.logError(piece, toSquare,
+                                                                          Error.friendlyFire)
                         else:
                             if isCheckForCheck: ErrorHandler.logError(piece, toSquare, Error.invalidDestination)
                     else:

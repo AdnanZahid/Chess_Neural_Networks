@@ -39,10 +39,8 @@ class Player:
         # A quick hack to check for new king position which is different from original king
         if not (position) and self.king:
             position = self.king.position
-        # Think twice before using isCanTakeKing=True!
-        return position in MoveGenerator.generatePossibleTargetSquaresForAllPieces(board, self.opponent,
-                                                                                   isCheckForCheck=False,
-                                                                                   isCanTakeKing=True)
+
+        return position in self.opponent.getAllPossibleTargetSquares(board)
 
     def isUnderCheckMate(self, board):
         # Make a move on a new board, piece and player (clone of current one)

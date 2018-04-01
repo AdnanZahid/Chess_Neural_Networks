@@ -20,5 +20,4 @@ class Error:
     underCheckmate = "Your king is under checkmate"
     samePosition = "Starting and ending positions are same"
     wrongTurn = "It is not your turn"
-    kingCapture = "King can never be captured"
     none = ""
