@@ -33,6 +33,6 @@ class AIPlayer(Player):
                             break
 
                     elif bestMove.evaluationValue > alpha:
-                        localAlpha = bestMove.evaluationValue
+                        pass
 
         return bestMove

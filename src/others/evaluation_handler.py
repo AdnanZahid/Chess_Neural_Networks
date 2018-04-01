@@ -5,7 +5,7 @@ from src.others.move_generator import *
 class EvaluationHandler:
 
     @staticmethod
-    def getTotalEvaluationValue(player, board):
+    def getTotalEvaluationValue(player):
         return EvaluationHandler.getEvaluationValue(player.piecesList, player) - EvaluationHandler.getEvaluationValue(
             player.opponent.piecesList, player.opponent)
 
