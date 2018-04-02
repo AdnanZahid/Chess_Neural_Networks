@@ -110,8 +110,8 @@ class Board:
         return piecesList
 
     def printBoard(self):
-        for file in range(kNumberOfSquaresAlongFile):
-            for rank in range(kNumberOfSquaresAlongRank):
+        for rank in range(kNumberOfSquaresAlongRank):
+            for file in range(kNumberOfSquaresAlongFile):
                 piece = self.getPieceOnPosition(Square(file, rank))
                 if piece:
                     if Utility.isValidPiece(piece):

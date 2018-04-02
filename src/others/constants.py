@@ -1,8 +1,13 @@
+import sys
+
 # Here are all the constants
-kMaxPlies = 2
+kMaxPlies = 1
 
 kNumberOfSquaresAlongFile = 8
 kNumberOfSquaresAlongRank = 8
+
+kMaxPossibleNumber = sys.maxsize
+kMinPossibleNumber = -sys.maxsize - 1
 
 
 class Symbols:

@@ -6,32 +6,28 @@ from src.others.evaluation_handler import *
 class AIPlayer(Player):
 
     def __init__(self, color, board):
-        self.isAI = True
         super().__init__(color, board)
+        self.isAI = True
 
     def generateMove(self):
-        move = self.getBestMove(kMaxPlies, self, int.min / 2, int.max / 2)
+        move = self.getBestMove(kMaxPlies, self, kMinPossibleNumber, kMaxPossibleNumber)
         return EvaluationMove(move.fromSquare, move.toSquare)
 
     def getBestMove(self, depth, player, alpha, beta):
-        if depth == 0:
-            if player.color == Color.white:
-                return EvaluationHandler(self, self.board)
-            else:
-                return -EvaluationHandler(self, self.board)
-
-        bestMove = EvaluationMove(None, None, int.min)
+        _, newBoard, newPlayer = Utility.getDeepCopies(None, self.board, self)
+        bestMove = EvaluationMove(None, None, kMinPossibleNumber)
         for piece in player.piecesList:
             fromSquare = piece.position
             for toSquare in MoveGenerator.generatePossibleTargetSquares(piece, self.board, self):
-                if MoveGenerator.movePiece(piece, self.board, self, toSquare):
+                newPiece = Utility.getDeepCopy(piece)
+                if MoveGenerator.movePiece(newPiece, newBoard, newPlayer, toSquare):
                     localAlpha = alpha
-                    Move = EvaluationMove(fromSquare, toSquare,
-                                          -self.getBestMove(depth - 1, player.opponent, -beta,
-                                                            -localAlpha))
+                    evaluationMove = EvaluationMove(fromSquare, toSquare,
+                                                    -self.getBestMoveValue(depth - 1, player.opponent, -beta,
+                                                                           -localAlpha))
 
-                    if Move.evaluationValue > bestMove.evaluationValue:
-                        bestMove = Move
+                    if evaluationMove.evaluationValue > bestMove.evaluationValue:
+                        bestMove = evaluationMove
 
                     if bestMove.evaluationValue >= beta:
                         break
@@ -40,3 +36,31 @@ class AIPlayer(Player):
                     pass
 
         return bestMove
+
+    def getBestMoveValue(self, depth, player, alpha, beta):
+        _, newBoard, newPlayer = Utility.getDeepCopies(None, self.board, self)
+        if depth == 0:
+            if player.color == Color.white:
+                return EvaluationHandler.getTotalEvaluationValue(newBoard, newPlayer)
+            else:
+                return -EvaluationHandler.getTotalEvaluationValue(newBoard, newPlayer)
+
+        bestEvaluationValue = EvaluationMove(None, None, kMinPossibleNumber).evaluationValue
+        for piece in player.piecesList:
+            fromSquare = piece.position
+            for toSquare in MoveGenerator.generatePossibleTargetSquares(piece, self.board, self):
+                newPiece = Utility.getDeepCopy(piece)
+                if MoveGenerator.movePiece(newPiece, newBoard, newPlayer, toSquare):
+                    localAlpha = alpha
+                    evaluationValue = -self.getBestMoveValue(depth - 1, player.opponent, -beta, -localAlpha)
+
+                    if evaluationValue > bestEvaluationValue:
+                        bestEvaluationValue = evaluationValue
+
+                    if bestEvaluationValue >= beta:
+                        break
+
+                elif bestEvaluationValue > alpha:
+                    pass
+
+        return bestEvaluationValue

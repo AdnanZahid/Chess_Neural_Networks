@@ -5,19 +5,19 @@ from src.others.move_generator import *
 class EvaluationHandler:
 
     @staticmethod
-    def getTotalEvaluationValue(player):
-        return EvaluationHandler.getEvaluationValue(player.piecesList, player) - EvaluationHandler.getEvaluationValue(
-            player.opponent.piecesList, player.opponent)
+    def getTotalEvaluationValue(board, player):
+        return EvaluationHandler.getEvaluationValue(board, player) - EvaluationHandler.getEvaluationValue(board,
+                                                                                                          player.opponent)
 
     @staticmethod
-    def getEvaluationValue(piecesList, player, board):
+    def getEvaluationValue(board, player):
         # This evaluation function relies on:
         # 1. Piece values
         # 2. Mobility values
         pieceValues = 0
         mobilityValues = 0
-        for piece in piecesList:
+        for piece in player.piecesList:
             pieceValues += piece.value
-            mobilityValues += MoveGenerator.getMobility(piece, board, player)
+            mobilityValues += MoveGenerator.getMobility(piece, board, player) * 100
 
         return pieceValues + mobilityValues

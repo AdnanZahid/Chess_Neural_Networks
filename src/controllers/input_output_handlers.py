@@ -14,7 +14,7 @@ class InputHandlerDelegate:
 class InputHandler:
 
     @abstractmethod
-    def input(self):
+    def input(self, gameLogic=None):
         pass
 
 

@@ -16,42 +16,36 @@ green_color = (0, 255, 0)
 class View:
 
     def __init__(self):
-        self.gameOver = False
-
-    def runGame(self, gameLogic):
-        board = gameLogic.board
+        # Initialization
+        init()
+        self.screen = display.set_mode(screen_size)
         self.resetMoveState()
-        while not (self.isGameOver()):
-            player = gameLogic.currentPlayer
-            # Initialization
-            init()
-            screen = display.set_mode(screen_size)
 
-            # Events
-            for e in event.get():
-                if e.type == QUIT:
-                    pass
-                elif e.type == MOUSEBUTTONUP:
-                    position = mouse.get_pos()
-                    file, rank = self.convertCoordinatesForModel(position[0], position[1])
+    def input(self, gameLogic=None):
+        board = gameLogic.board
+        player = gameLogic.currentPlayer
+        # Events
+        for e in event.get():
+            if e.type == QUIT:
+                pass
+            elif e.type == MOUSEBUTTONUP:
+                position = mouse.get_pos()
+                file, rank = self.convertCoordinatesForModel(position[0], position[1])
 
-                    if not self.possibleMoves:
-                        self.selectedPiece = board.getPieceOnPosition(Square(file, rank))
-                        self.possibleMoves = MoveGenerator.generatePossibleTargetSquaresForFileAndRank(file, rank,
-                                                                                                       board, player)
+                if not self.possibleMoves:
+                    self.selectedPiece = board.getPieceOnPosition(Square(file, rank))
+                    self.possibleMoves = MoveGenerator.generatePossibleTargetSquaresForFileAndRank(file, rank, board,
+                                                                                                   player)
+                elif Utility.isValidPiece(self.selectedPiece):
+                    self.move(EvaluationMove(self.selectedPiece.position, Square(file, rank)))
 
-                    elif Utility.isValidPiece(self.selectedPiece):
-                        self.move(EvaluationMove(self.selectedPiece.position, Square(file, rank)))
+        # Drawing
+        self.screen.fill(white_color)
+        self.draw(self.screen, board)
+        display.flip()
 
-            # Drawing
-            screen.fill(white_color)
-            self.draw(screen, board)
-            display.flip()
-
-            # Clock ticking
-            time.Clock().tick(60)
-
-        self.inputHandlerDelegate.setupNewGame()
+        # Clock ticking
+        time.Clock().tick(60)
 
     def output(self):
         # Reset state once output is done
@@ -118,9 +112,3 @@ class View:
         file = x // square_size
         rank = rows - 1 - (y // square_size)
         return file, rank
-
-    def isGameOver(self):
-        return self.gameOver
-
-    def setIsGameOver(self, gameOver):
-        self.gameOver = gameOver
