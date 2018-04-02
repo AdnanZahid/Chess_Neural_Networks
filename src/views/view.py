@@ -74,9 +74,11 @@ class View:
         for file in range(columns):
             for rank in range(rows):
                 if (file + rank) % 2:
-                    draw.rect(screen, white_color, Rect(file * square_size, rank * square_size, square_size, square_size))
+                    draw.rect(screen, white_color,
+                              Rect(file * square_size, rank * square_size, square_size, square_size))
                 else:
-                    draw.rect(screen, black_color, Rect(file * square_size, rank * square_size, square_size, square_size))
+                    draw.rect(screen, black_color,
+                              Rect(file * square_size, rank * square_size, square_size, square_size))
 
     def drawPieces(self, screen, board):
         for file in range(kNumberOfSquaresAlongFile):
@@ -113,12 +115,11 @@ class View:
         y = (rows - 1 - rank) * square_size
         return x, y
 
-    def convertCoordinatesForModel(self, file, rank):
+    def convertCoordinatesForModel(self, x, y):
         # Transform according to our view
         # Transform = rows - 1, because view is inverted
         # Divider = square_size, because each square is a certain distance apart in GUI but adjacent in model
-        x = rows - 1 - rank // square_size
-        y = file // square_size
+        y = rows - 1 - (y // square_size)
         return x, y
 
     def isGameOver(self):
