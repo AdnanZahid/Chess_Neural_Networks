@@ -17,8 +17,7 @@ class EvaluationHandler:
         pieceValues = 0
         mobilityValues = 0
         for piece in piecesList:
-            if piece.captured == False:
-                pieceValues += piece.value
-                mobilityValues += MoveGenerator.getMobility(piece, board, player)
+            pieceValues += piece.value
+            mobilityValues += MoveGenerator.getMobility(piece, board, player)
 
         return pieceValues + mobilityValues

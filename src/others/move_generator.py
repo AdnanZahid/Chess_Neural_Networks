@@ -94,7 +94,6 @@ class MoveGenerator:
                         # Can not go out of bounds
                         existingPiece = board.getPieceOnPosition(toSquare)
                         if existingPiece and Utility.isValidPiece(piece):
-                            existingPiece.captured = True
                             if isCheckForCheck:
                                 newPiece, newBoard, newPlayer = Utility.getDeepCopies(piece, board, player)
                                 newBoard.movePiece(newPiece, toSquare, newPlayer)

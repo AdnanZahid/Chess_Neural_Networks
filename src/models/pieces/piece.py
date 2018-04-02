@@ -10,7 +10,6 @@ class Piece:
         self.color = color
         self.strategy = strategy
         self.hasMoved = False
-        self.captured = False
         self.directionsList = []
         self.id = (position.rank * 10) + position.file
 

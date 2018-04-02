@@ -69,7 +69,6 @@ class Board:
         # Can not go out of bounds
         existingPiece = self.getPieceOnPosition(square)
         if existingPiece and Utility.isValidPiece(piece):
-            existingPiece.captured = True
             self.grid[square.rank][square.file] = piece
             if player and Utility.isValidPiece(existingPiece) and existingPiece in player.opponent.piecesList:
                 # Remove existing piece from pieces list (all occurences)

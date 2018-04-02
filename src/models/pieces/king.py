@@ -45,7 +45,7 @@ class King(Piece):
 
             if player.kingSideRook and player.kingSideRook.position == toSquare + (1, 0):
                 rook = player.kingSideRook
-                if not (player.king.hasMoved) and not (rook.hasMoved) and not (rook.captured):
+                if not (player.king.hasMoved) and not (rook.hasMoved):
                     if player.kingSideRook.canMovePiece(board, kingSideRookPositionAfterCastling):
                         if isCheckForCastling and not (player.isUnderCheck(board)) and not (
                                 player.isUnderCheck(board, kingSideIntermediateSquare)):
@@ -54,7 +54,7 @@ class King(Piece):
                                 wasCastlingSuccessful = True
             elif player.queenSideRook and player.queenSideRook.position == toSquare - (2, 0):
                 rook = player.queenSideRook
-                if not (player.king.hasMoved) and not (rook.hasMoved) and not (rook.captured):
+                if not (player.king.hasMoved) and not (rook.hasMoved):
                     if player.queenSideRook.canMovePiece(board, queenSideRookPositionAfterCastling):
                         if isCheckForCastling and not (player.isUnderCheck(board)) and not (
                                 player.isUnderCheck(board, queenSideIntermediateSquare)):

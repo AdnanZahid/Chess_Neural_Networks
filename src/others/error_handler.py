@@ -12,7 +12,7 @@ class ErrorHandler:
 
 
 class Error:
-    friendlyFire = "Can not captured own piece"
+    friendlyFire = "Can not capture own piece"
     invalidMove = "This move is not valid"
     invalidPiece = "No piece is selected"
     invalidDestination = "Destination out of bounds"
@@ -20,4 +20,3 @@ class Error:
     underCheckmate = "Your king is under checkmate"
     samePosition = "Starting and ending positions are same"
     wrongTurn = "It is not your turn"
-    none = ""
