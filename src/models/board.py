@@ -35,7 +35,7 @@ class Board:
     def checkForClearPath(self, move):
         result = True
         # GET a FILE RANK PAIR from a given MOVE - FILE RANK PAIR indicates the DIRECTION
-        fileRankPair = Utility.getFileAndRankAdvance(EvaluationMove(move.fromSquare, move.toSquare))
+        fileRankPair = Utility.getFileAndRankAdvance(Move(move.fromSquare, move.toSquare))
         # GET the STARTING POSITION
         positionToCheck = move.fromSquare
         # GET the POSITION BEFORE the ENDING POSITION - Call it SECOND LAST SQUARE

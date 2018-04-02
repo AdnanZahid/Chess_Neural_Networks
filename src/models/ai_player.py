@@ -15,18 +15,18 @@ class AIPlayer(Player):
             else:
                 return -EvaluationHandler(self, self.board)
 
-        bestMove = EvaluationMove(None, None, int.min)
+        bestMove = Move(None, None, int.min)
         for piece in player.piecesList:
             fromSquare = piece.position
             for toSquare in MoveGenerator.generatePossibleTargetSquares(piece, self.board, self):
                 if MoveGenerator.movePiece(piece, self.board, self, toSquare):
                     localAlpha = alpha
-                    evaluationMove = EvaluationMove(fromSquare, toSquare,
+                    Move = Move(fromSquare, toSquare,
                                                     -self.getBestMove(depth - 1, player.opponent, -beta,
                                                                       -localAlpha))
 
-                    if evaluationMove.evaluationValue > bestMove.evaluationValue:
-                        bestMove = evaluationMove
+                    if Move.evaluationValue > bestMove.evaluationValue:
+                        bestMove = Move
 
                     if bestMove.evaluationValue >= beta:
                         break

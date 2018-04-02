@@ -130,7 +130,7 @@ class PlayerTests(unittest.TestCase):
 
     def move(self, fromSquare, toSquare):
         piece = self.board.getPieceOnPosition(fromSquare)
-        self.gameLogic.move(EvaluationMove(piece.position, toSquare))
+        self.gameLogic.move(Move(piece.position, toSquare))
         return piece.position == toSquare
 
     def getCheckOnWhite(self):

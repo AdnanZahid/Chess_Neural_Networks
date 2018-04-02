@@ -1,5 +1,5 @@
 # Here are all the basic structures
-class EvaluationMove:
+class Move:
     def __init__(self, fromSquare, toSquare):
         self.fromSquare = fromSquare
         self.toSquare = toSquare
