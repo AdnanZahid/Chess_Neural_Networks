@@ -30,7 +30,7 @@ class TestUtility(unittest.TestCase):
 
     # GET PIECE and FAIL to move it to the SQUARE, asserts FALSE
     def failToMoveToSquare(self, piece, toSquare):
-        self.assertFalse(MoveGenerator.canMovePiece(piece, self.board, self.player, toSquare))
+        self.assertFalse(MoveGenerator.movePiece(piece, self.board, self.player, toSquare))
 
     # GET PIECE by PieceValue and perform the MOVE on it, returns FALSE
     def failToMove(self, pieceValue, move):
@@ -42,19 +42,33 @@ class TestUtility(unittest.TestCase):
         self.invalidMove(piece, move.toSquare)
         return piece
 
+    # GET PIECE by PieceValue and perform the MOVE on it, returns FALSE
+    def failToMoveButValidMoveOnNewBoard(self, pieceValue, move):
+        # GETTING a PIECE from the PIECE FACTORY - Given the PIECE VALUE and STARTING SQUARE
+        piece = PieceFactory.getPiece(pieceValue, move.fromSquare)
+        # PUTTING the PIECE on the given SQUARE
+        self.assertTrue(self.board.putPieceOnPosition(piece, piece.position))
+        # MOVING the PIECE to the given SQUARE - EXPECTING it to FAIL
+        self.invalidMoveButValidOnNewBoard(piece, move.toSquare)
+        return piece
+
     # GET PIECE and move on it to the SQUARE on a completely NEW BOARD, asserts TRUE
     def validMove(self, piece, toSquare):
         self.board.putPieceOnPosition(piece, piece.position)
-        self.assertTrue(self.board.movePiece(piece, toSquare))
+        self.assertTrue(MoveGenerator.movePiece(piece, self.board, self.player, toSquare))
 
     # GET PIECE and move on it to the SQUARE on a completely NEW BOARD, asserts TRUE
     def validMoveOnNewBoard(self, board, piece, toSquare):
         board.putPieceOnPosition(piece, piece.position)
-        self.assertTrue(board.movePiece(piece, toSquare))
+        self.assertTrue(MoveGenerator.movePiece(piece, board, self.player, toSquare))
 
     # GET PIECE and move on it to the SQUARE, asserts FALSE
     def invalidMove(self, piece, toSquare):
-        self.assertFalse(MoveGenerator.canMovePiece(piece, self.board, self.player, toSquare))
+        self.assertFalse(MoveGenerator.movePiece(piece, self.board, self.player, toSquare))
+
+    # GET PIECE and move on it to the SQUARE, asserts FALSE
+    def invalidMoveButValidOnNewBoard(self, piece, toSquare):
+        self.invalidMove(piece, toSquare)
         # MOVING the PIECE to the given SQUARE on a completely NEW BOARD - EXPECTING it to PASS
         self.validMoveOnNewBoard(Board(), piece, toSquare)
 

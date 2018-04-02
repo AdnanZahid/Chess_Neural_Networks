@@ -16,15 +16,15 @@ class BishopDisallowMovesTests(unittest.TestCase):
     # // WHITE //
     # ///////////
 
-    def testFailToMoveWhiteBishopFromA1ToA8(self):
+    def testfailToMoveButValidMoveOnNewBoardWhiteBishopFromA1ToA8(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
         self.testUtility.failToMove(Values.bishop, self.testUtility.getMove(A1, A8))
 
-    def testFailToMoveWhiteBishopFromH1ToA1(self):
+    def testfailToMoveButValidMoveOnNewBoardWhiteBishopFromH1ToA1(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
         self.testUtility.failToMove(Values.bishop, self.testUtility.getMove(H1, A1))
 
-    def testFailToMoveWhiteBishopFromD4ToD5ToF4(self):
+    def testfailToMoveButValidMoveOnNewBoardWhiteBishopFromD4ToD5ToF4(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
         self.testUtility.failToMoveToSquare(
             self.testUtility.failToMove(Values.bishop, self.testUtility.getMove(D4, D5)),
@@ -34,15 +34,15 @@ class BishopDisallowMovesTests(unittest.TestCase):
     # // BLACK //
     # ///////////
 
-    def testFailToMoveBlackBishopFromA1ToA8(self):
+    def testfailToMoveButValidMoveOnNewBoardBlackBishopFromA1ToA8(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
         self.testUtility.failToMove(-Values.bishop, self.testUtility.getMove(A1, A8))
 
-    def testFailToMoveBlackBishopFromH1ToA1(self):
+    def testfailToMoveButValidMoveOnNewBoardBlackBishopFromH1ToA1(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
         self.testUtility.failToMove(-Values.bishop, self.testUtility.getMove(H1, A1))
 
-    def testFailToMoveBlackBishopFromD4ToD5ToF4(self):
+    def testfailToMoveButValidMoveOnNewBoardBlackBishopFromD4ToD5ToF4(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
         self.testUtility.failToMoveToSquare(
             self.testUtility.failToMove(-Values.bishop, self.testUtility.getMove(D4, D5)),

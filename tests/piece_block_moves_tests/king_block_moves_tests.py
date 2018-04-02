@@ -19,19 +19,19 @@ class KingBlockMovesTests(unittest.TestCase):
     def testBlockWhiteKingFromG7ToH8(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
         self.testUtility.moveValueToSquare(Values.queen, H8)
-        self.testUtility.failToMove(Values.king, self.testUtility.getMove(G7, H8))
+        self.testUtility.failToMoveButValidMoveOnNewBoard(Values.king, self.testUtility.getMove(G7, H8))
 
     def testBlockWhiteKingFromD4ToD5(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
         self.testUtility.moveValueToSquare(Values.queen, D5)
-        self.testUtility.failToMove(Values.king, self.testUtility.getMove(D4, D5))
+        self.testUtility.failToMoveButValidMoveOnNewBoard(Values.king, self.testUtility.getMove(D4, D5))
 
     def testBlockWhiteKingFromD6ToE5ToD5(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
         self.testUtility.moveValueToSquare(Values.queen, E5)
         self.testUtility.moveValueToSquare(Values.queen, D5)
-        self.testUtility.invalidMove( \
-            self.testUtility.failToMove(Values.king, \
+        self.testUtility.invalidMoveButValidOnNewBoard( \
+            self.testUtility.failToMoveButValidMoveOnNewBoard(Values.king, \
                                              self.testUtility.getMove(D6, E5)), D5)
 
     # ///////////
@@ -41,17 +41,17 @@ class KingBlockMovesTests(unittest.TestCase):
     def testBlockBlackKingFromC4ToD4(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
         self.testUtility.moveValueToSquare(-Values.queen, D4)
-        self.testUtility.failToMove(-Values.king, self.testUtility.getMove(C4, D4))
+        self.testUtility.failToMoveButValidMoveOnNewBoard(-Values.king, self.testUtility.getMove(C4, D4))
 
     def testBlockBlackKingFromA3ToA2(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
         self.testUtility.moveValueToSquare(-Values.queen, A2)
-        self.testUtility.failToMove(-Values.king, self.testUtility.getMove(A3, A2))
+        self.testUtility.failToMoveButValidMoveOnNewBoard(-Values.king, self.testUtility.getMove(A3, A2))
 
     def testBlockBlackKingFromD4ToE5ToD5(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
         self.testUtility.moveValueToSquare(-Values.queen, E5)
         self.testUtility.moveValueToSquare(-Values.queen, D5)
-        self.testUtility.invalidMove( \
-            self.testUtility.failToMove(-Values.king, \
+        self.testUtility.invalidMoveButValidOnNewBoard( \
+            self.testUtility.failToMoveButValidMoveOnNewBoard(-Values.king, \
                                              self.testUtility.getMove(D4, E5)), D5)

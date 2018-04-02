@@ -16,15 +16,15 @@ class KnightDisallowMovesTests(unittest.TestCase):
     # // WHITE //
     # ///////////
 
-    def testFailToMoveWhiteKnightFromG1ToC2(self):
+    def testfailToMoveButValidMoveOnNewBoardWhiteKnightFromG1ToC2(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
         self.testUtility.failToMove(Values.knight, self.testUtility.getMove(G1, C2))
 
-    def testFailToMoveWhiteKnightFromB7ToF5(self):
+    def testfailToMoveButValidMoveOnNewBoardWhiteKnightFromB7ToF5(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
         self.testUtility.failToMove(Values.knight, self.testUtility.getMove(B7, F5))
 
-    def testFailToMoveWhiteKnightFromA4ToF5ToE3(self):
+    def testfailToMoveButValidMoveOnNewBoardWhiteKnightFromA4ToF5ToE3(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.whitePlayer)
         self.testUtility.failToMoveToSquare(
             self.testUtility.failToMove(Values.knight, self.testUtility.getMove(A4, F5)),
@@ -34,15 +34,15 @@ class KnightDisallowMovesTests(unittest.TestCase):
     # // BLACK //
     # ///////////
 
-    def testFailToMoveBlackKnightFromH1ToC2(self):
+    def testfailToMoveButValidMoveOnNewBoardBlackKnightFromH1ToC2(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
         self.testUtility.failToMove(-Values.knight, self.testUtility.getMove(H1, C2))
 
-    def testFailToMoveBlackKnightFromA7ToF5(self):
+    def testfailToMoveButValidMoveOnNewBoardBlackKnightFromA7ToF5(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
         self.testUtility.failToMove(-Values.knight, self.testUtility.getMove(A7, F5))
 
-    def testFailToMoveBlackKnightFromA4ToF5ToE3(self):
+    def testfailToMoveButValidMoveOnNewBoardBlackKnightFromA4ToF5ToE3(self):
         self.testUtility = TestUtility(self.board, self.gameLogic.blackPlayer)
         self.testUtility.failToMoveToSquare(
             self.testUtility.failToMove(-Values.knight, self.testUtility.getMove(A4, F5)),
