@@ -1,10 +1,11 @@
 from src.others.move_generator import *
-
+from abc import abstractmethod
 
 # This class represents all the player information (while and black)
 class Player:
 
     def __init__(self, color, board):
+        self.isAI = False
         self.color = color
         self.board = board
         self.piecesList = self.board.setupPieceBoard(color)
@@ -59,6 +60,10 @@ class Player:
                             return False
             return True
         return False
+
+    @abstractmethod
+    def generateMove(self):
+        pass
 
     def __repr__(self):
         if self.color == Color.white:

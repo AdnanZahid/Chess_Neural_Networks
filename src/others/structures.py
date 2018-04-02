@@ -1,8 +1,9 @@
 # Here are all the basic structures
-class Move:
-    def __init__(self, fromSquare, toSquare):
+class EvaluationMove:
+    def __init__(self, fromSquare, toSquare, evaluationValue=0):
         self.fromSquare = fromSquare
         self.toSquare = toSquare
+        self.evaluationValue = evaluationValue
 
     def __repr__(self):
         return "{} -> {}".format(self.fromSquare, self.toSquare)

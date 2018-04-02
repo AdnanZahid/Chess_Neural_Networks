@@ -12,7 +12,7 @@ class Controller(InputHandlerDelegate):
     def setupNewGame(self):
 
         # SET GAMELOGIC with AI or HUMAN PLAYERS
-        self.gameLogic = GameLogic()
+        self.gameLogic = GameLogic(isWhitePlayerAI=True, isBlackPlayerAI=False)
 
         # SET VIEW as OUTPUTHANDLER
         view = View()

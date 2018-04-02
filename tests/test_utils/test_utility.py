@@ -74,7 +74,7 @@ class TestUtility(unittest.TestCase):
 
     # GET two SQUARE's and make a MOVE out of them
     def getMove(self, fromSquare, toSquare):
-        return Move(fromSquare, toSquare)
+        return EvaluationMove(fromSquare, toSquare)
 
     # GET PIECE by PieceValue, place it on the SQUARE and then try getting a non-None value
     def isPieceExists(self, pieceValue, square):

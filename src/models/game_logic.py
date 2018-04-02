@@ -1,15 +1,23 @@
+from src.models.ai_player import *
 from src.models.board import *
-from src.models.player import *
 from src.others.structures import *
 
 
 # This class represents all the game logic in general
 class GameLogic:
 
-    def __init__(self):
+    def __init__(self, isWhitePlayerAI=False, isBlackPlayerAI=False):
         self.board = Board()
-        self.whitePlayer = Player(Color.white, self.board)
-        self.blackPlayer = Player(Color.black, self.board)
+
+        if isWhitePlayerAI:
+            self.whitePlayer = AIPlayer(Color.white, self.board)
+        else:
+            self.whitePlayer = Player(Color.white, self.board)
+
+        if isBlackPlayerAI:
+            self.blackPlayer = AIPlayer(Color.black, self.board)
+        else:
+            self.blackPlayer = Player(Color.black, self.board)
 
         self.whitePlayer.opponent = self.blackPlayer
         self.blackPlayer.opponent = self.whitePlayer
@@ -27,3 +35,6 @@ class GameLogic:
 
     def isAITurn(self):
         return False
+
+    def input(self):
+        self.inputHandlerDelegate.didTakeInput(self.currentPlayer.generateMove())
