@@ -37,7 +37,8 @@ class View:
 
                     if not self.possibleMoves:
                         self.selectedPiece = board.getPieceOnPosition(Square(file, rank))
-                        self.possibleMoves = MoveGenerator.generatePossibleTargetSquaresForFileAndRank(file, rank, board, player)
+                        self.possibleMoves = MoveGenerator.generatePossibleTargetSquaresForFileAndRank(file, rank,
+                                                                                                       board, player)
 
                     elif Utility.isValidPiece(self.selectedPiece):
                         self.move(EvaluationMove(self.selectedPiece.position, Square(file, rank)))
@@ -72,17 +73,16 @@ class View:
     def draw(self, screen, board):
         self.drawSquares(screen)
         self.drawPieces(screen, board)
-        self.drawPossibleMoves(screen)
+        self.drawPossibleTargetSquares(screen)
 
     def drawSquares(self, screen):
         for file in range(columns):
             for rank in range(rows):
                 if (file + rank) % 2:
-                    draw.rect(screen, white_color,
-                              Rect(file * square_size, rank * square_size, square_size, square_size))
+                    color = white_color
                 else:
-                    draw.rect(screen, black_color,
-                              Rect(file * square_size, rank * square_size, square_size, square_size))
+                    color = black_color
+                draw.rect(screen, color, Rect(file * square_size, rank * square_size, square_size, square_size))
 
     def drawPieces(self, screen, board):
         for file in range(kNumberOfSquaresAlongFile):
@@ -95,7 +95,7 @@ class View:
                     sprite = transform.scale(sprite, (square_size, square_size))
                     screen.blit(sprite, Rect(x, y, square_size, square_size))
 
-    def drawPossibleMoves(self, screen):
+    def drawPossibleTargetSquares(self, screen):
         for square in self.possibleMoves:
             x, y = self.convertCoordinatesForGUI(square.file, square.rank)
             surface = Surface((square_size, square_size))
