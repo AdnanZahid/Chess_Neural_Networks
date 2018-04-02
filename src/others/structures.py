@@ -8,6 +8,11 @@ class EvaluationMove:
         return "{} -> {}".format(self.fromSquare, self.toSquare)
 
 
+class EmptyPiece:
+    def __init__(self):
+        pass
+
+
 class PieceState:
     def __init__(self, piece, position, hasMoved):
         self.piece = piece

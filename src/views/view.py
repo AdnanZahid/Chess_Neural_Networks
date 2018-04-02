@@ -37,9 +37,9 @@ class View:
 
                     if not self.possibleMoves:
                         self.selectedPiece = board.getPieceOnPosition(Square(file, rank))
-                        self.possibleMoves = self.getPossibleMoves(file, rank, board, player)
+                        self.possibleMoves = MoveGenerator.generatePossibleTargetSquaresForFileAndRank(file, rank, board, player)
 
-                    elif not (self.selectedPiece == EmptyPiece or self.selectedPiece == None):
+                    elif Utility.isValidPiece(self.selectedPiece):
                         self.move(EvaluationMove(self.selectedPiece.position, Square(file, rank)))
 
             # Drawing
@@ -88,16 +88,12 @@ class View:
         for file in range(kNumberOfSquaresAlongFile):
             for rank in range(kNumberOfSquaresAlongRank):
                 piece = board.getPieceOnPosition(Square(file, rank))
-                if not (piece == EmptyPiece or piece == None):
+                if Utility.isValidPiece(piece):
                     x, y = self.convertCoordinatesForGUI(file, rank)
                     path = os.path.dirname(__file__) + "/images/" + piece.symbol + ".png"
                     sprite = image.load(path)
                     sprite = transform.scale(sprite, (square_size, square_size))
                     screen.blit(sprite, Rect(x, y, square_size, square_size))
-
-    def getPossibleMoves(self, file, rank, board, player):
-        piece = board.getPieceOnPosition(Square(file, rank))
-        return MoveGenerator.generatePossibleTargetSquares(piece, board, player)
 
     def drawPossibleMoves(self, screen):
         for square in self.possibleMoves:

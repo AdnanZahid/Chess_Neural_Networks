@@ -5,7 +5,7 @@ from src.models.pieces.piece import *
 class ErrorHandler:
     @staticmethod
     def logError(piece, toSquare, error):
-        if not (piece == EmptyPiece or piece == None):
+        if Utility.isValidPiece(piece):
             print("{} ({}) -> {} --- Error: {}".format(piece.symbol, piece.position, toSquare, error))
         else:
             print(error)

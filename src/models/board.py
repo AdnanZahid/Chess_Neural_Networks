@@ -4,7 +4,6 @@ from src.others.piece_factory import *
 
 # This class handles all the Board related tasks
 class Board:
-    EmptyPiece = EmptyPiece()
 
     # Initialize an EMPTY board
     def __init__(self):
@@ -24,7 +23,7 @@ class Board:
 
     # CHECK if given SQUARE is EMPTY
     def checkIfSquareIsEmpty(self, square):
-        return self.getPieceOnPosition(square) == EmptyPiece
+        return Utility.isEmptyPiece(self.getPieceOnPosition(square))
 
     # CHECK if given SQUARE is EMPTY or occupied by the ENEMY
     def checkIfEmptyOrEnemyPieceExists(self, color, square):
@@ -69,15 +68,14 @@ class Board:
         result = False
         # Can not go out of bounds
         existingPiece = self.getPieceOnPosition(square)
-        if existingPiece:
-            if not (piece == EmptyPiece):
-                existingPiece.captured = True
-                self.grid[square.rank][square.file] = piece
-                if player and not (existingPiece == EmptyPiece) and existingPiece in player.opponent.piecesList:
-                    # Remove existing piece from pieces list (all occurences)
-                    player.opponent.piecesList = Utility.removeAllOccurencesFromList(player.opponent.piecesList,
-                                                                                     existingPiece)
-                result = True
+        if existingPiece and Utility.isValidPiece(piece):
+            existingPiece.captured = True
+            self.grid[square.rank][square.file] = piece
+            if player and Utility.isValidPiece(existingPiece) and existingPiece in player.opponent.piecesList:
+                # Remove existing piece from pieces list (all occurences)
+                player.opponent.piecesList = Utility.removeAllOccurencesFromList(player.opponent.piecesList,
+                                                                                 existingPiece)
+            result = True
         return result
 
     def putEmptyPieceOnPosition(self, square):
@@ -117,7 +115,7 @@ class Board:
             for rank in range(kNumberOfSquaresAlongRank):
                 piece = self.getPieceOnPosition(Square(file, rank))
                 if piece:
-                    if not (piece == EmptyPiece):
+                    if Utility.isValidPiece(piece):
                         print(piece.symbol, sep="", end="")
                     else:
                         print(".", sep="", end="")

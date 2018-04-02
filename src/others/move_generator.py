@@ -24,6 +24,14 @@ class MoveGenerator:
         return set(possibleMovesToSquaresList)
 
     @staticmethod
+    def generatePossibleTargetSquaresForFileAndRank(file, rank, board, player):
+        piece = board.getPieceOnPosition(Square(file, rank))
+        if Utility.isValidPiece(piece):
+            return MoveGenerator.generatePossibleTargetSquares(piece, board, player)
+        else:
+            return []
+
+    @staticmethod
     def generatePossibleTargetSquares(piece, board, player, isCheckForCheck=True):
         possibleMovesToSquaresList = []
         directionsList = piece.directionsList
@@ -78,14 +86,14 @@ class MoveGenerator:
         # STARTING and ENDING squares are not the same
         if not (piece.position == toSquare):
             # PIECE is not EMPTY or OUT OF BOUNDS
-            if not (piece == EmptyPiece or piece == None):
+            if Utility.isValidPiece(piece):
                 # This PIECE COLOR has the CURRENT TURN
                 if piece.color == player.color:
                     # Check if PIECE can MOVE
                     if piece.canMovePiece(board, toSquare, player, isCheckForCastling=isCheckForCheck):
                         # Can not go out of bounds
                         existingPiece = board.getPieceOnPosition(toSquare)
-                        if existingPiece and not (piece == EmptyPiece):
+                        if existingPiece and Utility.isValidPiece(piece):
                             existingPiece.captured = True
                             if isCheckForCheck:
                                 newPiece, newBoard, newPlayer = Utility.getDeepCopies(piece, board, player)

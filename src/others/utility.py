@@ -6,6 +6,26 @@ from src.others.structures import *
 # This file contains basic utility functions
 class Utility:
 
+    # This function checks if given piece is empty
+    @staticmethod
+    def isEmptyPiece(piece):
+        return piece == EmptyPiece
+
+    # This function makes sure that given piece is not empty
+    @staticmethod
+    def isNonEmptyPiece(piece):
+        return not (Utility.isEmptyPiece(piece))
+
+    # This function makes sure that given piece is not empty or none
+    @staticmethod
+    def isValidPiece(piece):
+        return piece and Utility.isNonEmptyPiece(piece)
+
+    # This function checks if given piece is empty or none
+    @staticmethod
+    def isInvalidPiece(piece):
+        return not (Utility.isValidPiece(piece))
+
     # This function checks if file was changed (rank may be changed too)
     @staticmethod
     def fileAdvanceCheck(move):

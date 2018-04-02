@@ -3,6 +3,9 @@ from src.others.structures import *
 
 # This class represents a square and its essential functions
 class Square:
+    # This is a singleton (used to check for empty piece from anywhere on any square)
+    EmptyPiece = EmptyPiece()
+
     def __init__(self, file, rank):
         self.file = file
         self.rank = rank
@@ -13,9 +16,6 @@ class Square:
 
     def __hash__(self):
         return self.order
-
-    def __ne__(self, other):
-        return ~(self == other)
 
     def __add__(self, fileRankPair):
         return Square(self.file + fileRankPair[0], self.rank + fileRankPair[1])
