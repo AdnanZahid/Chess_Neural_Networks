@@ -43,18 +43,10 @@ class Player:
         return position in self.opponent.getAllPossibleTargetSquares(board)
 
     def isUnderCheckMate(self, board):
-        # Make a move on a new board, piece and player (clone of current one)
-        # And then check if the new player is under check or not
-        newPlayer = copy.deepcopy(self)
-        newPlayerOpponent = copy.deepcopy(self.opponent)
-        newPlayer.opponent = newPlayerOpponent
+        _, newBoard, newPlayer = Utility.getDeepCopies(None, board, self)
         if newPlayer.isUnderCheck(board):
             for piece in self.piecesList:
-                # Before checking for check
-                # Make a move on a new board, piece (clones of current ones)
-                # And then check if the new player is under check or not
-                newBoard = copy.deepcopy(board)
-                newPiece = copy.deepcopy(piece)
+                newPiece = Utility.getDeepCopy(piece)
                 for targetSquare in MoveGenerator.generatePossibleTargetSquares(piece, newBoard, newPlayer):
                     if MoveGenerator.movePiece(newPiece, newBoard, newPlayer, targetSquare):
                         newPiece.updatePosition(targetSquare)

@@ -1,3 +1,5 @@
+import copy
+
 from src.others.structures import *
 
 
@@ -83,3 +85,19 @@ class Utility:
     @staticmethod
     def removeAllOccurencesFromList(list, valueToRemove):
         return [value for value in list if not (value == valueToRemove)]
+
+    @staticmethod
+    def getDeepCopy(item):
+        return copy.deepcopy(item)
+
+    @staticmethod
+    def getDeepCopies(piece, board, player):
+        # Make a move on a new board, piece and player (clones of current ones)
+        # This makes the changes temporary (for checking only)
+        # So we don't have to undo them
+        newPiece = Utility.getDeepCopy(piece)
+        newBoard = Utility.getDeepCopy(board)
+        newPlayer = Utility.getDeepCopy(player)
+        newPlayerOpponent = Utility.getDeepCopy(player.opponent)
+        newPlayer.opponent = newPlayerOpponent
+        return newPiece, newBoard, newPlayer

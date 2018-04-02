@@ -4,7 +4,7 @@ from pygame import *
 from src.others.move_generator import *
 
 # Constants
-square_size = 100
+square_size = 125
 columns, rows = kNumberOfSquaresAlongFile, kNumberOfSquaresAlongRank
 screen_size = (columns * square_size, rows * square_size)
 white_color = (236, 218, 185)
@@ -20,7 +20,7 @@ class View:
 
     def runGame(self, gameLogic):
         board = gameLogic.board
-        self.possibleMoves = []
+        self.resetMoveState()
         while not (self.isGameOver()):
             player = gameLogic.currentPlayer
             # Initialization
@@ -53,15 +53,19 @@ class View:
         self.inputHandlerDelegate.setupNewGame()
 
     def output(self):
-        # Nothing to do here since PyGame runs in a game loop architecture (instead of a turn based architecture)
-        pass
+        # Reset state once output is done
+        self.resetMoveState()
 
     def move(self, move):
         self.inputHandlerDelegate.didTakeInput(move)
-        self.selectedPiece = EmptyPiece
-        self.possibleMoves = []
+        # Reset state once move is done
+        self.resetMoveState()
 
     def cancelMove(self):
+        # Reset state once move is cancelled
+        self.resetMoveState()
+
+    def resetMoveState(self):
         self.selectedPiece = EmptyPiece
         self.possibleMoves = []
 
@@ -93,15 +97,11 @@ class View:
 
     def getPossibleMoves(self, file, rank, board, player):
         piece = board.getPieceOnPosition(Square(file, rank))
-
-        if not (piece == EmptyPiece or piece == None):
-            return MoveGenerator.generatePossibleTargetSquares(piece, board, player)
-        else:
-            return []
+        return MoveGenerator.generatePossibleTargetSquares(piece, board, player)
 
     def drawPossibleMoves(self, screen):
         for square in self.possibleMoves:
-            x, y = self.convertCoordinatesForGUI(square.rank, square.file)
+            x, y = self.convertCoordinatesForGUI(square.file, square.rank)
             surface = Surface((square_size, square_size))
             surface.set_alpha(100)
             surface.fill(green_color)
@@ -119,8 +119,9 @@ class View:
         # Transform according to our view
         # Transform = rows - 1, because view is inverted
         # Divider = square_size, because each square is a certain distance apart in GUI but adjacent in model
-        y = rows - 1 - (y // square_size)
-        return x, y
+        file = x // square_size
+        rank = rows - 1 - (y // square_size)
+        return file, rank
 
     def isGameOver(self):
         return self.gameOver

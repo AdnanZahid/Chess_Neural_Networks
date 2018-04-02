@@ -1,5 +1,3 @@
-import copy
-
 from src.models.squares import *
 from src.others.error_handler import *
 
@@ -87,47 +85,32 @@ class MoveGenerator:
                     if piece.canMovePiece(board, toSquare, player, isCheckForCastling=isCheckForCheck):
                         # Can not go out of bounds
                         existingPiece = board.getPieceOnPosition(toSquare)
-                        if existingPiece:
-                            # Destination square is empty
-                            # And no friendly fire
-                            if existingPiece == EmptyPiece \
-                                    or not (existingPiece.color == piece.color):
-                                if not (piece == EmptyPiece):
-                                    existingPiece.captured = True
-                                    if isCheckForCheck:
-                                        # Before checking for check
-                                        # Make a move on a new board, piece and player (clones of current ones)
-                                        # And then check if the new player is under check or not
-                                        newBoard = copy.deepcopy(board)
-                                        newPiece = copy.deepcopy(piece)
-                                        newPlayer = copy.deepcopy(player)
-                                        newPlayerOpponent = copy.deepcopy(player.opponent)
-                                        newPlayer.opponent = newPlayerOpponent
-                                        newBoard.movePiece(newPiece, toSquare, newPlayer)
-                                        newPiece.updatePosition(toSquare)
-                                        # A quick hack to check for new king position which is different from original king
-                                        newKing = None
-                                        if newPiece.value == Values.king:
-                                            newKing = newPiece
-                                        if newKing:
-                                            result = not (newPlayer.isUnderCheck(newBoard, newKing.position))
-                                        else:
-                                            result = not (newPlayer.isUnderCheck(newBoard))
-                                    else:
-                                        result = True
+                        if existingPiece and not (piece == EmptyPiece):
+                            existingPiece.captured = True
+                            if isCheckForCheck:
+                                newPiece, newBoard, newPlayer = Utility.getDeepCopies(piece, board, player)
+                                newBoard.movePiece(newPiece, toSquare, newPlayer)
+                                newPiece.updatePosition(toSquare)
+                                # A quick hack to check for new king position which is different from original king
+                                newKing = None
+                                if newPiece.value == Values.king:
+                                    newKing = newPiece
+                                if newKing:
+                                    result = not (newPlayer.isUnderCheck(newBoard, newKing.position))
+                                else:
+                                    result = not (newPlayer.isUnderCheck(newBoard))
                             else:
-                                if isCheckForCheck: ErrorHandler.logError(piece, toSquare,
-                                                                          Error.friendlyFire)
+                                result = True
                         else:
-                            if isCheckForCheck: ErrorHandler.logError(piece, toSquare, Error.invalidDestination)
+                            ErrorHandler.logError(piece, toSquare, Error.invalidDestination)
                     else:
-                        if isCheckForCheck: ErrorHandler.logError(piece, toSquare, Error.invalidMove)
+                        ErrorHandler.logError(piece, toSquare, Error.invalidMove)
                 else:
-                    if isCheckForCheck: ErrorHandler.logError(piece, toSquare, Error.wrongTurn)
+                    ErrorHandler.logError(piece, toSquare, Error.wrongTurn)
             else:
-                if isCheckForCheck: ErrorHandler.logError(piece, toSquare, Error.invalidPiece)
+                ErrorHandler.logError(piece, toSquare, Error.invalidPiece)
         else:
-            if isCheckForCheck: ErrorHandler.logError(piece, toSquare, Error.samePosition)
+            ErrorHandler.logError(piece, toSquare, Error.samePosition)
 
         return result
 
