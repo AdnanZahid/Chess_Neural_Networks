@@ -5,6 +5,8 @@ from src.others.structures import *
 
 # This file contains basic utility functions
 class Utility:
+    # This is a singleton (used to check for empty piece from anywhere on any square)
+    EmptyPiece = EmptyPiece()
 
     # This function checks if given piece is empty
     @staticmethod

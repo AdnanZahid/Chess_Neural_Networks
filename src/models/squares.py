@@ -3,8 +3,6 @@ from src.others.structures import *
 
 # This class represents a square and its essential functions
 class Square:
-    # This is a singleton (used to check for empty piece from anywhere on any square)
-    EmptyPiece = EmptyPiece()
 
     def __init__(self, file, rank):
         self.file = file
