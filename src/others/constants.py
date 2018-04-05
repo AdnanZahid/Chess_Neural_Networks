@@ -9,6 +9,7 @@ kNumberOfSquaresAlongRank = 8
 kMaxPossibleNumber = sys.maxsize
 kMinPossibleNumber = -sys.maxsize - 1
 
+kSectionsInFEN = 4
 
 class Symbols:
     newLine = "\n"
@@ -51,6 +52,15 @@ class Values:
     queen = 900
     king = 2000
 
+
+symbolsToValueDictionary = {
+    "P": 100,
+    "N": 300,
+    "B": 305,
+    "R": 500,
+    "Q": 900,
+    "K": 2000,
+}
 
 i = Values.empty
 P = -Values.pawn
