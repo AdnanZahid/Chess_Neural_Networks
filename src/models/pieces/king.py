@@ -1,4 +1,5 @@
 from src.models.pieces.piece import *
+from src.models.squares import *
 from src.others.constants import *
 
 
@@ -39,12 +40,13 @@ class King(Piece):
         wasCastlingSuccessful = False
         if player.king and board.checkIfSquareIsEmpty(toSquare) and player:
 
-            if player.kingSideRook.position == toSquare + (1, 0) and player.isKingSideCastlingPossible():
-                board.castledRook = player.kingSideRook
-                wasCastlingSuccessful = True
-            elif player.queenSideRook.position == toSquare - (2, 0) and player.isQueenSideCastlingPossible():
-                board.castledRook = player.queenSideRook
-                wasCastlingSuccessful = True
+            if isCheckForCastling:
+                if toSquare == Square(G1.file, self.position.rank) and player.isKingSideCastlingPossible():
+                    board.castledRook = player.kingSideRook
+                    wasCastlingSuccessful = super().canMovePiece(board, toSquare)
+                elif toSquare == Square(C1.file, self.position.rank) and player.isQueenSideCastlingPossible():
+                    board.castledRook = player.queenSideRook
+                    wasCastlingSuccessful = super().canMovePiece(board, toSquare)
 
         # Remove castling directions (all occurences)
         self.directionsList = Utility.removeAllOccurencesFromList(self.directionsList, (2, 0))

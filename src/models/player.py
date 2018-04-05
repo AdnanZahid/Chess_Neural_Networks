@@ -68,17 +68,16 @@ class Player:
                                   player,
                                   king,
                                   rook,
-                                  kingPositionAfterCastling,
-                                  kingSideRookPositionAfterCastling,
-                                  kingSideIntermediateSquare):
+                                  rookPositionBeforeCastling,
+                                  rookPositionAfterCastling,
+                                  intermediateSquare):
         return rook \
-               and rook.position == kingPositionAfterCastling + (1, 0) \
+               and rook.position == rookPositionBeforeCastling \
                and not (king.hasMoved) \
                and not (rook.hasMoved) \
-               and rook.canMovePiece(board, kingSideRookPositionAfterCastling) \
+               and rook.canMovePiece(board, rookPositionAfterCastling) \
                and not (player.isUnderCheck(board)) \
-               and not (player.isUnderCheck(board, kingSideIntermediateSquare)) \
-               and super().canMovePiece(board, kingPositionAfterCastling)
+               and not (player.isUnderCheck(board, intermediateSquare))
 
     def isKingSideCastlingPossible(self):
         board = self.board
@@ -87,21 +86,21 @@ class Player:
         rook = self.kingSideRook
 
         if player.color == Color.white:
-            kingPositionAfterCastling = G1
-            kingSideRookPositionAfterCastling = F1
-            kingSideIntermediateSquare = F1
+            rookPositionBeforeCastling = H1
+            rookPositionAfterCastling = F1
+            intermediateSquare = F1
         else:
-            kingPositionAfterCastling = G8
-            kingSideRookPositionAfterCastling = F8
-            kingSideIntermediateSquare = F8
+            rookPositionBeforeCastling = H8
+            rookPositionAfterCastling = F8
+            intermediateSquare = F8
 
         return player.isCastlingPossibleForRook(board,
                                                 player,
                                                 king,
                                                 rook,
-                                                kingPositionAfterCastling,
-                                                kingSideRookPositionAfterCastling,
-                                                kingSideIntermediateSquare)
+                                                rookPositionBeforeCastling,
+                                                rookPositionAfterCastling,
+                                                intermediateSquare)
 
     def isQueenSideCastlingPossible(self):
         board = self.board
@@ -110,21 +109,21 @@ class Player:
         rook = self.queenSideRook
 
         if player.color == Color.white:
-            kingPositionAfterCastling = C1
-            queenSideRookPositionAfterCastling = D1
-            queenSideIntermediateSquare = D1
+            rookPositionBeforeCastling = A1
+            rookPositionAfterCastling = D1
+            intermediateSquare = D1
         else:
-            kingPositionAfterCastling = C8
-            queenSideRookPositionAfterCastling = D8
-            queenSideIntermediateSquare = D8
+            rookPositionBeforeCastling = A8
+            rookPositionAfterCastling = D8
+            intermediateSquare = D8
 
         return player.isCastlingPossibleForRook(board,
                                                 player,
                                                 king,
                                                 rook,
-                                                kingPositionAfterCastling,
-                                                queenSideRookPositionAfterCastling,
-                                                queenSideIntermediateSquare)
+                                                rookPositionBeforeCastling,
+                                                rookPositionAfterCastling,
+                                                intermediateSquare)
 
     def hasKingSideCastlingRights(self):
         return not (self.king.hasMoved) and not (self.kingSideRook.hasMoved)

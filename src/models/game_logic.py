@@ -36,7 +36,7 @@ class GameLogic:
     def isAITurn(self):
         return self.currentPlayer.isAI
 
-    def input(self, gameLogic=None):
+    def input(self):
         self.inputHandlerDelegate.didTakeInput(self.currentPlayer.generateMove())
 
     def getFEN(self):

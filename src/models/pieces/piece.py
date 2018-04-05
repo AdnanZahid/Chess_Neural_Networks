@@ -32,7 +32,7 @@ class Piece:
     def __eq__(self, other):
         # "other" variable may be EmptyPiece
         # In that case return False, since piece can never be equal to EmptyPiece
-        if Utility.isInvalidPiece(other):
+        if other == None or other == EmptyPiece:
             return False
         return self.id == other.id
 

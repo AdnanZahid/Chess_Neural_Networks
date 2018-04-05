@@ -5,11 +5,10 @@ from src.models.pieces.piece import *
 class ErrorHandler:
     @staticmethod
     def logError(piece, toSquare, error):
-        pass
-        # if Utility.isValidPiece(piece):
-            # print("{} ({}) -> {} --- Error: {}".format(piece.symbol, piece.position, toSquare, error))
-        # else:
-            # print(error)
+        if Utility.isValidPiece(piece):
+            print("{} ({}) -> {} --- Error: {}".format(piece.symbol, piece.position, toSquare, error))
+        else:
+            print(error)
 
 
 class Error:

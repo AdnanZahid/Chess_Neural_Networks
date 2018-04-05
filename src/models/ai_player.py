@@ -47,7 +47,6 @@ class AIPlayer(Player):
 
         bestEvaluationValue = EvaluationMove(None, None, kMinPossibleNumber).evaluationValue
         for piece in player.piecesList:
-            fromSquare = piece.position
             for toSquare in MoveGenerator.generatePossibleTargetSquares(piece, self.board, self):
                 newPiece = Utility.getDeepCopy(piece)
                 if MoveGenerator.movePiece(newPiece, newBoard, newPlayer, toSquare):
