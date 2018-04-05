@@ -12,8 +12,10 @@ class King(Piece):
         # Symbol
         if color == Color.white:
             self.symbol = Symbols.white_king
+            self.fenSymbol = FENSymbols.white_king
         else:
             self.symbol = Symbols.black_king
+            self.fenSymbol = FENSymbols.black_king
 
         # King directions
 
@@ -37,30 +39,12 @@ class King(Piece):
         wasCastlingSuccessful = False
         if player.king and board.checkIfSquareIsEmpty(toSquare) and player:
 
-            kingSideRookPositionAfterCastling = toSquare - (1, 0)
-            queenSideRookPositionAfterCastling = toSquare + (1, 0)
-
-            kingSideIntermediateSquare = player.king.position + (1, 0)
-            queenSideIntermediateSquare = player.king.position - (1, 0)
-
-            if player.kingSideRook and player.kingSideRook.position == toSquare + (1, 0):
-                rook = player.kingSideRook
-                if not (player.king.hasMoved) and not (rook.hasMoved):
-                    if player.kingSideRook.canMovePiece(board, kingSideRookPositionAfterCastling):
-                        if isCheckForCastling and not (player.isUnderCheck(board)) and not (
-                                player.isUnderCheck(board, kingSideIntermediateSquare)):
-                            if super().canMovePiece(board, toSquare):
-                                board.castledRook = player.kingSideRook
-                                wasCastlingSuccessful = True
-            elif player.queenSideRook and player.queenSideRook.position == toSquare - (2, 0):
-                rook = player.queenSideRook
-                if not (player.king.hasMoved) and not (rook.hasMoved):
-                    if player.queenSideRook.canMovePiece(board, queenSideRookPositionAfterCastling):
-                        if isCheckForCastling and not (player.isUnderCheck(board)) and not (
-                                player.isUnderCheck(board, queenSideIntermediateSquare)):
-                            if super().canMovePiece(board, toSquare):
-                                board.castledRook = player.queenSideRook
-                                wasCastlingSuccessful = True
+            if player.kingSideRook.position == toSquare + (1, 0) and player.isKingSideCastlingPossible():
+                board.castledRook = player.kingSideRook
+                wasCastlingSuccessful = True
+            elif player.queenSideRook.position == toSquare - (2, 0) and player.isQueenSideCastlingPossible():
+                board.castledRook = player.queenSideRook
+                wasCastlingSuccessful = True
 
         # Remove castling directions (all occurences)
         self.directionsList = Utility.removeAllOccurencesFromList(self.directionsList, (2, 0))

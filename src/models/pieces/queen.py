@@ -12,8 +12,10 @@ class Queen(Piece):
         # Symbol
         if color == Color.white:
             self.symbol = Symbols.white_queen
+            self.fenSymbol = FENSymbols.white_queen
         else:
             self.symbol = Symbols.black_queen
+            self.fenSymbol = FENSymbols.black_queen
 
         # Queen directions
 

@@ -117,5 +117,5 @@ class Board:
                     if Utility.isValidPiece(piece):
                         print(piece.symbol, sep="", end="")
                     else:
-                        print(".", sep="", end="")
-            print("\n")
+                        print(Symbols.empty, sep="", end="")
+            print(Symbols.newLine)

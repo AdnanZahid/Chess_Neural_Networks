@@ -12,8 +12,10 @@ class Rook(Piece):
         # Symbol
         if color == Color.white:
             self.symbol = Symbols.white_rook
+            self.fenSymbol = FENSymbols.white_rook
         else:
             self.symbol = Symbols.black_rook
+            self.fenSymbol = FENSymbols.black_rook
 
         # Rook directions
         self.directionsList.append((1, 0))

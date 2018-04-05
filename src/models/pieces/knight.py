@@ -12,8 +12,10 @@ class Knight(Piece):
         # Symbol
         if color == Color.white:
             self.symbol = Symbols.white_knight
+            self.fenSymbol = FENSymbols.white_knight
         else:
             self.symbol = Symbols.black_knight
+            self.fenSymbol = FENSymbols.black_knight
 
         # Knight directions
         self.directionsList.append((1, 2))

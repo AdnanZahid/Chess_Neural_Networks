@@ -1,5 +1,7 @@
-from src.others.move_generator import *
 from abc import abstractmethod
+
+from src.others.move_generator import *
+
 
 # This class represents all the player information (while and black)
 class Player:
@@ -60,6 +62,75 @@ class Player:
                             return False
             return True
         return False
+
+    def isCastlingPossibleForRook(self,
+                                  board,
+                                  player,
+                                  king,
+                                  rook,
+                                  kingPositionAfterCastling,
+                                  kingSideRookPositionAfterCastling,
+                                  kingSideIntermediateSquare):
+        return rook \
+               and rook.position == kingPositionAfterCastling + (1, 0) \
+               and not (king.hasMoved) \
+               and not (rook.hasMoved) \
+               and rook.canMovePiece(board, kingSideRookPositionAfterCastling) \
+               and not (player.isUnderCheck(board)) \
+               and not (player.isUnderCheck(board, kingSideIntermediateSquare)) \
+               and super().canMovePiece(board, kingPositionAfterCastling)
+
+    def isKingSideCastlingPossible(self):
+        board = self.board
+        player = self
+        king = self.king
+        rook = self.kingSideRook
+
+        if player.color == Color.white:
+            kingPositionAfterCastling = G1
+            kingSideRookPositionAfterCastling = F1
+            kingSideIntermediateSquare = F1
+        else:
+            kingPositionAfterCastling = G8
+            kingSideRookPositionAfterCastling = F8
+            kingSideIntermediateSquare = F8
+
+        return player.isCastlingPossibleForRook(board,
+                                                player,
+                                                king,
+                                                rook,
+                                                kingPositionAfterCastling,
+                                                kingSideRookPositionAfterCastling,
+                                                kingSideIntermediateSquare)
+
+    def isQueenSideCastlingPossible(self):
+        board = self.board
+        player = self
+        king = self.king
+        rook = self.queenSideRook
+
+        if player.color == Color.white:
+            kingPositionAfterCastling = C1
+            queenSideRookPositionAfterCastling = D1
+            queenSideIntermediateSquare = D1
+        else:
+            kingPositionAfterCastling = C8
+            queenSideRookPositionAfterCastling = D8
+            queenSideIntermediateSquare = D8
+
+        return player.isCastlingPossibleForRook(board,
+                                                player,
+                                                king,
+                                                rook,
+                                                kingPositionAfterCastling,
+                                                queenSideRookPositionAfterCastling,
+                                                queenSideIntermediateSquare)
+
+    def hasKingSideCastlingRights(self):
+        return not (self.king.hasMoved) and not (self.kingSideRook.hasMoved)
+
+    def hasQueenSideCastlingRights(self):
+        return not (self.king.hasMoved) and not (self.queenSideRook.hasMoved)
 
     @abstractmethod
     def generateMove(self):

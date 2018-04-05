@@ -27,6 +27,21 @@ class Symbols:
     black_king = "♚"
 
 
+class FENSymbols:
+    white_pawn = "P"
+    white_knight = "N"
+    white_bishop = "B"
+    white_rook = "R"
+    white_queen = "Q"
+    white_king = "K"
+    black_pawn = "p"
+    black_knight = "n"
+    black_bishop = "b"
+    black_rook = "r"
+    black_queen = "q"
+    black_king = "k"
+
+
 class Values:
     empty = 0
     pawn = 100
@@ -45,6 +60,8 @@ R = -Values.rook
 Q = -Values.queen
 K = -Values.king
 
+# This is done to represent the symbols bottom to top
+# When in fact they are top to bottom (stored that way in the array)
 p = -P
 n = -N
 b = -B

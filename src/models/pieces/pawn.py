@@ -12,8 +12,10 @@ class Pawn(Piece):
         # Symbol
         if color == Color.white:
             self.symbol = Symbols.white_pawn
+            self.fenSymbol = FENSymbols.white_pawn
         else:
             self.symbol = Symbols.black_pawn
+            self.fenSymbol = FENSymbols.black_pawn
 
         # Pawn directions
 

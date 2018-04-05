@@ -38,3 +38,58 @@ class GameLogic:
 
     def input(self, gameLogic=None):
         self.inputHandlerDelegate.didTakeInput(self.currentPlayer.generateMove())
+
+    def getFEN(self):
+        fenString = ""
+
+        # Pieces FEN
+        for rank in reversed(range(kNumberOfSquaresAlongRank)):
+            fileString = ""
+            fileEmptyPieceCount = 0
+            for file in range(kNumberOfSquaresAlongFile):
+                piece = self.board.getPieceOnPosition(Square(file, rank))
+                if Utility.isValidPiece(piece):
+                    if fileEmptyPieceCount == 0:
+                        fileString += piece.fenSymbol
+                    else:
+                        fileString += str(fileEmptyPieceCount) + piece.fenSymbol
+                else:
+                    fileEmptyPieceCount += 1
+            if not (fileEmptyPieceCount == 0):
+                fileString += str(fileEmptyPieceCount)
+
+            if not (rank == RankIndex.k8):
+                fenString += "/"
+            fenString += fileString
+
+        # Side to move FEN
+        if self.currentPlayer.color == Color.white:
+            fenString += " w "
+        else:
+            fenString += " b "
+
+        # Castling FEN
+        # White castling
+        if self.whitePlayer.hasKingSideCastlingRights():
+            fenString += FENSymbols.white_king
+        if self.whitePlayer.hasQueenSideCastlingRights():
+            fenString += FENSymbols.white_queen
+
+        # Black castling
+        if self.blackPlayer.hasKingSideCastlingRights():
+            fenString += FENSymbols.black_king
+        if self.blackPlayer.hasQueenSideCastlingRights():
+            fenString += FENSymbols.black_queen
+
+        # Enpassant pawn
+        if self.board.movedPawn:
+            fenString += " " + str(self.board.movedPawn.position)
+        else:
+            fenString += " -"
+
+        # Half move clock
+        fenString += " 0"
+
+        # Full move counter
+        fenString += " 1"
+        return fenString

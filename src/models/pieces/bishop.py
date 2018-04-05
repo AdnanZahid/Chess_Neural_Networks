@@ -12,8 +12,10 @@ class Bishop(Piece):
         # Symbol
         if color == Color.white:
             self.symbol = Symbols.white_bishop
+            self.fenSymbol = FENSymbols.white_bishop
         else:
             self.symbol = Symbols.black_bishop
+            self.fenSymbol = FENSymbols.black_bishop
 
         # Bishop directions
         self.directionsList.append((1, 1))
