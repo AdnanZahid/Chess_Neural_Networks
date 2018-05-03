@@ -70,7 +70,8 @@ class PlayerTests(unittest.TestCase):
         # Move white queen on D8 to F8
         self.assertTrue(self.move(D8, F8))
         # Now check if black bishop on C5 can move at all
-        self.assertFalse(MoveGenerator.generatePossibleTargetSquares(self.board.getPieceOnPosition(C5), self.board, self.blackPlayer) == [])
+        self.assertFalse(MoveGenerator.generatePossibleTargetSquares(self.board.getPieceOnPosition(C5), self.board,
+                                                                     self.blackPlayer) == [])
 
     def testBlockWhiteQueenThatHasEnteredBlacksCampByKnightAfterItCapturesTheRook(self):
         # Infilterate blacks camp with white queen (and get captured)

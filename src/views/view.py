@@ -1,6 +1,6 @@
-import os
 from pygame import *
 
+from paths import *
 from src.others.move_generator import *
 
 # Constants
@@ -84,7 +84,7 @@ class View:
                 piece = board.getPieceOnPosition(Square(file, rank))
                 if Utility.isValidPiece(piece):
                     x, y = self.convertCoordinatesForGUI(file, rank)
-                    path = os.path.dirname(__file__) + "/images/" + piece.symbol + ".png"
+                    path = IMAGES_DIR + "/" + piece.symbol + ".png"
                     sprite = image.load(path)
                     sprite = transform.scale(sprite, (square_size, square_size))
                     screen.blit(sprite, Rect(x, y, square_size, square_size))

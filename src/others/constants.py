@@ -11,6 +11,7 @@ kMinPossibleNumber = -sys.maxsize - 1
 
 kSectionsInFEN = 4
 
+
 class Symbols:
     newLine = "\n"
     empty = "·"

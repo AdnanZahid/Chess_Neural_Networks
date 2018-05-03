@@ -3,6 +3,8 @@ import unittest
 from castling_enpassant_and_promotion_moves_tests.castling_moves_tests import *
 from castling_enpassant_and_promotion_moves_tests.enpassant_moves_tests import *
 from castling_enpassant_and_promotion_moves_tests.promotion_moves_tests import *
+from fen_and_pgn_tests.fen_tests import *
+from fen_and_pgn_tests.pgn_tests import *
 from game_logic_and_player_tests.game_logic_tests import *
 from game_logic_and_player_tests.player_tests import *
 from other_tests.square_tests import *

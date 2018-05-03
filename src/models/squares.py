@@ -1,9 +1,11 @@
+from src.others.constants import *
 from src.others.structures import *
 
 
 # This class represents a square and its essential functions
 class Square:
 
+    # Initialization from file and rank
     # File can either be number or alphabet
     def __init__(self, file, rank):
 
@@ -16,7 +18,16 @@ class Square:
             self.file = Square.convertAlphabetToNumber(file)
             self.rank = int(rank) - 1
 
-        self.order = (self.rank * 8) + self.file
+        self.order = (self.rank * kNumberOfSquaresAlongRank) + self.file
+
+    # Initialization from order
+    @staticmethod
+    def initializeFromOrder(order):
+        square = Square(0, 0)
+        square.file = order % kNumberOfSquaresAlongFile
+        square.rank = order // kNumberOfSquaresAlongRank
+        square.order = order
+        return square
 
     def __eq__(self, other):
         return self.order == other.order
@@ -38,6 +49,7 @@ class Square:
             return "Invalid square"
         return "{}{}".format(Square.fileString(self.file), self.rank + 1)
 
+    @staticmethod
     def convertAlphabetToNumber(alphabet):
         if len(alphabet) != 1:
             return 0
