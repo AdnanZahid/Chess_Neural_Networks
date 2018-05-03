@@ -109,13 +109,30 @@ class Board:
         # Return the LIST of PIECES to the corresponding PLAYER
         return piecesList
 
-    def printBoard(self):
+    def toString(self):
+        string = ""
         for rank in range(kNumberOfSquaresAlongRank):
             for file in range(kNumberOfSquaresAlongFile):
                 piece = self.getPieceOnPosition(Square(file, rank))
                 if piece:
                     if Utility.isValidPiece(piece):
-                        print(piece.symbol, sep="", end="")
+                        string += piece.symbol
                     else:
-                        print(Symbols.empty, sep="", end="")
-            print(Symbols.newLine)
+                        string += Symbols.empty
+            string += Symbols.newLine
+
+        return string
+
+    def __repr__(self):
+        string = ""
+        for rank in range(kNumberOfSquaresAlongRank):
+            for file in range(kNumberOfSquaresAlongFile):
+                piece = self.getPieceOnPosition(Square(file, rank))
+                if piece:
+                    if Utility.isValidPiece(piece):
+                        string += piece.symbol
+                    else:
+                        string += Symbols.empty
+            string += Symbols.newLine
+
+        return string

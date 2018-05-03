@@ -46,7 +46,23 @@ class GameLogicTests(unittest.TestCase):
         self.assertTrue(self.gameLogic.getFEN() == "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
 
     def testSetFEN(self):
+
+        # Set FEN #1
         self.gameLogic.setFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+        # Test board description against the corresponding string
+        self.assertTrue(self.gameLogic.board.toString() == "♜♞♝♛♚♝♞♜\n♟♟♟♟♟♟♟♟\n········\n········\n········\n········\n♙♙♙♙♙♙♙♙\n♖♘♗♕♔♗♘♖\n")
+
+        # Set FEN #2
         self.gameLogic.setFEN("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1")
+        # Test board description against the corresponding string
+        self.assertTrue(self.gameLogic.board.toString() == "♜♞♝♛♚♝♞♜\n♟♟♟♟♟♟♟♟\n········\n········\n····♙···\n········\n♙♙♙♙·♙♙♙\n♖♘♗♕♔♗♘♖\n")
+
+        # Set FEN #3
         self.gameLogic.setFEN("rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2")
+        # Test board description against the corresponding string
+        self.assertTrue(self.gameLogic.board.toString() == "♜♞♝♛♚♝♞♜\n♟♟·♟♟♟♟♟\n········\n··♟·····\n····♙···\n········\n♙♙♙♙·♙♙♙\n♖♘♗♕♔♗♘♖\n")
+
+        # Set FEN #4
         self.gameLogic.setFEN("rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2")
+        # Test board description against the corresponding string
+        self.assertTrue(self.gameLogic.board.toString() == "♜♞♝♛♚♝♞♜\n♟♟·♟♟♟♟♟\n········\n··♟·····\n····♙···\n·····♘··\n♙♙♙♙·♙♙♙\n♖♘♗♕♔♗·♖\n")

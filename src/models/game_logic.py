@@ -42,69 +42,42 @@ class GameLogic:
         self.inputHandlerDelegate.didTakeInput(self.currentPlayer.generateMove())
 
     def setFEN(self, fenString):
+
+        fenStringsArray = fenString.split(" ")
+        boardString = fenStringsArray[0]
+
         # Empty the board (to make room for new pieces)
         self.board.setupEmptyBoard()
-        # Split the FEN with whitespaces
-        fenArray = fenString.split(" ")
-        # There are 4 sections in FEN
-        if len(fenArray) < kSectionsInFEN:
-            print("Number of argument incorrect in the FEN.")
 
-        # Parse the board description
-        fenPiecesArray = fenArray[0].split("/")
-        if not (len(fenPiecesArray) == kNumberOfSquaresAlongRank):
-            print("Board representation incorrect in the FEN.")
+        rank, file = 0, 0
+        for fenSymbol in boardString:
+            if re.match("[rbqkpn]", fenSymbol):
+                color = Color.black
 
-        for rank, fenFileString in enumerate(fenPiecesArray):
-            fileEmptyPieceCount = 0
-            file = 0
-            while file < len(fenFileString):
-                fenSymbol = fenFileString[file]
-                if re.match("[rbqkpn]", fenSymbol):
-                    color = Color.black
-
-                    position = Square(file, rank)
-                    piece = PieceFactory.getPiece(-symbolsToValueDictionary[fenSymbol.upper()], position)
-                    piece.color = color
-                    self.board.putPieceOnPosition(piece, position)
-
-                elif re.match("[RBQKPN]", fenSymbol):
-                    color = Color.white
-
-                    position = Square(file, rank)
-                    piece = PieceFactory.getPiece(symbolsToValueDictionary[fenSymbol.upper()], position)
-                    piece.color = color
-                    self.board.putPieceOnPosition(piece, position)
-                else:
-                    try:
-                        fileEmptyPieceCount += int(fenSymbol)
-
-                        file += fileEmptyPieceCount - 1
-
-                        for fileEmptyPiece in range(fileEmptyPieceCount):
-                            self.board.putEmptyPieceOnPosition(Square(fileEmptyPiece, rank))
-                    except:
-                        print("Board representation incorrect in the FEN.")
+                position = Square(file, rank)
+                piece = PieceFactory.getPiece(-symbolsToValueDictionary[fenSymbol.upper()], position)
+                piece.color = color
+                self.board.putPieceOnPosition(piece, position)
 
                 file += 1
 
-                # Parse the color of the player to move next
-                if fenArray[1] == "w":
-                    self.currentPlayer = self.whitePlayer
-                elif fenArray[1] == "b":
-                    self.currentPlayer = self.blackPlayer
-                else:
-                    print("Color of the player to move next incorrect.")
+            elif re.match("[RBQKPN]", fenSymbol):
+                color = Color.white
 
-                # Parse the castling, en passant, half moves and full moves number
-                castling = fenArray[2]
-                enpassant = fenArray[3]
-                if len(fenArray) == 6:
-                    try:
-                        halfMoves = int(fenArray[4])
-                        fullMoves = int(fenArray[5])
-                    except:
-                        print("Impossible to have the number of full move or half move.")
+                position = Square(file, rank)
+                piece = PieceFactory.getPiece(symbolsToValueDictionary[fenSymbol.upper()], position)
+                piece.color = color
+                self.board.putPieceOnPosition(piece, position)
+
+                file += 1
+
+            elif fenSymbol in '12345678':
+
+                file += int(fenSymbol)
+
+            elif fenSymbol == '/':
+                file = 0
+                rank += 1
 
     def getFEN(self):
         fenString = ""
