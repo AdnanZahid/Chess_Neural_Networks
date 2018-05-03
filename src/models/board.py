@@ -7,6 +7,11 @@ class Board:
 
     # Initialize an EMPTY board
     def __init__(self):
+        # Simply set up an empty board
+        self.setupEmptyBoard()
+
+    # Fill the board with EMPTY pieces (piece type EMPTY)
+    def setupEmptyBoard(self):
         # Initialize piece list with None pieces
         self.grid = [[EmptyPiece for _ in range(kNumberOfSquaresAlongFile)] for _ in range(kNumberOfSquaresAlongRank)]
         # Indicates if the last moved piece was a pawn
@@ -80,12 +85,6 @@ class Board:
     def putEmptyPieceOnPosition(self, square):
         self.grid[square.rank][square.file] = EmptyPiece
 
-    # Fill the board with EMPTY pieces (piece type EMPTY)
-    def setupEmptyBoard(self):
-        for file in allPiecesFileEnumeration:
-            for rank in allPiecesRankEnumeration:
-                self.putEmptyPieceOnPosition(Square(file, rank))
-
     # Fill the board with PIECES of the given COLOR
     def setupPieceBoard(self, color):
         # Set up a LIST of PIECES to be passed to the corresponding PLAYER
@@ -125,7 +124,7 @@ class Board:
 
     def __repr__(self):
         string = ""
-        for rank in range(kNumberOfSquaresAlongRank):
+        for rank in reversed(range(kNumberOfSquaresAlongRank)):
             for file in range(kNumberOfSquaresAlongFile):
                 piece = self.getPieceOnPosition(Square(file, rank))
                 if piece:

@@ -43,41 +43,36 @@ class GameLogic:
 
     def setFEN(self, fenString):
 
+        # Separate all FEN strings for each corresponding domain
         fenStringsArray = fenString.split(" ")
-        boardString = fenStringsArray[0]
 
-        # Empty the board (to make room for new pieces)
-        self.board.setupEmptyBoard()
+        # Set board using FEN Board String
+        piecesSymbolsString = fenStringsArray[0]
+        self.setBoardUsingFEN(piecesSymbolsString)
 
-        rank, file = 0, 0
-        for fenSymbol in boardString:
-            if re.match("[rbqkpn]", fenSymbol):
-                color = Color.black
+        # Parse the color of the player to move next
+        if fenStringsArray[1] == "w":
+            self.currentPlayer = self.whitePlayer
+        elif fenStringsArray[1] == "b":
+            self.currentPlayer = self.blackPlayer
+        else:
+            print("Color of the player to move next incorrect.")
 
-                position = Square(file, rank)
-                piece = PieceFactory.getPiece(-symbolsToValueDictionary[fenSymbol.upper()], position)
-                piece.color = color
-                self.board.putPieceOnPosition(piece, position)
+        # Set the castling rights
+        castlingSymbolsString = fenStringsArray[2]
+        self.setCastlingRightsUsingFEN(castlingSymbolsString)
 
-                file += 1
+        # Set the last enpassant pawn
+        enpassantString = fenStringsArray[3]
+        self.board.movedPawn = self.getMovedPawnUsingFEN(enpassantString)
 
-            elif re.match("[RBQKPN]", fenSymbol):
-                color = Color.white
-
-                position = Square(file, rank)
-                piece = PieceFactory.getPiece(symbolsToValueDictionary[fenSymbol.upper()], position)
-                piece.color = color
-                self.board.putPieceOnPosition(piece, position)
-
-                file += 1
-
-            elif fenSymbol in '12345678':
-
-                file += int(fenSymbol)
-
-            elif fenSymbol == '/':
-                file = 0
-                rank += 1
+        # Set the half move clock and full move number
+        if len(fenStringsArray) == 6:
+            try:
+                self.halfMoveClock = int(fenStringsArray[4])
+                self.fullMoveNumber = int(fenStringsArray[5])
+            except:
+                print("Impossible to have the number of full move or half move.")
 
     def getFEN(self):
         fenString = ""
@@ -133,3 +128,72 @@ class GameLogic:
         # Full move counter
         fenString += " 1"
         return fenString
+
+    def setBoardUsingFEN(self, piecesSymbolsString):
+        # Empty the board (to make room for new pieces)
+        self.board.setupEmptyBoard()
+
+        rank, file = 7, 0
+        # Set each invidual piece character by character from the string
+        for fenSymbol in piecesSymbolsString:
+            if re.match("[rbqkpn]", fenSymbol):
+                color = Color.black
+
+                position = Square(file, rank)
+                piece = PieceFactory.getPiece(-symbolsToValueDictionary[fenSymbol.upper()], position)
+                piece.color = color
+                self.board.putPieceOnPosition(piece, position)
+
+                file += 1
+
+            elif re.match("[RBQKPN]", fenSymbol):
+                color = Color.white
+
+                position = Square(file, rank)
+                piece = PieceFactory.getPiece(symbolsToValueDictionary[fenSymbol.upper()], position)
+                piece.color = color
+                self.board.putPieceOnPosition(piece, position)
+
+                file += 1
+
+            elif fenSymbol in '12345678':
+
+                file += int(fenSymbol)
+
+            elif fenSymbol == '/':
+                file = 0
+                rank -= 1
+
+    def setCastlingRightsUsingFEN(self, castlingSymbolsString):
+        self.setCastlingRightsToFalse()
+        # Set each invidual castling right character by character from the string
+        # By setting rook's hasMoved property
+        for castlingSymbol in castlingSymbolsString:
+            if castlingSymbol == "K":
+                self.whitePlayer.setKingSideCastlingRights(True)
+            elif castlingSymbol == "Q":
+                self.whitePlayer.setQueenSideCastlingRights(True)
+            elif castlingSymbol == "k":
+                self.blackPlayer.setKingSideCastlingRights(True)
+            elif castlingSymbol == "q":
+                self.blackPlayer.setQueenSideCastlingRights(True)
+
+    def getMovedPawnUsingFEN(self, enpassantString):
+        if enpassantString == "-" or len(enpassantString) < 2:
+            return None
+
+        enpassantSquare = Square(enpassantString[0], enpassantString[1])
+        if self.currentPlayer == self.whitePlayer:
+            movedPawn = self.board.getPieceOnPosition(
+                Square(enpassantSquare.file, enpassantSquare.rank - 1))
+        else:
+            movedPawn = self.board.getPieceOnPosition(
+                Square(enpassantSquare.file, enpassantSquare.rank + 1))
+
+        return movedPawn
+
+    def setCastlingRightsToFalse(self):
+        self.whitePlayer.setKingSideCastlingRights(False)
+        self.whitePlayer.setQueenSideCastlingRights(False)
+        self.blackPlayer.setKingSideCastlingRights(False)
+        self.blackPlayer.setQueenSideCastlingRights(False)

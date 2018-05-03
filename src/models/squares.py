@@ -4,9 +4,18 @@ from src.others.structures import *
 # This class represents a square and its essential functions
 class Square:
 
+    # File can either be number or alphabet
     def __init__(self, file, rank):
-        self.file = file
-        self.rank = rank
+
+        if type(file) is int and type(rank) is int:
+            # If file is number
+            self.file = file
+            self.rank = rank
+        else:
+            # If file is alphabet
+            self.file = Square.convertAlphabetToNumber(file)
+            self.rank = int(rank) - 1
+
         self.order = (self.rank * 8) + self.file
 
     def __eq__(self, other):
@@ -28,6 +37,19 @@ class Square:
         if Square.fileString(self.file) == "Invalid file" or self.rank < RankIndex.k1 or self.rank > RankIndex.k8:
             return "Invalid square"
         return "{}{}".format(Square.fileString(self.file), self.rank + 1)
+
+    def convertAlphabetToNumber(alphabet):
+        if len(alphabet) != 1:
+            return 0
+        number = ord(alphabet)
+        if 65 <= number <= 90:
+            # Upper case letter
+            return number - 65
+        elif 97 <= number <= 122:
+            # Lower case letter
+            return number - 97
+        # Unrecognized character
+        return 0
 
     @staticmethod
     def fileString(file):

@@ -131,6 +131,12 @@ class Player:
     def hasQueenSideCastlingRights(self):
         return not (self.king.hasMoved) and not (self.queenSideRook.hasMoved)
 
+    def setKingSideCastlingRights(self, isCastlable):
+        self.kingSideRook.hasMoved = not isCastlable
+
+    def setQueenSideCastlingRights(self, isCastlable):
+        self.queenSideRook.hasMoved = not isCastlable
+
     @abstractmethod
     def generateMove(self):
         pass
