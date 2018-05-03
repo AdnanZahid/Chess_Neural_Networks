@@ -57,29 +57,36 @@ class GameLogic:
 
         for rank, fenFileString in enumerate(fenPiecesArray):
             fileEmptyPieceCount = 0
-            for file, fenSymbol in enumerate(fenFileString):
+            file = 0
+            while file < len(fenFileString):
+                fenSymbol = fenFileString[file]
                 if re.match("[rbqkpn]", fenSymbol):
                     color = Color.black
 
                     position = Square(file, rank)
-                    self.board.putPieceOnPosition(
-                        PieceFactory.getPiece(symbolsToValueDictionary[fenSymbol.upper()], position), position)
+                    piece = PieceFactory.getPiece(-symbolsToValueDictionary[fenSymbol.upper()], position)
+                    piece.color = color
+                    self.board.putPieceOnPosition(piece, position)
 
                 elif re.match("[RBQKPN]", fenSymbol):
                     color = Color.white
 
                     position = Square(file, rank)
-                    self.board.putPieceOnPosition(
-                        PieceFactory.getPiece(symbolsToValueDictionary[fenSymbol.upper()], position), position)
+                    piece = PieceFactory.getPiece(symbolsToValueDictionary[fenSymbol.upper()], position)
+                    piece.color = color
+                    self.board.putPieceOnPosition(piece, position)
                 else:
                     try:
                         fileEmptyPieceCount += int(fenSymbol)
 
+                        file += fileEmptyPieceCount - 1
+
                         for fileEmptyPiece in range(fileEmptyPieceCount):
-                            file = fileEmptyPiece
                             self.board.putEmptyPieceOnPosition(Square(fileEmptyPiece, rank))
                     except:
                         print("Board representation incorrect in the FEN.")
+
+                file += 1
 
                 # Parse the color of the player to move next
                 if fenArray[1] == "w":
