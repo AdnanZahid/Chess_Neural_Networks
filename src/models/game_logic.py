@@ -146,6 +146,12 @@ class GameLogic:
 
                 file += 1
 
+                if piece.value == Values.pawn:
+                    if rank == RankIndex.k7:
+                        piece.hasMoved = False
+                    else:
+                        piece.hasMoved = True
+
             elif re.match("[RBQKPN]", fenSymbol):
                 color = Color.white
 
@@ -155,6 +161,12 @@ class GameLogic:
                 self.board.putPieceOnPosition(piece, position)
 
                 file += 1
+
+                if piece.value == Values.pawn:
+                    if rank == RankIndex.k2:
+                        piece.hasMoved = False
+                    else:
+                        piece.hasMoved = True
 
             elif fenSymbol in '12345678':
 
