@@ -13,7 +13,7 @@ class Controller(InputHandlerDelegate):
         # Set game over to false by default
         self.gameOver = False
         # SET GAMELOGIC with AI or HUMAN PLAYERS
-        self.gameLogic = GameLogic(isWhitePlayerAI=False, isBlackPlayerAI=False)
+        self.gameLogic = GameLogic(isWhitePlayerAI=False, isBlackPlayerAI=True)
         # SET VIEW as OUTPUTHANDLER
         self.view = View()
         self.outputHandler = self.view
