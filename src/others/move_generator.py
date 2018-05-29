@@ -1,4 +1,4 @@
-from src.models.squares import *
+from src.models.square import *
 from src.others.error_handler import *
 
 

@@ -1,7 +1,7 @@
 import chess.pgn
 
 from paths import *
-from src.models.squares import *
+from src.models.square import *
 
 
 # This class helps with PGN related logic
