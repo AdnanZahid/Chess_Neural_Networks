@@ -62,7 +62,7 @@ This simply presents the board in human viewable form. It draws images correspon
 
 7. ```piece_factory.py``` simply constructs pieces based on simple factory pattern, it takes piece value and position as input and returns a piece of that type and puts it on the given position
 
-8. ```structures.py``` contains basic structures such as EvaluationMove, EmptyPiece, PieceState, MoveState, FileIndex, RankIndex, Color, Strategy and MoveType
+8. ```structures.py``` contains basic structures such as Move, EmptyPiece, PieceState, MoveState, FileIndex, RankIndex, Color, Strategy and MoveType
 
 9. ``` utility.py``` contains all the basic file, rank and directional advance checks
 

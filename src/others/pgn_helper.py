@@ -16,5 +16,5 @@ class PGNHelper:
 
         for move in game.main_line():
             self.delegate.move(
-                EvaluationMove(Square.initializeFromOrder(move.from_square),
+                Move(Square.initializeFromOrder(move.from_square),
                                Square.initializeFromOrder(move.to_square)))

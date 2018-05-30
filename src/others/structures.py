@@ -1,5 +1,5 @@
 # Here are all the basic structures
-class EvaluationMove:
+class Move:
     def __init__(self, fromSquare, toSquare, evaluationValue=0):
         self.fromSquare = fromSquare
         self.toSquare = toSquare
@@ -8,6 +8,10 @@ class EvaluationMove:
     def __repr__(self):
         return "{} -> {}".format(self.fromSquare, self.toSquare)
 
+class Evaluation:
+    def __init__(self, move, value):
+        self.move = move
+        self.value = value
 
 class EmptyPiece:
     def __init__(self):

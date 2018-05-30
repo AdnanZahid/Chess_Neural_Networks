@@ -18,6 +18,6 @@ class EvaluationHandler:
         mobilityValues = 0
         for piece in player.piecesList:
             pieceValues += piece.value
-            mobilityValues += MoveGenerator.getMobility(piece, board, player) * 100
+            mobilityValues += MoveGenerator.getMobility(piece, board, player) * 10
 
         return pieceValues + mobilityValues

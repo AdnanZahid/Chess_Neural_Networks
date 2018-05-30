@@ -41,28 +41,23 @@ class Utility:
     # This function checks if only file was changed
     @staticmethod
     def fileAdvanceOnlyCheck(move):
-        return Utility.fileAdvanceCheck(EvaluationMove(move.fromSquare, move.toSquare)) and not (
-            Utility.rankAdvanceCheck(EvaluationMove(move.fromSquare, move.toSquare)))
+        return Utility.fileAdvanceCheck(move) and not (
+            Utility.rankAdvanceCheck(move))
 
     # This function checks if only rank was changed
     @staticmethod
     def rankAdvanceOnlyCheck(move):
-        return not (
-            Utility.fileAdvanceCheck(EvaluationMove(move.fromSquare, move.toSquare))) and Utility.rankAdvanceCheck(
-            EvaluationMove(move.fromSquare, move.toSquare))
+        return not (Utility.fileAdvanceCheck(move)) and Utility.rankAdvanceCheck(move)
 
     # This function checks if only rank or only file was changed
     @staticmethod
     def fileOrRankAdvanceExclusiveCheck(move):
-        return not (Utility.fileAdvanceOnlyCheck(
-            EvaluationMove(move.fromSquare, move.toSquare)) == Utility.rankAdvanceOnlyCheck(
-            EvaluationMove(move.fromSquare, move.toSquare)))
+        return not (Utility.fileAdvanceOnlyCheck(move) == Utility.rankAdvanceOnlyCheck(move))
 
     # This function checks if rank and file both were changed
     @staticmethod
     def fileOrRankAdvanceBothCheck(move):
-        return Utility.fileAdvanceCheck(EvaluationMove(move.fromSquare, move.toSquare)) and Utility.rankAdvanceCheck(
-            EvaluationMove(move.fromSquare, move.toSquare))
+        return Utility.fileAdvanceCheck(move) and Utility.rankAdvanceCheck(move)
 
     # This function determines how many steps to take in file and rank to reach the final position given the starting position
     @staticmethod

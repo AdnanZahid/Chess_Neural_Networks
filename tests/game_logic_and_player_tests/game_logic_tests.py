@@ -15,7 +15,7 @@ class GameLogicTests(unittest.TestCase):
         # Move knight on B1 to C3
         piece = self.board.getPieceOnPosition(B1)
         toSquare = C3
-        self.gameLogic.move(EvaluationMove(piece.position, toSquare))
+        self.gameLogic.move(Move(piece.position, toSquare))
         self.assertTrue(piece.position == toSquare)
 
     def testChangeTurn(self):

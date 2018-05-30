@@ -37,7 +37,7 @@ class View:
                     self.possibleMoves = MoveGenerator.generatePossibleTargetSquaresForFileAndRank(file, rank, board,
                                                                                                    player)
                 elif Utility.isValidPiece(self.selectedPiece):
-                    self.move(EvaluationMove(self.selectedPiece.position, Square(file, rank)))
+                    self.move(Move(self.selectedPiece.position, Square(file, rank)))
 
         # Drawing
         self.screen.fill(white_color)
