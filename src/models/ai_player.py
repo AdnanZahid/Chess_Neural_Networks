@@ -14,17 +14,16 @@ class AIPlayer(Player):
         return EvaluationMove(move.fromSquare, move.toSquare)
 
     def getBestMove(self, depth, player, alpha, beta):
-        _, newBoard, newPlayer = Utility.getDeepCopies(None, self.board, self)
         bestMove = EvaluationMove(None, None, kMinPossibleNumber)
         for piece in player.piecesList:
             fromSquare = piece.position
             for toSquare in MoveGenerator.generatePossibleTargetSquares(piece, self.board, self):
-                newPiece = Utility.getDeepCopy(piece)
+                newPiece, newBoard, newPlayer = Utility.getDeepCopies(piece, self.board, self)
                 if MoveGenerator.movePiece(newPiece, newBoard, newPlayer, toSquare):
                     localAlpha = alpha
                     evaluationMove = EvaluationMove(fromSquare, toSquare,
                                                     -self.getBestMoveValue(depth - 1, player.opponent, -beta,
-                                                                           -localAlpha))
+                                                                           -localAlpha, newBoard))
 
                     if evaluationMove.evaluationValue > bestMove.evaluationValue:
                         bestMove = evaluationMove
@@ -37,21 +36,20 @@ class AIPlayer(Player):
 
         return bestMove
 
-    def getBestMoveValue(self, depth, player, alpha, beta):
-        _, newBoard, newPlayer = Utility.getDeepCopies(None, self.board, self)
+    def getBestMoveValue(self, depth, player, alpha, beta, board):
         if depth == 0:
             if player.color == Color.white:
-                return EvaluationHandler.getTotalEvaluationValue(newBoard, newPlayer)
+                return EvaluationHandler.getTotalEvaluationValue(board, player)
             else:
-                return -EvaluationHandler.getTotalEvaluationValue(newBoard, newPlayer)
+                return -EvaluationHandler.getTotalEvaluationValue(board, player)
 
         bestEvaluationValue = EvaluationMove(None, None, kMinPossibleNumber).evaluationValue
         for piece in player.piecesList:
             for toSquare in MoveGenerator.generatePossibleTargetSquares(piece, self.board, self):
-                newPiece = Utility.getDeepCopy(piece)
+                newPiece, newBoard, newPlayer = Utility.getDeepCopies(piece, self.board, self)
                 if MoveGenerator.movePiece(newPiece, newBoard, newPlayer, toSquare):
                     localAlpha = alpha
-                    evaluationValue = -self.getBestMoveValue(depth - 1, player.opponent, -beta, -localAlpha)
+                    evaluationValue = -self.getBestMoveValue(depth - 1, player.opponent, -beta, -localAlpha, board)
 
                     if evaluationValue > bestEvaluationValue:
                         bestEvaluationValue = evaluationValue
